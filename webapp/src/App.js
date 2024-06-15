@@ -1,15 +1,16 @@
 import './App.css';
-import login from './Features/login';
+import Login from './Features/login.js';
+import login from './Features/login.js';
 
 function App() {
   return (
     <div className="App">
+      <Login />
       <header className="App-header">
         <p>
           DearbornSalvageAuto
         </p>
-
-        <img src = "https://images.pexels.com/photos/3764984/pexels-photo-3764984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" className='logo' ></img>
+       
       </header>
     </div>
   );
