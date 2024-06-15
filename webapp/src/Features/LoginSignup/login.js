@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import logo1 from '../Resources/logo1.png'
+import logo1 from '../../Assets/logo1.png';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -33,9 +33,11 @@ const Login = () => {
         <div>
           <label>Password:</label>
           <input type="password" value={password} onChange={handlePasswordChange} required />
+          <h1>Forgot Password?</h1>
         </div>
         <button type="submit">Login</button>
       </form>
+
       <h3>Dont have an account? Sign up here</h3>
     </div>
   );

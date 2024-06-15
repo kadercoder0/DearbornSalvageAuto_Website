@@ -1,6 +1,5 @@
 import './App.css';
-import Login from './Features/login.js';
-import login from './Features/login.js';
+import Login from './Features/LoginSignup/login.js';
 
 function App() {
   return (
