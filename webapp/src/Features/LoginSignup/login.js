@@ -1,20 +1,22 @@
-
-import React, { useState } from 'react';
-import logo1 from '../../Assets/logo1.png';
-import './login.component.css'
+import React, { useState } from 'react'; 
+import logo1 from '../../Assets/logo1.png'; 
+import './login.component.css'; // Import the CSS file for styling
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(''); // State for storing the email input
+  const [password, setPassword] = useState(''); // State for storing the password input
 
+  // Handler function for updating the email state
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
+  // Handler function for updating the password state
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
+  // Handler function for form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     // Here you can handle the login logic, such as sending the data to the server
@@ -24,8 +26,13 @@ const Login = () => {
 
   return (
     <div>
-    <img src={logo1} alt="Logo" style={{ width: '950px', height: '150px' }} />
+      {/* Logo image */}
+      <img src={logo1} alt="Logo" style={{ width: '950px', height: '150px' }} />
+      
+      {/* Login heading */}
       <h2>Login</h2>
+      
+      {/* Login form */}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email:</label>
@@ -36,12 +43,15 @@ const Login = () => {
           <input type="password" value={password} onChange={handlePasswordChange} required />
           <h1>Forgot Password?</h1>
         </div>
+        
+        {/* Submit button */}
         <button type="submit">Login</button>
       </form>
 
-      <h3>Dont have an account? Sign up here</h3>
+      {/* Signup prompt */}
+      <h3>Don't have an account? Sign up here</h3>
     </div>
   );
 };
 
-export default Login;
+export default Login; // Export the Login component as the default export
