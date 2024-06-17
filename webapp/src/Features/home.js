@@ -7,8 +7,8 @@ const Home = () => {
   return (
     <div>
       <h1>Dearborn Salvage Auto</h1>
-      <p>Quality Cars that dont break you bank!</p>
-      <p>Salvage and Clean titles</p>
+      <p>Quality Cars that Dont Break your Bank!</p>
+      <p>Salvage and Clean Titles</p>
       <img src = {lineup} alt = "background cars" />
     </div>
   );
