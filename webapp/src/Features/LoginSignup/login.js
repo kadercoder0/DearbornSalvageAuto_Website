@@ -1,10 +1,13 @@
-import React, { useState } from 'react'; 
-import logo1 from '../../Assets/logo1.png'; 
-import './login.component.css'; // Import the CSS file for styling
+
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import logo1 from '../../Assets/logo1.png';
+import '../LoginSignup/login.component.css'
 
 const Login = () => {
-  const [email, setEmail] = useState(''); // State for storing the email input
-  const [password, setPassword] = useState(''); // State for storing the password input
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate
 
   // Handler function for updating the email state
   const handleEmailChange = (e) => {
@@ -22,14 +25,19 @@ const Login = () => {
     // Here you can handle the login logic, such as sending the data to the server
     console.log('Email:', email);
     console.log('Password:', password);
+    
+    // Simulate a successful login
+    navigate('/home'); // Navigate to the home page
   };
 
   return (
     <div>
+
       {/* Logo image */}
       <img src={logo1} alt="Logo" style={{ width: '950px', height: '150px' }} />
       
       {/* Login heading */}
+
       <h2>Login</h2>
       
       {/* Login form */}
@@ -48,8 +56,10 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
 
+
       {/* Signup prompt */}
       <h3>Don't have an account? Sign up here</h3>
+
     </div>
   );
 };
