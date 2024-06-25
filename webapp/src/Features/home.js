@@ -1,4 +1,3 @@
-// src/Features/Home/home.js
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import lineup from '../Assets/lineup.png';

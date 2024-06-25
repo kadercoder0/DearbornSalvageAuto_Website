@@ -1,4 +1,4 @@
-// src/Features/Contact/contact.js
+import { Link } from 'react-router-dom'; 
 import React from 'react';
 
 const Contact = () => {
@@ -6,6 +6,9 @@ const Contact = () => {
     <div>
       <h1>Contact Us</h1>
       <p>Contact details and form.</p>
+      <nav className="navbar">
+        <Link to="/home" className="nav-link"> Back to Home</Link>
+      </nav>
     </div>
   );
 };
