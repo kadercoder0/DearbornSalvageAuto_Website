@@ -48,13 +48,18 @@ const getYears = () => {
   return years;
 };
 
+const drivetrains = ['FWD', 'RWD', 'AWD', '4WD'];
+const engineSizes = ['1.0L', '1.5L', '2.0L', '2.5L', '3.0L', '3.5L', '4.0L', '4.5L', '5.0L'];
+
 const Filter = ({ applyFilter }) => {
   const [filters, setFilters] = useState({
     make: '',
     model: '',
     year: '',
-    minPrice: '',
-    maxPrice: '',
+    minPrice: 0,
+    maxPrice: 25000,
+    drivetrain: '',
+    engineSize: '',
   });
 
   const handleChange = (e) => {
@@ -71,34 +76,65 @@ const Filter = ({ applyFilter }) => {
   };
 
   return (
-    <form className="filter-form" onSubmit={handleSubmit}>
-      <label>Make:</label>
-      <select name="make" value={filters.make} onChange={handleChange}>
-        <option value="">Select Make</option>
-        {Object.keys(makesAndModels).map((make) => (
-          <option key={make} value={make}>{make}</option>
-        ))}
-      </select>
-      <label>Model:</label>
-      <select name="model" value={filters.model} onChange={handleChange}>
-        <option value="">Select Model</option>
-        {filters.make && makesAndModels[filters.make].map((model) => (
-          <option key={model} value={model}>{model}</option>
-        ))}
-      </select>
-      <label>Year:</label>
-      <select name="year" value={filters.year} onChange={handleChange}>
-        <option value="">Select Year</option>
-        {getYears().map((year) => (
-          <option key={year} value={year}>{year}</option>
-        ))}
-      </select>
-      <label>Min Price:</label>
-      <input type="number" name="minPrice" value={filters.minPrice} onChange={handleChange} />
-      <label>Max Price:</label>
-      <input type="number" name="maxPrice" value={filters.maxPrice} onChange={handleChange} />
-      <button type="submit">Apply Filter</button>
-    </form>
+    <div>
+      <h2>Filter</h2>
+      <form className="filter-form" onSubmit={handleSubmit}>
+        <label>Make:</label>
+        <select name="make" value={filters.make} onChange={handleChange}>
+          <option value="">Select Make</option>
+          {Object.keys(makesAndModels).map((make) => (
+            <option key={make} value={make}>{make}</option>
+          ))}
+        </select>
+        <label>Model:</label>
+        <select name="model" value={filters.model} onChange={handleChange}>
+          <option value="">Select Model</option>
+          {filters.make && makesAndModels[filters.make].map((model) => (
+            <option key={model} value={model}>{model}</option>
+          ))}
+        </select>
+        <label>Year:</label>
+        <select name="year" value={filters.year} onChange={handleChange}>
+          <option value="">Select Year</option>
+          {getYears().map((year) => (
+            <option key={year} value={year}>{year}</option>
+          ))}
+        </select>
+        <label>Min Price: ${filters.minPrice}</label>
+        <input
+          type="range"
+          name="minPrice"
+          min="0"
+          max="25000"
+          value={filters.minPrice}
+          onChange={handleChange}
+        />
+        <label>Max Price: ${filters.maxPrice}</label>
+        <input
+          type="range"
+          name="maxPrice"
+          min="0"
+          max="25000"
+          value={filters.maxPrice}
+          onChange={handleChange}
+        />
+        <label>Drivetrain:</label>
+        <select name="drivetrain" value={filters.drivetrain} onChange={handleChange}>
+          <option value="">Select Drivetrain</option>
+          {drivetrains.map((drivetrain) => (
+            <option key={drivetrain} value={drivetrain}>{drivetrain}</option>
+          ))}
+        </select>
+        <label>Engine Size:</label>
+        <select name="engineSize" value={filters.engineSize} onChange={handleChange}>
+          <option value="">Select Engine Size</option>
+          {engineSizes.map((size) => (
+            <option key={size} value={size}>{size}</option>
+          ))}
+        </select>
+        <button type="submit">Apply Filter</button>
+      </form>
+    </div>
   );
 };
 

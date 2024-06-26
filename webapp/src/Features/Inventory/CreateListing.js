@@ -1,5 +1,5 @@
 // src/Features/Inventory/CreateListing.js
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 const makesAndModels = {
   Acura: ['ILX', 'MDX', 'RDX', 'TLX'],
@@ -48,6 +48,9 @@ const getYears = () => {
   return years;
 };
 
+const drivetrains = ['FWD', 'RWD', 'AWD', '4WD'];
+const engineSizes = ['1.0L', '1.5L', '2.0L', '2.5L', '3.0L', '3.5L', '4.0L', '4.5L', '5.0L'];
+
 const CreateListing = ({ addListing }) => {
   const [car, setCar] = useState({
     make: '',
@@ -55,8 +58,13 @@ const CreateListing = ({ addListing }) => {
     year: '',
     price: '',
     description: '',
-    imageUrl: ''
+    image: null,
+    imageUrl: '',
+    drivetrain: '',
+    engineSize: '',
   });
+
+  const fileInputRef = useRef();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,8 +74,21 @@ const CreateListing = ({ addListing }) => {
     }));
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setCar((prevCar) => ({
+        ...prevCar,
+        image: file,
+        imageUrl: imageUrl,
+      }));
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Handle image file upload logic here (e.g., to a server or cloud storage)
     addListing(car);
     setCar({
       make: '',
@@ -75,8 +96,14 @@ const CreateListing = ({ addListing }) => {
       year: '',
       price: '',
       description: '',
-      imageUrl: ''
+      image: null,
+      imageUrl: '',
+      drivetrain: '',
+      engineSize: '',
     });
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   return (
@@ -106,8 +133,22 @@ const CreateListing = ({ addListing }) => {
       <input type="number" name="price" value={car.price} onChange={handleChange} required />
       <label>Description:</label>
       <textarea name="description" value={car.description} onChange={handleChange} required />
-      <label>Image URL:</label>
-      <input type="url" name="imageUrl" value={car.imageUrl} onChange={handleChange} required />
+      <label>Image:</label>
+      <input type="file" ref={fileInputRef} onChange={handleFileChange} required />
+      <label>Drivetrain:</label>
+      <select name="drivetrain" value={car.drivetrain} onChange={handleChange} required>
+        <option value="">Select Drivetrain</option>
+        {drivetrains.map((drivetrain) => (
+          <option key={drivetrain} value={drivetrain}>{drivetrain}</option>
+        ))}
+      </select>
+      <label>Engine Size:</label>
+      <select name="engineSize" value={car.engineSize} onChange={handleChange} required>
+        <option value="">Select Engine Size</option>
+        {engineSizes.map((size) => (
+          <option key={size} value={size}>{size}</option>
+        ))}
+      </select>
       <button type="submit">Add Listing</button>
     </form>
   );

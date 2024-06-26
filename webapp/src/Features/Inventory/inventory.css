@@ -1,106 +1,131 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0; 
+}
 
-  
-  .filter-container {
-    width: 20%;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    overflow-y: auto;
-  }
-  
-  .main-content {
-    display: flex;
-    width: 80%;
-    margin-left: 20%;
-    padding: 20px;
-    overflow: hidden; /* Prevents the main content from expanding */
-  }
-  
-  .create-listing-container {
-    width: 20%;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-    position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    overflow-y: auto;
-  }
-  
-  .listings-container {
-    width: 70%;
-    padding-right: 20px;
-    overflow-y: auto; /* Enables scrolling within the listings container */
-    height: calc(100vh - 40px); /* Adjust the height to fit the screen, accounting for padding */
-  }
-  
-  .car-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  .car-card {
-    flex: 0 0 23%; /* Adjust to fit 4 cards in a row */
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    margin: 10px 0;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .car-image {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  form label, form input, form textarea, form select {
-    margin: 10px 0;
-  }
-  
-  form input, form textarea, form select {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 80%;
-  }
-  
-  form button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #61dafb;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .filter-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .filter-form label {
-    margin: 10px 0;
-  }
-  
-  .filter-form input, .filter-form select {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-  }
-  
+.filter-container {
+  width: 20%;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  background-color: #fff; 
+  z-index: 1; 
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+
+}
+
+.main-content {
+  display: flex;
+  width: 60%; 
+  margin-left: 20%;
+  margin-right: 20%; 
+  padding: 20px;
+  overflow: hidden; 
+  background-color: #f0f0f0; 
+}
+
+.create-listing-container {
+  width: 20%;
+  padding: 20px;
+  border-left: 1px solid #ddd;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  background-color: #fff; 
+  z-index: 1; 
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); 
+}
+
+.listings-container {
+  width: 100%; 
+  padding-right: 20px;
+  overflow-y: auto; 
+  height: calc(100vh - 40px);
+}
+
+.car-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; 
+}
+
+.car-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.car-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+form label, form input, form textarea, form select {
+  margin: 10px 0;
+}
+
+form input, form textarea, form select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 80%;
+}
+
+form input[type="file"] {
+  padding: 0; 
+}
+
+
+form button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #61dafb;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.filter-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-form label, .filter-form select, .filter-form input[type="range"] {
+  margin: 10px 0;
+  width: 100%;
+}
+
+.filter-form input, .filter-form select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.filter-form input[type="range"] {
+  width: 100%;
+  margin-bottom: 20px;
+}
