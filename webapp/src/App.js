@@ -7,6 +7,7 @@ import Inventory from './Features/Inventory/inventory'; // Import Inventory comp
 import Contact from './Features/contact'; // Import Contact component
 import FAQ from './Features/faq'; // Import FAQ component
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import AuthDetails from './Features/auth/authdetails';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/faq" element={<FAQ />} /> {/* FAQ page */}
           <Route path="/" element={<Navigate to="/login" />} /> {/* Redirect to login */}
         </Routes>
+        <AuthDetails />
       </div>
     </Router>
   );
