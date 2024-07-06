@@ -1,32 +1,35 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom'; // Import Link for navigation
-import logo1 from '../../Assets/logo1.png';
-import '../LoginSignup/login.component.css'
+import logo1 from '../../../Assets/logo1.png'
+import './login.component.css';
 
-const Login = () => {
+const Register = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
-  // Handler function for updating the email state
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
-  // Handler function for updating the password state
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
-  // Handler function for form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you can handle the login logic, such as sending the data to the server
+    // Handle the registration logic here
+    console.log('Name:', name);
     console.log('Email:', email);
     console.log('Password:', password);
     
-    // Simulate a successful login
-    navigate('/home'); // Navigate to the home page
+    // Simulate successful registration
+    navigate('/login');
   };
 
   return (
@@ -34,11 +37,15 @@ const Login = () => {
       {/* Logo image */}
       <img src={logo1} alt="Logo" style={{ width: '950px', height: '150px' }} />
       
-      {/* Login heading */}
-      <h2>Login</h2>
+      {/* Register heading */}
+      <h2>Register</h2>
       
-      {/* Login form */}
+      {/* Register form */}
       <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name:</label>
+          <input type="text" value={name} onChange={handleNameChange} required />
+        </div>
         <div>
           <label>Email:</label>
           <input type="email" value={email} onChange={handleEmailChange} required />
@@ -46,19 +53,18 @@ const Login = () => {
         <div>
           <label>Password:</label>
           <input type="password" value={password} onChange={handlePasswordChange} required />
-          <h1>Forgot Password?</h1>
         </div>
         
         {/* Submit button */}
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
 
-      {/* Signup prompt */}
+      {/* Link to login */}
       <h3>
-        Don't have an account? <Link to="/register">Sign up here</Link>
+        Already have an account? <Link to="/login">Login here</Link>
       </h3>
     </div>
   );
 };
 
-export default Login; // Export the Login component as the default export
+export default Register;

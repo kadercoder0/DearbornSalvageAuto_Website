@@ -1,6 +1,6 @@
 import './App.css';
-import Login from './Features/LoginSignup/login';
-import Register from './Features/LoginSignup/register';
+import Login from './Features/auth/LoginSignup/login';
+import Register from './Features/auth/LoginSignup/register';
 import Home from './Features/home';
 import About from './Features/about'; // Import About component
 import Inventory from './Features/Inventory/inventory'; // Import Inventory component
