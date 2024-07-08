@@ -17,6 +17,7 @@ const Home = () => {
         <Link to="/about" className="nav-link">About Us</Link>
         <Link to="/contact" className="nav-link">Contact Us</Link>
         <Link to="/faq" className="nav-link">FAQ</Link>
+        <Link to= "/profile" className='nav-link'>Profile</Link>
       </nav>
 
       <img src={lineup} alt="background cars" className="responsive-image" />
