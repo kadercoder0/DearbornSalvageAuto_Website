@@ -8,6 +8,7 @@ import Contact from './Features/contact'; // Import Contact component
 import FAQ from './Features/faq'; // Import FAQ component
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import AuthDetails from './Features/auth/authdetails';
+import Profile from './Features/profile';
 
 function App() {
   return (
@@ -21,9 +22,9 @@ function App() {
           <Route path="/inventory" element={<Inventory />} /> {/* Inventory page */}
           <Route path="/contact" element={<Contact />} /> {/* Contact Us page */}
           <Route path="/faq" element={<FAQ />} /> {/* FAQ page */}
+          <Route path="/profile" element={<Profile />} /> {/* Profile page */}
           <Route path="/" element={<Navigate to="/login" />} /> {/* Redirect to login */}
         </Routes>
-        <AuthDetails />
       </div>
     </Router>
   );
