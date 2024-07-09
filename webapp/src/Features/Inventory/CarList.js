@@ -7,10 +7,8 @@ const CarList = ({ cars }) => {
       {cars.map((car, index) => (
         <div key={index} className="car-card">
           <img src={car.imageUrl} alt={`${car.make} ${car.model}`} className="car-image" />
-          <h2>{car.make} {car.model}</h2>
-          <p>Year: {car.year}</p>
+          <h2>{car.year} {car.make} {car.model}</h2>
           <p>Price: ${car.price}</p>
-          <p>{car.description}</p>
         </div>
       ))}
     </div>

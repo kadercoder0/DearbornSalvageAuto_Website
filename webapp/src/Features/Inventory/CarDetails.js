@@ -1,3 +1,4 @@
+// src/Features/Inventory/CarDetails.js
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -12,14 +13,14 @@ const CarDetails = ({ cars }) => {
       <h2>{car.make} {car.model}</h2>
       <p>Year: {car.year}</p>
       <p>Price: ${car.price}</p>
-      <p>Mileage: {car.mileage} miles</p>
+      <p>Odometer: {car.odometer} miles</p>
+      <p>Title Status: {car.titleStatus}</p>
       <p>Drivetrain: {car.drivetrain}</p>
+      <p>Engine Size: {car.engineSize}</p>
       <p>Cylinders: {car.cylinders}</p>
       <p>{car.description}</p>
       <div className="car-images">
-        {car.images.map((image, index) => (
-          <img key={index} src={URL.createObjectURL(image)} alt={`${car.make} ${car.model}`} className="car-image-large" />
-        ))}
+        <img src={car.imageUrl} alt={`${car.make} ${car.model}`} className="car-image-large" />
       </div>
     </div>
   );

@@ -50,6 +50,7 @@ const getYears = () => {
 
 const drivetrains = ['FWD', 'RWD', 'AWD', '4WD'];
 const engineSizes = ['1.0L', '1.5L', '2.0L', '2.5L', '3.0L', '3.5L', '4.0L', '4.5L', '5.0L'];
+const titleStatuses = ['Clean', 'Salvage', 'Rebuilt', 'Parts Only'];
 
 const CreateListing = ({ addListing }) => {
   const [car, setCar] = useState({
@@ -62,6 +63,9 @@ const CreateListing = ({ addListing }) => {
     imageUrl: '',
     drivetrain: '',
     engineSize: '',
+    odometer: '',
+    titleStatus: '',
+    cylinders: '',
   });
 
   const fileInputRef = useRef();
@@ -100,6 +104,9 @@ const CreateListing = ({ addListing }) => {
       imageUrl: '',
       drivetrain: '',
       engineSize: '',
+      odometer: '',
+      titleStatus: '',
+      cylinders: '',
     });
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -149,6 +156,17 @@ const CreateListing = ({ addListing }) => {
           <option key={size} value={size}>{size}</option>
         ))}
       </select>
+      <label>Odometer:</label>
+      <input type="number" name="odometer" value={car.odometer} onChange={handleChange} required />
+      <label>Title Status:</label>
+      <select name="titleStatus" value={car.titleStatus} onChange={handleChange} required>
+        <option value="">Select Title Status</option>
+        {titleStatuses.map((status) => (
+          <option key={status} value={status}>{status}</option>
+        ))}
+      </select>
+      <label>Cylinders:</label>
+      <input type="number" name="cylinders" value={car.cylinders} onChange={handleChange} required />
       <button type="submit">Add Listing</button>
     </form>
   );

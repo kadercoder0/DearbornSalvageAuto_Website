@@ -1,5 +1,5 @@
 // src/Features/Inventory/Filter.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const makesAndModels = {
   Acura: ['ILX', 'MDX', 'RDX', 'TLX'],
@@ -50,8 +50,17 @@ const getYears = () => {
 
 const drivetrains = ['FWD', 'RWD', 'AWD', '4WD'];
 const engineSizes = ['1.0L', '1.5L', '2.0L', '2.5L', '3.0L', '3.5L', '4.0L', '4.5L', '5.0L'];
+const titleStatuses = ['Clean', 'Salvage', 'Rebuilt', 'Parts Only'];
+const odometerRanges = [
+  { label: 'Less than 25,000', value: '0-25000' },
+  { label: '25,000 - 50,000', value: '25000-50000' },
+  { label: '50,000 - 75,000', value: '50000-75000' },
+  { label: '75,000 - 100,000', value: '75000-100000' },
+  { label: 'Above 100,000', value: '100000-' },
+];
+const cylinderCounts = ['2', '3', '4', '5', '6', '8', '10', '12'];
 
-const Filter = ({ applyFilter }) => {
+const Filter = ({ applyFilter, resetFilters }) => {
   const [filters, setFilters] = useState({
     make: '',
     model: '',
@@ -60,6 +69,9 @@ const Filter = ({ applyFilter }) => {
     maxPrice: 25000,
     drivetrain: '',
     engineSize: '',
+    odometer: '',
+    titleStatus: '',
+    cylinders: '',
   });
 
   const handleChange = (e) => {
@@ -74,6 +86,21 @@ const Filter = ({ applyFilter }) => {
     e.preventDefault();
     applyFilter(filters);
   };
+
+  useEffect(() => {
+    resetFilters.current = () => setFilters({
+      make: '',
+      model: '',
+      year: '',
+      minPrice: 0,
+      maxPrice: 25000,
+      drivetrain: '',
+      engineSize: '',
+      odometer: '',
+      titleStatus: '',
+      cylinders: '',
+    });
+  }, [resetFilters]);
 
   return (
     <div>
@@ -130,6 +157,27 @@ const Filter = ({ applyFilter }) => {
           <option value="">Select Engine Size</option>
           {engineSizes.map((size) => (
             <option key={size} value={size}>{size}</option>
+          ))}
+        </select>
+        <label>Odometer:</label>
+        <select name="odometer" value={filters.odometer} onChange={handleChange}>
+          <option value="">Select Odometer Range</option>
+          {odometerRanges.map((range) => (
+            <option key={range.value} value={range.value}>{range.label}</option>
+          ))}
+        </select>
+        <label>Title Status:</label>
+        <select name="titleStatus" value={filters.titleStatus} onChange={handleChange}>
+          <option value="">Select Title Status</option>
+          {titleStatuses.map((status) => (
+            <option key={status} value={status}>{status}</option>
+          ))}
+        </select>
+        <label>Cylinders:</label>
+        <select name="cylinders" value={filters.cylinders} onChange={handleChange}>
+          <option value="">Select Cylinders</option>
+          {cylinderCounts.map((count) => (
+            <option key={count} value={count}>{count}</option>
           ))}
         </select>
         <button type="submit">Apply Filter</button>
