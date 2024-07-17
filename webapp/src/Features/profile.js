@@ -77,8 +77,24 @@ const Profile = () => {
   return (
     <div>
       <h2>Profile</h2>
-      
       <button onClick={handleLogout}>Logout</button>
+      
+      <div>
+        <h3>Change Password</h3>
+        <input 
+          type="password" 
+          placeholder="Current Password" 
+          value={currentPassword} 
+          onChange={handleCurrentPasswordChange} 
+        />
+        <input 
+          type="password" 
+          placeholder="New Password" 
+          value={newPassword} 
+          onChange={handleNewPasswordChange} 
+        />
+        <button onClick={handlePasswordUpdate}>Update Password</button>
+      </div>
     </div>
   );
 };
