@@ -35,13 +35,14 @@ const Register = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Update profile with the name
+      // Updating profile with the name
       await updateProfile(user, {
         displayName: name
       });
 
-      // Store user details in Firestore
+      // Storing user details in Firestore
       await setDoc(doc(db, 'users', user.uid), {
+        name: user.displayName,
         email: user.email,
         phoneNumber: phoneNumber
       });

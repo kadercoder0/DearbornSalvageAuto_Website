@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { auth } from '../firebase';
-import { updateEmail, updatePassword, signOut, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
-
+import { auth, db } from '../firebase'; // Adjust the import path as necessary
+import { updatePassword, signOut, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -17,12 +18,24 @@ const Profile = () => {
     if (currentUser) {
       setUser(currentUser);
       setEmail(currentUser.email);
-      // Assume phoneNumber is stored in user metadata or another database if necessary
+      setName(currentUser.name);
+      fetchUserData(currentUser.uid);
     }
   }, []);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const fetchUserData = async (userId) => {
+    try {
+      const userDoc = await getDoc(doc(db, 'users', userId));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setPhoneNumber(userData.phoneNumber);
+        setName(userData.name);
+      } else {
+        console.log('No such document!');
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
   };
 
   const handlePhoneNumberChange = (e) => {
@@ -35,16 +48,6 @@ const Profile = () => {
 
   const handleNewPasswordChange = (e) => {
     setNewPassword(e.target.value);
-  };
-
-  const handleEmailUpdate = () => {
-    updateEmail(user, email)
-      .then(() => {
-        console.log('Email updated successfully');
-      })
-      .catch((error) => {
-        console.error('Error updating email:', error);
-      });
   };
 
   const handlePasswordUpdate = () => {
@@ -78,13 +81,18 @@ const Profile = () => {
   return (
     <div>
       <h1>
-      <Link to="/home" className="nav-link"> Back to Home</Link>
-
+        <Link to="/home" className="nav-link"> Back to Home</Link>
       </h1>
       <h2>Profile</h2>
       <button onClick={handleLogout}>Logout</button>
 
-      
+      <div>
+        <h3>User Information</h3>
+        <p>Email: {email}</p>
+        <p>Phone Number: {phoneNumber}</p>
+        <p>Name: {name}</p>
+      </div>
+
       <div>
         <h3>Change Password</h3>
         <input 
