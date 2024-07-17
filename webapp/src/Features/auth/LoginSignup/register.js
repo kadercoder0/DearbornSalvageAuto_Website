@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import logo1 from '../../../Assets/logo1.png';
 import './login.component.css';
-import { auth } from '../../../firebase';
+import { db, auth } from '../../../firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const navigate = useNavigate();
 
   const handleNameChange = (e) => {
@@ -23,23 +25,32 @@ const Register = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handlePhoneNumberChange = (e) => {
+    setPhoneNumber(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(userCredential);
-        updateProfile(userCredential.user, {
-          displayName: name
-        }).then(() => {
-          console.log('Profile updated successfully');
-          navigate('/login');
-        }).catch((error) => {
-          console.error('Error updating profile:', error);
-        });
-      })
-      .catch((error) => {
-        console.error('Error registering:', error);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Update profile with the name
+      await updateProfile(user, {
+        displayName: name
       });
+
+      // Store user details in Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        email: user.email,
+        phoneNumber: phoneNumber
+      });
+
+      console.log('User registered and details stored in Firestore');
+      navigate('/login');
+    } catch (error) {
+      console.error('Error registering:', error);
+    }
   };
 
   return (
@@ -58,6 +69,10 @@ const Register = () => {
         <div>
           <label>Password:</label>
           <input type="password" value={password} onChange={handlePasswordChange} required />
+        </div>
+        <div>
+          <label>Phone Number:</label>
+          <input type="text" value={phoneNumber} onChange={handlePhoneNumberChange} required />
         </div>
         <button type="submit">Register</button>
       </form>
