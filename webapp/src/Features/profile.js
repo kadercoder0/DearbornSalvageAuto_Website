@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { auth } from '../firebase';
 import { updateEmail, updatePassword, signOut, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
+
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -76,8 +77,13 @@ const Profile = () => {
 
   return (
     <div>
+      <h1>
+      <Link to="/home" className="nav-link"> Back to Home</Link>
+
+      </h1>
       <h2>Profile</h2>
       <button onClick={handleLogout}>Logout</button>
+
       
       <div>
         <h3>Change Password</h3>
