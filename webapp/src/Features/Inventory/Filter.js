@@ -1,4 +1,3 @@
-// src/Features/Inventory/Filter.js
 import React, { useState, useEffect } from 'react';
 
 const makesAndModels = {
@@ -36,154 +35,118 @@ const makesAndModels = {
   Toyota: ['4Runner', 'Avalon', 'Camry', 'Corolla', 'Highlander', 'Land Cruiser', 'Prius', 'RAV4', 'Sequoia', 'Sienna', 'Tacoma', 'Tundra'],
   Volkswagen: ['Atlas', 'Golf', 'Jetta', 'Passat', 'Tiguan'],
   Volvo: ['S60', 'S90', 'V60', 'XC40', 'XC60', 'XC90'],
-  // Add more makes and models as needed
+
+};
+const getYears = () => { 
+  const currentYear = new Date().getFullYear(); 
+  const years = []; 
+  for (let year = 2000; year <= currentYear; year++) { 
+    years.push(year); 
+  } 
+  return years; 
 };
 
-const getYears = () => {
-  const currentYear = new Date().getFullYear();
-  const years = [];
-  for (let year = 2000; year <= currentYear; year++) {
-    years.push(year);
-  }
-  return years;
-};
-
-const drivetrains = ['FWD', 'RWD', 'AWD', '4WD'];
-const engineSizes = ['1.0L', '1.5L', '2.0L', '2.5L', '3.0L', '3.5L', '4.0L', '4.5L', '5.0L'];
-const titleStatuses = ['Clean', 'Salvage', 'Rebuilt', 'Parts Only'];
-const odometerRanges = [
-  { label: 'Less than 25,000', value: '0-25000' },
-  { label: '25,000 - 50,000', value: '25000-50000' },
-  { label: '50,000 - 75,000', value: '50000-75000' },
-  { label: '75,000 - 100,000', value: '75000-100000' },
-  { label: 'Above 100,000', value: '100000-' },
-];
+const drivetrains = ['FWD', 'RWD', 'AWD', '4WD']; 
+const engineSizes = ['1.0L', '1.5L', '2.0L', '2.5L', '3.0L', '3.5L', '4.0L', '4.5L', '5.0L']; 
+const titleStatuses = ['Clean', 'Salvage', 'Rebuilt', 'Parts Only']; 
+const odometerRanges = [ 
+  { label: 'Less than 25,000', value: '0-25000' }, 
+  { label: '25,000 - 50,000', value: '25000-50000' }, 
+  { label: '50,000 - 75,000', value: '50000-75000' }, 
+  { label: '75,000 - 100,000', value: '75000-100000' }, 
+  { label: 'Above 100,000', value: '100000-' }, 
+]; 
 const cylinderCounts = ['2', '3', '4', '5', '6', '8', '10', '12'];
 
-const Filter = ({ applyFilter, resetFilters }) => {
-  const [filters, setFilters] = useState({
-    make: '',
-    model: '',
-    year: '',
-    minPrice: 0,
-    maxPrice: 25000,
-    drivetrain: '',
-    engineSize: '',
-    odometer: '',
-    titleStatus: '',
-    cylinders: '',
+const Filter = ({ applyFilter, resetFilters }) => { 
+  const [filters, setFilters] = useState({ 
+    make: '', model: '', year: '', minPrice: 0, maxPrice: 25000, drivetrain: '', engineSize: '', odometer: '', titleStatus: '', cylinders: '', 
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: value,
-    }));
+  const handleChange = (e) => { 
+    const { name, value } = e.target; 
+    setFilters((prevFilters) => ({ ...prevFilters, [name]: value, })); 
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    applyFilter(filters);
+  const handleSubmit = (e) => { 
+    e.preventDefault(); 
+    applyFilter(filters); 
   };
 
-  useEffect(() => {
-    resetFilters.current = () => setFilters({
-      make: '',
-      model: '',
-      year: '',
-      minPrice: 0,
-      maxPrice: 25000,
-      drivetrain: '',
-      engineSize: '',
-      odometer: '',
-      titleStatus: '',
-      cylinders: '',
-    });
+  useEffect(() => { 
+    resetFilters.current = () => setFilters({ 
+      make: '', model: '', year: '', minPrice: 0, maxPrice: 25000, drivetrain: '', engineSize: '', odometer: '', titleStatus: '', cylinders: '', 
+    }); 
   }, [resetFilters]);
 
-  return (
-    <div>
-      <h2>Filter</h2>
-      <form className="filter-form" onSubmit={handleSubmit}>
-        <label>Make:</label>
-        <select name="make" value={filters.make} onChange={handleChange}>
-          <option value="">Select Make</option>
-          {Object.keys(makesAndModels).map((make) => (
-            <option key={make} value={make}>{make}</option>
-          ))}
-        </select>
-        <label>Model:</label>
-        <select name="model" value={filters.model} onChange={handleChange}>
-          <option value="">Select Model</option>
-          {filters.make && makesAndModels[filters.make].map((model) => (
-            <option key={model} value={model}>{model}</option>
-          ))}
-        </select>
-        <label>Year:</label>
-        <select name="year" value={filters.year} onChange={handleChange}>
-          <option value="">Select Year</option>
-          {getYears().map((year) => (
-            <option key={year} value={year}>{year}</option>
-          ))}
-        </select>
-        <label>Min Price: ${filters.minPrice}</label>
-        <input
-          type="range"
-          name="minPrice"
-          min="0"
-          max="25000"
-          value={filters.minPrice}
-          onChange={handleChange}
-        />
-        <label>Max Price: ${filters.maxPrice}</label>
-        <input
-          type="range"
-          name="maxPrice"
-          min="0"
-          max="25000"
-          value={filters.maxPrice}
-          onChange={handleChange}
-        />
-        <label>Drivetrain:</label>
-        <select name="drivetrain" value={filters.drivetrain} onChange={handleChange}>
-          <option value="">Select Drivetrain</option>
-          {drivetrains.map((drivetrain) => (
-            <option key={drivetrain} value={drivetrain}>{drivetrain}</option>
-          ))}
-        </select>
-        <label>Engine Size:</label>
-        <select name="engineSize" value={filters.engineSize} onChange={handleChange}>
-          <option value="">Select Engine Size</option>
-          {engineSizes.map((size) => (
-            <option key={size} value={size}>{size}</option>
-          ))}
-        </select>
-        <label>Odometer:</label>
-        <select name="odometer" value={filters.odometer} onChange={handleChange}>
-          <option value="">Select Odometer Range</option>
-          {odometerRanges.map((range) => (
-            <option key={range.value} value={range.value}>{range.label}</option>
-          ))}
-        </select>
-        <label>Title Status:</label>
-        <select name="titleStatus" value={filters.titleStatus} onChange={handleChange}>
-          <option value="">Select Title Status</option>
-          {titleStatuses.map((status) => (
-            <option key={status} value={status}>{status}</option>
-          ))}
-        </select>
-        <label>Cylinders:</label>
-        <select name="cylinders" value={filters.cylinders} onChange={handleChange}>
-          <option value="">Select Cylinders</option>
-          {cylinderCounts.map((count) => (
-            <option key={count} value={count}>{count}</option>
-          ))}
-        </select>
-        <button type="submit">Apply Filter</button>
-      </form>
-    </div>
-  );
+  return ( 
+    <div> 
+      <h2>Filter</h2> 
+      <form className="filter-form" onSubmit={handleSubmit}> 
+        <label>Make:</label> 
+        <select name="make" value={filters.make} onChange={handleChange}> 
+          <option value="">Select Make</option> 
+          {Object.keys(makesAndModels).map((make, index) => ( 
+            <option key={index} value={make}>{make}</option> 
+          ))} 
+        </select> 
+        <label>Model:</label> 
+        <select name="model" value={filters.model} onChange={handleChange}> 
+          <option value="">Select Model</option> 
+          {filters.make && makesAndModels[filters.make].map((model, index) => ( 
+            <option key={index} value={model}>{model}</option> 
+          ))} 
+        </select> 
+        <label>Year:</label> 
+        <select name="year" value={filters.year} onChange={handleChange}> 
+          <option value="">Select Year</option> 
+          {getYears().map((year, index) => ( 
+            <option key={index} value={year}>{year}</option> 
+          ))} 
+        </select> 
+        <label>Min Price: ${filters.minPrice}</label> 
+        <input type="range" name="minPrice" min="0" max="25000" value={filters.minPrice} onChange={handleChange} /> 
+        <label>Max Price: ${filters.maxPrice}</label> 
+        <input type="range" name="maxPrice" min="0" max="25000" value={filters.maxPrice} onChange={handleChange} /> 
+        <label>Drivetrain:</label> 
+        <select name="drivetrain" value={filters.drivetrain} onChange={handleChange}> 
+          <option value="">Select Drivetrain</option> 
+          {drivetrains.map((drivetrain, index) => ( 
+            <option key={index} value={drivetrain}>{drivetrain}</option> 
+          ))} 
+        </select> 
+        <label>Engine Size:</label> 
+        <select name="engineSize" value={filters.engineSize} onChange={handleChange}> 
+          <option value="">Select Engine Size</option> 
+          {engineSizes.map((size, index) => ( 
+            <option key={index} value={size}>{size}</option> 
+          ))} 
+        </select> 
+        <label>Odometer:</label> 
+        <select name="odometer" value={filters.odometer} onChange={handleChange}> 
+          <option value="">Select Odometer Range</option> 
+          {odometerRanges.map((range, index) => ( 
+            <option key={index} value={range.value}>{range.label}</option> 
+          ))} 
+        </select> 
+        <label>Title Status:</label> 
+        <select name="titleStatus" value={filters.titleStatus} onChange={handleChange}> 
+          <option value="">Select Title Status</option> 
+          {titleStatuses.map((status, index) => ( 
+            <option key={index} value={status}>{status}</option> 
+          ))} 
+        </select> 
+        <label>Cylinders:</label> 
+        <select name="cylinders" value={filters.cylinders} onChange={handleChange}> 
+          <option value="">Select Cylinders</option> 
+          {cylinderCounts.map((count, index) => ( 
+            <option key={index} value={count}>{count}</option> 
+          ))} 
+        </select> 
+        <button type="submit">Apply Filter</button> 
+      </form> 
+    </div> 
+  ); 
 };
 
 export default Filter;

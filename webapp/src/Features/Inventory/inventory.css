@@ -1,49 +1,45 @@
-/* inventory.css */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #f0f0f0;
 }
 
-.filter-container {
+.filter-container, .create-listing-container {
   width: 5%;
+  height: 100vh; /* Set a fixed height */
   padding: 20px;
-  border-right: 1px solid #ddd;
   position: fixed;
-  left: 0;
   top: 0;
-  bottom: 0;
-  overflow-y: auto;
-  background-color: #fff;
   z-index: 1;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.filter-container {
+  left: 0;
+  border-right: 1px solid #ddd;
 }
 
 .create-listing-container {
-  width: 5%;
-  padding: 20px;
-  border-left: 1px solid #ddd;
-  position: fixed;
   right: 0;
-  top: 0;
-  bottom: 0;
-  overflow-y: auto;
-  background-color: #fff;
-  z-index: 1;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  border-left: 1px solid #ddd;
 }
 
 .listings-container {
-  width: 100%;
-  padding-right: 20px;
+  width: 80%;
+  padding: 20px;
   overflow-y: auto;
   height: calc(100vh - 40px);
+  position: relative;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .car-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
+  padding: 20px;
 }
 
 .car-card {
@@ -56,17 +52,18 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 300px; /* Ensure consistent height */
+  height: 300px;
   text-align: center;
 }
 
 .car-image {
   width: 100%;
-  height: 150px; /* Ensure consistent image height */
-  object-fit: cover; /* Maintain aspect ratio and cover the space */
-  border-radius: 10px;
+  height: 50%; /* Set a fixed height for the image container */
+  object-fit: cover;
+  border-radius: 1vw;
 }
 
+
 .car-card h2, .car-card p {
-  margin: 5px; /* Ensure consistent spacing */
+  margin: 5px;
 }

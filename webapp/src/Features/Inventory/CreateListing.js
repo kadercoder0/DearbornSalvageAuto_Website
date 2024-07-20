@@ -1,4 +1,3 @@
-// src/Features/Inventory/CreateListing.js
 import React, { useState, useRef } from 'react';
 
 const makesAndModels = {
@@ -36,140 +35,111 @@ const makesAndModels = {
   Toyota: ['4Runner', 'Avalon', 'Camry', 'Corolla', 'Highlander', 'Land Cruiser', 'Prius', 'RAV4', 'Sequoia', 'Sienna', 'Tacoma', 'Tundra'],
   Volkswagen: ['Atlas', 'Golf', 'Jetta', 'Passat', 'Tiguan'],
   Volvo: ['S60', 'S90', 'V60', 'XC40', 'XC60', 'XC90'],
-  // Add more makes and models as needed
+
 };
 
-const getYears = () => {
-  const currentYear = new Date().getFullYear();
-  const years = [];
-  for (let year = 2000; year <= currentYear; year++) {
-    years.push(year);
-  }
-  return years;
+const getYears = () => { 
+  const currentYear = new Date().getFullYear(); 
+  const years = []; 
+  for (let year = 2000; year <= currentYear; year++) { 
+    years.push(year); 
+  } 
+  return years; 
 };
 
-const drivetrains = ['FWD', 'RWD', 'AWD', '4WD'];
-const engineSizes = ['1.0L', '1.5L', '2.0L', '2.5L', '3.0L', '3.5L', '4.0L', '4.5L', '5.0L'];
+const drivetrains = ['FWD', 'RWD', 'AWD', '4WD']; 
+const engineSizes = ['1.0L', '1.5L', '2.0L', '2.5L', '3.0L', '3.5L', '4.0L', '4.5L', '5.0L']; 
 const titleStatuses = ['Clean', 'Salvage', 'Rebuilt', 'Parts Only'];
 
-const CreateListing = ({ addListing }) => {
-  const [car, setCar] = useState({
-    make: '',
-    model: '',
-    year: '',
-    price: '',
-    description: '',
-    image: null,
-    imageUrl: '',
-    drivetrain: '',
-    engineSize: '',
-    odometer: '',
-    titleStatus: '',
-    cylinders: '',
+const CreateListing = ({ addListing }) => { 
+  const [car, setCar] = useState({ 
+    make: '', model: '', year: '', price: '', description: '', image: null, imageUrl: '', drivetrain: '', engineSize: '', odometer: '', titleStatus: '', cylinders: '', 
   });
 
   const fileInputRef = useRef();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCar((prevCar) => ({
-      ...prevCar,
-      [name]: value,
-    }));
+  const handleChange = (e) => { 
+    const { name, value } = e.target; 
+    setCar((prevCar) => ({ ...prevCar, [name]: value, })); 
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setCar((prevCar) => ({
-        ...prevCar,
-        image: file,
-        imageUrl: imageUrl,
-      }));
-    }
+  const handleFileChange = (e) => { 
+    const file = e.target.files[0]; 
+    if (file) { 
+      const imageUrl = URL.createObjectURL(file); 
+      setCar((prevCar) => ({ ...prevCar, image: file, imageUrl: imageUrl, })); 
+    } 
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle image file upload logic here (e.g., to a server or cloud storage)
-    addListing(car);
-    setCar({
-      make: '',
-      model: '',
-      year: '',
-      price: '',
-      description: '',
-      image: null,
-      imageUrl: '',
-      drivetrain: '',
-      engineSize: '',
-      odometer: '',
-      titleStatus: '',
-      cylinders: '',
-    });
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
+  const handleSubmit = (e) => { 
+    e.preventDefault(); 
+    // Handle image file upload logic here (e.g., to a server or cloud storage) 
+    addListing(car); 
+    setCar({ 
+      make: '', model: '', year: '', price: '', description: '', image: null, imageUrl: '', drivetrain: '', engineSize: '', odometer: '', titleStatus: '', cylinders: '', 
+    }); 
+    if (fileInputRef.current) { 
+      fileInputRef.current.value = ''; 
+    } 
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <label>Make:</label>
-      <select name="make" value={car.make} onChange={handleChange} required>
-        <option value="">Select Make</option>
-        {Object.keys(makesAndModels).map((make) => (
-          <option key={make} value={make}>{make}</option>
-        ))}
-      </select>
-      <label>Model:</label>
-      <select name="model" value={car.model} onChange={handleChange} required>
-        <option value="">Select Model</option>
-        {car.make && makesAndModels[car.make].map((model) => (
-          <option key={model} value={model}>{model}</option>
-        ))}
-      </select>
-      <label>Year:</label>
-      <select name="year" value={car.year} onChange={handleChange} required>
-        <option value="">Select Year</option>
-        {getYears().map((year) => (
-          <option key={year} value={year}>{year}</option>
-        ))}
-      </select>
-      <label>Price:</label>
-      <input type="number" name="price" value={car.price} onChange={handleChange} required />
-      <label>Description:</label>
-      <textarea name="description" value={car.description} onChange={handleChange} required />
-      <label>Image:</label>
-      <input type="file" ref={fileInputRef} onChange={handleFileChange} required />
-      <label>Drivetrain:</label>
-      <select name="drivetrain" value={car.drivetrain} onChange={handleChange} required>
-        <option value="">Select Drivetrain</option>
-        {drivetrains.map((drivetrain) => (
-          <option key={drivetrain} value={drivetrain}>{drivetrain}</option>
-        ))}
-      </select>
-      <label>Engine Size:</label>
-      <select name="engineSize" value={car.engineSize} onChange={handleChange} required>
-        <option value="">Select Engine Size</option>
-        {engineSizes.map((size) => (
-          <option key={size} value={size}>{size}</option>
-        ))}
-      </select>
-      <label>Odometer:</label>
-      <input type="number" name="odometer" value={car.odometer} onChange={handleChange} required />
-      <label>Title Status:</label>
-      <select name="titleStatus" value={car.titleStatus} onChange={handleChange} required>
-        <option value="">Select Title Status</option>
-        {titleStatuses.map((status) => (
-          <option key={status} value={status}>{status}</option>
-        ))}
-      </select>
-      <label>Cylinders:</label>
-      <input type="number" name="cylinders" value={car.cylinders} onChange={handleChange} required />
-      <button type="submit">Add Listing</button>
-    </form>
-  );
+  return ( 
+    <form onSubmit={handleSubmit}> 
+      <label>Make:</label> 
+      <select name="make" value={car.make} onChange={handleChange} required> 
+        <option value="">Select Make</option> 
+        {Object.keys(makesAndModels).map((make, index) => ( 
+          <option key={index} value={make}>{make}</option> 
+        ))} 
+      </select> 
+      <label>Model:</label> 
+      <select name="model" value={car.model} onChange={handleChange} required> 
+        <option value="">Select Model</option> 
+        {car.make && makesAndModels[car.make].map((model, index) => ( 
+          <option key={index} value={model}>{model}</option> 
+        ))} 
+      </select> 
+      <label>Year:</label> 
+      <select name="year" value={car.year} onChange={handleChange} required> 
+        <option value="">Select Year</option> 
+        {getYears().map((year, index) => ( 
+          <option key={index} value={year}>{year}</option> 
+        ))} 
+      </select> 
+      <label>Price:</label> 
+      <input type="number" name="price" value={car.price} onChange={handleChange} required /> 
+      <label>Description:</label> 
+      <textarea name="description" value={car.description} onChange={handleChange} required /> 
+      <label>Image:</label> 
+      <input type="file" ref={fileInputRef} onChange={handleFileChange} required /> 
+      <label>Drivetrain:</label> 
+      <select name="drivetrain" value={car.drivetrain} onChange={handleChange} required> 
+        <option value="">Select Drivetrain</option> 
+        {drivetrains.map((drivetrain, index) => ( 
+          <option key={index} value={drivetrain}>{drivetrain}</option> 
+        ))} 
+      </select> 
+      <label>Engine Size:</label> 
+      <select name="engineSize" value={car.engineSize} onChange={handleChange} required> 
+        <option value="">Select Engine Size</option> 
+        {engineSizes.map((size, index) => ( 
+          <option key={index} value={size}>{size}</option> 
+        ))} 
+      </select> 
+      <label>Odometer:</label> 
+      <input type="number" name="odometer" value={car.odometer} onChange={handleChange} required /> 
+      <label>Title Status:</label> 
+      <select name="titleStatus" value={car.titleStatus} onChange={handleChange} required> 
+        <option value="">Select Title Status</option> 
+        {titleStatuses.map((status, index) => ( 
+          <option key={index} value={status}>{status}</option> 
+        ))} 
+      </select> 
+      <label>Cylinders:</label> 
+      <input type="number" name="cylinders" value={car.cylinders} onChange={handleChange} required /> 
+      <button type="submit">Add Listing</button> 
+    </form> 
+  ); 
 };
 
 export default CreateListing;
