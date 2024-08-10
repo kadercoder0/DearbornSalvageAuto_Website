@@ -6,19 +6,31 @@ import { auth } from '../../../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const Login = () => {
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const login = (e) => {
+
     e.preventDefault();
+    
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
         navigate('/home'); // Navigating to the home page on successful login
       }).catch((error) => {
-        console.log(error);
+        // Check for the specific error codes
+          if (error.code === 'auth/wrong-password') {
+            setErrorMessage('Incorrect password. Please try again.');
+        } else if (error.code === 'auth/user-not-found') {
+            setErrorMessage('No user found with this email.');
+        } else {
+            setErrorMessage('Incorrect email or password. Please try again.');
+        }
       });
+
   };
 
   // Handler function for updating the email state
@@ -43,6 +55,7 @@ const Login = () => {
         <div>
           <label>Password:</label>
           <input type="password" value={password} onChange={handlePasswordChange} required />
+          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
           <h1>Forgot Password?</h1>
         </div>
         <button type="submit">Login</button>
