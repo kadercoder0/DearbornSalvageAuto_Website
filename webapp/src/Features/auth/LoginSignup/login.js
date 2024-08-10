@@ -43,6 +43,11 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+  const handleReset = () =>{
+    navigate('/reset');
+
+  }
+
   return (
     <div>
       <img src={logo1} alt="Logo" style={{ width: '950px', height: '150px' }} />
@@ -56,7 +61,7 @@ const Login = () => {
           <label>Password:</label>
           <input type="password" value={password} onChange={handlePasswordChange} required />
           {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-          <h1>Forgot Password?</h1>
+          <p onClick={handleReset}>Forgot Password?</p>
         </div>
         <button type="submit">Login</button>
       </form>

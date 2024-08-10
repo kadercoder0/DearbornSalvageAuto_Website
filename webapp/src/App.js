@@ -9,6 +9,7 @@ import FAQ from './Features/faq'; // Import FAQ component
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import AuthDetails from './Features/auth/authdetails';
 import Profile from './Features/profile';
+import ForgotPassword from './Features/auth/LoginSignup/forgotPassword';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/contact" element={<Contact />} /> {/* Contact Us page */}
           <Route path="/faq" element={<FAQ />} /> {/* FAQ page */}
           <Route path="/profile" element={<Profile />} /> {/* Profile page */}
+          <Route path="/reset" element={<ForgotPassword />} /> {/* Reset password page */}
           <Route path="/" element={<Navigate to="/login" />} /> {/* Redirect to login */}
         </Routes>
       </div>
