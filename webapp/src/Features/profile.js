@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { auth, db } from '../firebase'; // Adjust the import path as necessary
 import { updatePassword, signOut, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
+import "/Users/mohammedhaidous/Downloads/Developer/DearbornSalvageAuto_Website/webapp/src/Features/profile.component.css"
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -81,10 +82,10 @@ const Profile = () => {
   return (
     <div>
       <h1>
-        <Link to="/home" className="nav-link"> Back to Home</Link>
+        <Link to="/home" className="nav-link">Back to Home</Link>
       </h1>
       <h2>Profile</h2>
-      <button onClick={handleLogout}>Logout</button>
+      <button className="button" onClick={handleLogout}>Logout</button>
 
       <div>
         <h3>User Information</h3>
@@ -100,14 +101,16 @@ const Profile = () => {
           placeholder="Current Password" 
           value={currentPassword} 
           onChange={handleCurrentPasswordChange} 
+          className="input"
         />
         <input 
           type="password" 
           placeholder="New Password" 
           value={newPassword} 
           onChange={handleNewPasswordChange} 
+          className="input"
         />
-        <button onClick={handlePasswordUpdate}>Update Password</button>
+        <button className="button" onClick={handlePasswordUpdate}>Update Password</button>
       </div>
     </div>
   );

@@ -54,11 +54,11 @@ const Login = () => {
       <h2>Login</h2>
       <form onSubmit={login}>
         <div>
-          <label>Email:</label>
+          <label>Email</label>
           <input type="email" value={email} onChange={handleEmailChange} required />
         </div>
         <div>
-          <label>Password:</label>
+          <label>Password</label>
           <input type="password" value={password} onChange={handlePasswordChange} required />
           {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
           <p onClick={handleReset}>Forgot Password?</p>
