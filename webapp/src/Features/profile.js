@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { auth, db } from '../firebase'; // Adjust the import path as necessary
 import { updatePassword, signOut, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import "/Users/mohammedhaidous/Downloads/Developer/DearbornSalvageAuto_Website/webapp/src/Features/profile.component.css"
+import "./profile.component.css"
 
 const Profile = () => {
   const [user, setUser] = useState(null);
