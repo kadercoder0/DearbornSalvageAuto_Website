@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import logo1 from '../../../Assets/logo1.png';
-import './login.component.css';
 import { db, auth } from '../../../firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
+import '../LoginSignup/signup.module.css'
 
-const Register = () => {
+const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -60,20 +60,40 @@ const Register = () => {
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Name:</label>
-          <input type="text" value={name} onChange={handleNameChange} required />
+          <input 
+            type="text" 
+            value={name} 
+            onChange={handleNameChange} 
+            placeholder="Name" // Placeholder for Name
+            required 
+          />
         </div>
         <div>
-          <label>Email:</label>
-          <input type="email" value={email} onChange={handleEmailChange} required />
+          <input 
+            type="email" 
+            value={email} 
+            onChange={handleEmailChange} 
+            placeholder="Email" // Placeholder for Email
+            required 
+          />
         </div>
         <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={handlePasswordChange} required />
+          <input 
+            type="password" 
+            value={password} 
+            onChange={handlePasswordChange} 
+            placeholder="Password" // Placeholder for Password
+            required 
+          />
         </div>
         <div>
-          <label>Phone Number:</label>
-          <input type="text" value={phoneNumber} onChange={handlePhoneNumberChange} required />
+          <input 
+            type="text" 
+            value={phoneNumber} 
+            onChange={handlePhoneNumberChange} 
+            placeholder="Phone Number" // Placeholder for Phone Number
+            required 
+          />
         </div>
         <button type="submit">Register</button>
       </form>
@@ -84,4 +104,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Signup;

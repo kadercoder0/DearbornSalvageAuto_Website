@@ -1,6 +1,6 @@
 import './App.css';
 import Login from './Features/auth/LoginSignup/login';
-import Register from './Features/auth/LoginSignup/register';
+import Signup from './Features/auth/LoginSignup/signup';
 import Home from './Features/home';
 import About from './Features/about'; // Import About component
 import Inventory from './Features/Inventory/inventory'; // Import Inventory component
@@ -17,7 +17,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/signup" element={<Signup />} /> 
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} /> {/* About Us page */}
           <Route path="/inventory" element={<Inventory />} /> {/* Inventory page */}
