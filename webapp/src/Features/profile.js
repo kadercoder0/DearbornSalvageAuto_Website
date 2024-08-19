@@ -12,6 +12,7 @@ const Profile = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false); // State for controlling the alert
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,6 +59,10 @@ const Profile = () => {
         updatePassword(user, newPassword)
           .then(() => {
             console.log('Password updated successfully');
+            setShowSuccessAlert(true); // Show the alert
+            setTimeout(() => {
+              setShowSuccessAlert(false); // Hide the alert after 5 seconds
+            }, 5000);
           })
           .catch((error) => {
             console.error('Error updating password:', error);
@@ -112,6 +117,13 @@ const Profile = () => {
         />
         <button className="button" onClick={handlePasswordUpdate}>Update Password</button>
       </div>
+
+      {showSuccessAlert && (
+        <div className="alert">
+          <span className="closebtn" onClick={() => setShowSuccessAlert(false)}>&times;</span> 
+          Password updated successfully!
+        </div>
+      )}
     </div>
   );
 };
