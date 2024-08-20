@@ -36,7 +36,12 @@ function ForgotPassword() {
         <div className="App">
             <h1>Forgot Password</h1>
             <form onSubmit={handleSubmit}>
-                <input name="email" placeholder="Enter your email" required /><br /><br />
+               <input 
+                name="email" 
+                placeholder="Enter your email" 
+                required 
+                style={{ width: "300px" }}  
+                />
                 <button type="submit">Reset</button>
             </form>
             <button onClick={handleBackToLogin}>Back to Login</button>  
