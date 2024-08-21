@@ -18,7 +18,7 @@ const Login = () => {
       .then(async (userCredential) => {
         const user = userCredential.user;
 
-        // Check if the logged-in user is an admin
+        // Check if the logged-in user is an admin and log the result
         const isAdmin = await checkIfAdmin(user.uid);
 
         // Redirect based on admin status
@@ -27,22 +27,6 @@ const Login = () => {
         } else {
           navigate('/home'); // Redirect to home page if the user is not an admin
         }
-      })
-      .catch(async (error) => {
-        console.error("Login error:", error);
-        if (error.code === 'auth/wrong-password') {
-            setErrorMessage('Incorrect password. Please try again.');
-        } else if (error.code === 'auth/user-not-found') {
-            setErrorMessage('No user found with this email.');
-        } else {
-            setErrorMessage('Incorrect email or password. Please try again.');
-        }
-        // Check if the logged-in user is an admin and log the result
-        const isAdmin = await checkIfAdmin(user.uid);
-        console.log(`Is Admin: ${isAdmin}`);
-
-        // For now, just navigate to the home page after logging in
-        navigate('/home');
       })
       .catch((error) => {
         console.error("Login error:", error);
