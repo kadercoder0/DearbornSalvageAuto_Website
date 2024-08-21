@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import logo1 from '../../../Assets/logo1.png';
-import styles from '../LoginSignup/login.module.css';
 import { auth } from '../../../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { checkIfAdmin } from '../adminUtils'; // Import the checkIfAdmin function
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -15,18 +15,27 @@ const Login = () => {
     e.preventDefault();
     
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(userCredential);
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+
+        // Check if the logged-in user is an admin and log the result
+        const isAdmin = await checkIfAdmin(user.uid);
+        console.log(`Is Admin: ${isAdmin}`);
+
+        // For now, just navigate to the home page after logging in
         navigate('/home');
-      }).catch((error) => {
+      })
+      .catch((error) => {
+        console.error("Login error:", error);
         if (error.code === 'auth/wrong-password') {
-          setErrorMessage('Incorrect password. Please try again.');
+            setErrorMessage('Incorrect password. Please try again.');
         } else if (error.code === 'auth/user-not-found') {
-          setErrorMessage('No user found with this email.');
+            setErrorMessage('No user found with this email.');
         } else {
-          setErrorMessage('Incorrect email or password. Please try again.');
+            setErrorMessage('Incorrect email or password. Please try again.');
         }
-      });
+    });
+    
   };
 
   const handleEmailChange = (e) => {
