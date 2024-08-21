@@ -18,12 +18,15 @@ const Login = () => {
       .then(async (userCredential) => {
         const user = userCredential.user;
 
-        // Check if the logged-in user is an admin and log the result
+        // Check if the logged-in user is an admin
         const isAdmin = await checkIfAdmin(user.uid);
-        console.log(`Is Admin: ${isAdmin}`);
 
-        // For now, just navigate to the home page after logging in
-        navigate('/home');
+        // Redirect based on admin status
+        if (isAdmin) {
+          navigate('/admin/dashboard'); // Redirect to admin dashboard if the user is an admin
+        } else {
+          navigate('/home'); // Redirect to home page if the user is not an admin
+        }
       })
       .catch((error) => {
         console.error("Login error:", error);
