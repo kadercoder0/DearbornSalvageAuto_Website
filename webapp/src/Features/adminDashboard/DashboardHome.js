@@ -12,6 +12,7 @@ const DashboardHome = () => {
           <li><a href="/admin/managelistings">Manage Listings</a></li>
           <li><a href="/admin/viewusers">View Users</a></li>
           <li><a href="/admin/adminprofile">Profile Settings</a></li>
+          <li><a href="/admin/manageFaqs">Manage FAQS</a></li>
         </ul>
       </div>
     </div>

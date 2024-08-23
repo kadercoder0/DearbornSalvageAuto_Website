@@ -18,6 +18,7 @@ import ManageListings from './Features/adminDashboard/managelistings';
 import ViewUsers from './Features/adminDashboard/viewUsers';
 import ViewListing from './Features/adminDashboard/viewListings';
 import AdminProfile from './Features/adminDashboard/adminProfile';
+import ManageFAQs from './Features/adminDashboard/manageFaqs';
 
 
 function App() {
@@ -41,8 +42,10 @@ function App() {
           <Route path="/admin/dashboard" element={<DashboardHome />} />
           <Route path="/admin/managelistings" element={<ManageListings />} />
           <Route path="/admin/viewusers" element={<ViewUsers />} />
-          <Route path="/admin/viewlisting/:id" element={<ViewListing />} /> {/* Assuming you pass an ID */}
+          <Route path="/admin/viewlisting/:id" element={<ViewListing />} /> 
           <Route path="/admin/adminprofile" element={<AdminProfile />} />
+          <Route path="/admin/manageFaqs" element={<ManageFAQs />} />
+
         </Routes>
       </div>
     </Router>
