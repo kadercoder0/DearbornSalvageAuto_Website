@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import { collection, getDocs, doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import styles from '../Features/adminDashboard/manageFaq.module.css'; // Import the CSS module
+import styles from './manageFaq.module.css'; // Import the CSS module
 
 const ManageFAQs = () => {
   const [questions, setQuestions] = useState([]);
@@ -57,10 +57,12 @@ const ManageFAQs = () => {
     setResponseText(currentResponse || '');
   };
 
+  console.log("Rendering Back to Dashboard button");
+
   return (
     <div className={styles['manage-faqs-container']}>
       <h1>Manage FAQs</h1>
-      
+  
       {questions.map((question) => (
         <div key={question.id} className={styles['question-block']}>
           <p><strong>User:</strong> {question.userName}</p>
@@ -91,7 +93,7 @@ const ManageFAQs = () => {
           </button>
         </div>
       )}
-
+  
       <div className={styles['bottom-button-container']}>
         <button 
           onClick={() => navigate('/admin/dashboard')} 
@@ -102,6 +104,10 @@ const ManageFAQs = () => {
       </div>
     </div>
   );
+  
+  
+
+  
 };
 
 export default ManageFAQs;

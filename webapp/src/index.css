@@ -7,6 +7,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto; /* Ensure vertical scrolling is enabled */
+}
+
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
