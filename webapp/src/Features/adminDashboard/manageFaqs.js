@@ -1,98 +1,113 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../firebase';
-import {  collection, getDocs, doc, getDoc, updateDoc} from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-
-
+import styles from './manageFaq.module.css'; // Import the CSS module
 
 const ManageFAQs = () => {
-    const [questions, setQuestions] = useState([]);
-    const [responseText, setResponseText] = useState('');
-    const [selectedQuestionId, setSelectedQuestionId] = useState(null);
-    const navigate = useNavigate();
-  
-    useEffect(() => {
-      const fetchQuestions = async () => {
-        const querySnapshot = await getDocs(collection(db, 'questions'));
-        const questionsData = await Promise.all(querySnapshot.docs.map(async (questionDoc) => {
-          const questionData = questionDoc.data();
-          const userDocRef = doc(db, 'users', questionData.uid);
-          const userDoc = await getDoc(userDocRef);
-          const userName = userDoc.exists() ? userDoc.data().name : 'Unknown User';
-  
-          return {
-            id: questionDoc.id,
-            userName: userName,
-            ...questionData,
-          };
-        }));
-        setQuestions(questionsData);
-      };
-  
-      fetchQuestions();
-    }, []);
-  
-    const handleResponseSubmit = async () => {
-      if (!responseText || !selectedQuestionId) {
-        alert('Please select a question and enter a response before submitting.');
-        return;
-      }
-  
-      const questionDocRef = doc(db, 'questions', selectedQuestionId);
-      await updateDoc(questionDocRef, { responseText: responseText });
-      setResponseText('');
-      setSelectedQuestionId(null);
-      alert('Response submitted successfully.');
-  
-      // Refresh the questions list
-      const updatedQuestions = questions.map(q => q.id === selectedQuestionId ? { ...q, responseText } : q);
-      setQuestions(updatedQuestions);
-    };
-  
-    const selectQuestion = (questionId, currentResponse) => {
-      setSelectedQuestionId(questionId);
-      setResponseText(currentResponse || '');
-    };
-  
-    return (
+  const [questions, setQuestions] = useState([]);
+  const [responseText, setResponseText] = useState('');
+  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
+  const navigate = useNavigate();
 
-      <div>
-      <h1>
-      <button onClick={() => navigate('/admin/dashboard')}>Back to Dashboard</button>
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      const querySnapshot = await getDocs(collection(db, 'questions'));
+      const questionsData = await Promise.all(querySnapshot.docs.map(async (questionDoc) => {
+        const questionData = questionDoc.data();
+        const userDocRef = doc(db, 'users', questionData.uid);
+        const userDoc = await getDoc(userDocRef);
+        const userName = userDoc.exists() ? userDoc.data().name : 'Unknown User';
 
-      </h1>
-        <h2>Manage FAQs</h2>
-        {questions.map((question) => (
-          <div key={question.id} style={{ marginBottom: '20px' }}>
-            <p><strong>User:</strong> {question.userName}</p>
-            <p><strong>Question:</strong> {question.questionText}</p>
-            <p><strong>Response:</strong> {question.responseText || 'No response yet'}</p>
-            {!question.responseText && (
-              <button 
-                onClick={() => selectQuestion(question.id, question.responseText)} 
-                style={{ margin: '10px 0', padding: '5px 10px', cursor: 'pointer', backgroundColor: '#007bff', color: 'white', border: 'none' }}>
-                Respond to this question
-              </button>
-            )}
-          </div>
-        ))}
-  
-        {selectedQuestionId && (
-          <div style={{ marginTop: '20px' }}>
-            <textarea
-              value={responseText}
-              onChange={(e) => setResponseText(e.target.value)}
-              placeholder="Type your response here..."
-              required
-              style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
-            />
-            <button onClick={handleResponseSubmit} style={{ padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', cursor: 'pointer' }}>
-              Submit Response
-            </button>
-          </div>
-        )}
-      </div>
+        return {
+          id: questionDoc.id,
+          userName: userName,
+          ...questionData,
+        };
+      }));
+      setQuestions(questionsData);
+    };
+
+    fetchQuestions();
+  }, []);
+
+  const handleResponseSubmit = async () => {
+    if (!responseText || !selectedQuestionId) {
+      alert('Please select a question and enter a response before submitting.');
+      return;
+    }
+
+    const questionDocRef = doc(db, 'questions', selectedQuestionId);
+    await updateDoc(questionDocRef, { 
+      responseText: responseText,
+      responseTimestamp: serverTimestamp()
+    });
+    setResponseText('');
+    setSelectedQuestionId(null);
+    alert('Response submitted successfully.');
+
+    const updatedQuestions = questions.map(q => 
+      q.id === selectedQuestionId ? { ...q, responseText, responseTimestamp: new Date() } : q
     );
+    setQuestions(updatedQuestions);
   };
+
+  const selectQuestion = (questionId, currentResponse) => {
+    setSelectedQuestionId(questionId);
+    setResponseText(currentResponse || '');
+  };
+
+  console.log("Rendering Back to Dashboard button");
+
+  return (
+    <div className={styles['manage-faqs-container']}>
+      <h1>Manage FAQs</h1>
   
-  export default ManageFAQs;
+      {questions.map((question) => (
+        <div key={question.id} className={styles['question-block']}>
+          <p><strong>User:</strong> {question.userName}</p>
+          <p><strong>Question:</strong> {question.questionText}</p>
+          <p><strong>Response:</strong> {question.responseText || 'No response yet'}</p>
+          {!question.responseText && (
+            <button 
+              onClick={() => selectQuestion(question.id, question.responseText)} 
+              className={styles['submit-button']}
+            >
+              Respond to this question
+            </button>
+          )}
+        </div>
+      ))}
+  
+      {selectedQuestionId && (
+        <div className={styles['response-form']}>
+          <textarea
+            value={responseText}
+            onChange={(e) => setResponseText(e.target.value)}
+            placeholder="Type your response here..."
+            required
+            className={styles['textarea']}
+          />
+          <button onClick={handleResponseSubmit} className={styles['submit-button']}>
+            Submit Response
+          </button>
+        </div>
+      )}
+  
+      <div className={styles['bottom-button-container']}>
+        <button 
+          onClick={() => navigate('/admin/dashboard')} 
+          className={styles['back-to-dashboard-button']}
+        >
+          Back to Dashboard
+        </button>
+      </div>
+    </div>
+  );
+  
+  
+
+  
+};
+
+export default ManageFAQs;
