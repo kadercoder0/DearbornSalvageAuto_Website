@@ -19,6 +19,9 @@ import ViewListing from './Features/adminDashboard/viewListings';
 import AdminProfile from './Features/adminDashboard/adminProfile';
 import ManageFAQs from './Features/adminDashboard/manageFaqs';
 
+// Importing the PrivateRoute component
+import PrivateRoute from './Features/auth/privateRoute';
+
 function App() {
   return (
     <Router>
@@ -37,12 +40,54 @@ function App() {
           <Route path="/" element={<Navigate to="/login" />} />
 
           {/* Admin Routes */}
-          <Route path="/admin/dashboard" element={<DashboardHome />} />
-          <Route path="/admin/managelistings" element={<ManageListings />} />
-          <Route path="/admin/viewusers" element={<ViewUsers />} />
-          <Route path="/admin/viewlisting/:id" element={<ViewListing />} /> {/* Assuming you pass an ID */}
-          <Route path="/admin/adminprofile" element={<AdminProfile />} />
-          <Route path="/admin/manageFaqs" element={<ManageFAQs />} />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <PrivateRoute adminOnly>
+                <DashboardHome />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/managelistings"
+            element={
+              <PrivateRoute adminOnly>
+                <ManageListings />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/viewusers"
+            element={
+              <PrivateRoute adminOnly>
+                <ViewUsers />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/viewlisting/:id"
+            element={
+              <PrivateRoute adminOnly>
+                <ViewListing />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/adminprofile"
+            element={
+              <PrivateRoute adminOnly>
+                <AdminProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/manageFaqs"
+            element={
+              <PrivateRoute adminOnly>
+                <ManageFAQs />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </div>
     </Router>
