@@ -1,107 +1,96 @@
-import React, { useEffect, useState } from 'react';
-import { db } from '../firebase';
-import { collection, getDocs, doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
-import styles from '../Features/adminDashboard/manageFaq.module.css'; // Import the CSS module
+import { Link } from 'react-router-dom'; 
+import React, { useState, useEffect } from 'react';
+import { db, auth } from '../firebase'; 
+import { collection, addDoc, serverTimestamp, onSnapshot } from 'firebase/firestore';
+import { format } from 'date-fns';
+import styles from './faq.module.css'; // Assuming you want to move the styles to a separate CSS file
 
-const ManageFAQs = () => {
+const FAQ = () => {
+  const [questionText, setQuestionText] = useState('');
   const [questions, setQuestions] = useState([]);
-  const [responseText, setResponseText] = useState('');
-  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchQuestions = async () => {
-      const querySnapshot = await getDocs(collection(db, 'questions'));
-      const questionsData = await Promise.all(querySnapshot.docs.map(async (questionDoc) => {
-        const questionData = questionDoc.data();
-        const userDocRef = doc(db, 'users', questionData.uid);
-        const userDoc = await getDoc(userDocRef);
-        const userName = userDoc.exists() ? userDoc.data().name : 'Unknown User';
-
+    const unsubscribe = onSnapshot(collection(db, 'questions'), (snapshot) => {
+      const questionsData = snapshot.docs.map(doc => {
+        const data = doc.data();
         return {
-          id: questionDoc.id,
-          userName: userName,
-          ...questionData,
+          id: doc.id,
+          ...data,
+          formattedTimestamp: data.timestamp ? format(data.timestamp.toDate(), 'MMMM dd, yyyy HH:mm') : null,
+          formattedResponseTimestamp: data.responseTimestamp ? format(data.responseTimestamp.toDate(), 'MMMM dd, yyyy HH:mm') : null,
         };
-      }));
+      });
       setQuestions(questionsData);
-    };
+    });
 
-    fetchQuestions();
+    return () => unsubscribe();
   }, []);
 
-  const handleResponseSubmit = async () => {
-    if (!responseText || !selectedQuestionId) {
-      alert('Please select a question and enter a response before submitting.');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      alert('You must be logged in to submit a question.');
       return;
     }
 
-    const questionDocRef = doc(db, 'questions', selectedQuestionId);
-    await updateDoc(questionDocRef, { 
-      responseText: responseText,
-      responseTimestamp: serverTimestamp()
-    });
-    setResponseText('');
-    setSelectedQuestionId(null);
-    alert('Response submitted successfully.');
-
-    const updatedQuestions = questions.map(q => 
-      q.id === selectedQuestionId ? { ...q, responseText, responseTimestamp: new Date() } : q
-    );
-    setQuestions(updatedQuestions);
-  };
-
-  const selectQuestion = (questionId, currentResponse) => {
-    setSelectedQuestionId(questionId);
-    setResponseText(currentResponse || '');
+    try {
+      await addDoc(collection(db, 'questions'), {
+        uid: currentUser.uid,
+        questionText: questionText,
+        responseText: '',
+        timestamp: serverTimestamp(),
+        responseTimestamp: null, // Initially null since there's no response yet
+      });
+      setQuestionText('');
+      alert('Your question has been submitted.');
+    } catch (error) {
+      console.error('Error submitting question: ', error);
+      alert('There was an error submitting your question.');
+    }
   };
 
   return (
-    <div className={styles['manage-faqs-container']}>
-      <h1>Manage FAQs</h1>
+    <div className={styles.faqContainer}>
+      <h2>Frequently Asked Questions</h2>
       
-      {questions.map((question) => (
-        <div key={question.id} className={styles['question-block']}>
-          <p><strong>User:</strong> {question.userName}</p>
-          <p><strong>Question:</strong> {question.questionText}</p>
-          <p><strong>Response:</strong> {question.responseText || 'No response yet'}</p>
-          {!question.responseText && (
-            <button 
-              onClick={() => selectQuestion(question.id, question.responseText)} 
-              className={styles['submit-button']}
-            >
-              Respond to this question
-            </button>
-          )}
-        </div>
-      ))}
-  
-      {selectedQuestionId && (
-        <div className={styles['response-form']}>
-          <textarea
-            value={responseText}
-            onChange={(e) => setResponseText(e.target.value)}
-            placeholder="Type your response here..."
-            required
-            className={styles['textarea']}
-          />
-          <button onClick={handleResponseSubmit} className={styles['submit-button']}>
-            Submit Response
-          </button>
-        </div>
-      )}
-
-      <div className={styles['bottom-button-container']}>
-        <button 
-          onClick={() => navigate('/home')} 
-          className={styles['back-to-dashboard-button']}
-        >
-          Back to Dashboard
-        </button>
+      {/* Display existing FAQs */}
+      <div className={styles.questionList}>
+        {questions.length > 0 ? (
+          questions.map((question) => (
+            <div key={question.id} className={styles.questionBlock}>
+              <p><strong>Question:</strong> {question.questionText}</p>
+              {question.formattedTimestamp && <p><em>Asked on {question.formattedTimestamp}</em></p>}
+              <p>
+                <strong>Response:</strong> {question.responseText 
+                  ? `System Admin: ${question.responseText} on ${question.formattedResponseTimestamp}` 
+                  : 'No response yet'}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p>No questions have been asked yet.</p>
+        )}
       </div>
+      
+      {/* Form to submit a new question */}
+      <form onSubmit={handleSubmit} className={styles.submitForm}>
+        <textarea
+          value={questionText}
+          onChange={(e) => setQuestionText(e.target.value)}
+          placeholder="Have a question? Ask here..."
+          required
+          className={styles.textarea}
+        />
+        <button type="submit" className={styles.submitButton}>
+          Submit Question
+        </button>
+        <Link to="/home" className={styles.backLink}>Back to Home</Link>
+      </form>
     </div>
   );
 };
 
-export default ManageFAQs;
+export default FAQ;
