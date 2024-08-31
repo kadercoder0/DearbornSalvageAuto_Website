@@ -94,7 +94,7 @@ const ManageFAQs = () => {
 
       <div className={styles['bottom-button-container']}>
         <button 
-          onClick={() => navigate('/admin/dashboard')} 
+          onClick={() => navigate('/home')} 
           className={styles['back-to-dashboard-button']}
         >
           Back to Dashboard
