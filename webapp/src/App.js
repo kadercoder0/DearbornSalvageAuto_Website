@@ -1,14 +1,14 @@
 import './App.css';
 import Login from './Features/auth/LoginSignup/login';
 import Signup from './Features/auth/LoginSignup/signup';
-import Home from './Features/home';
-import About from './Features/about';
-import Inventory from './Features/Inventory/inventory';
-import Contact from './Features/contact';
-import FAQ from './Features/faq';
+import Home from './Features/user/home';
+import About from './Features/user/about';
+import Inventory from './Features/user/Inventory/inventory';
+import Contact from './Features/user/contact';
+import FAQ from './Features/user/faq';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import AuthDetails from './Features/auth/authdetails';
-import Profile from './Features/profile';
+import Profile from './Features/user/profile';
 import ForgotPassword from './Features/auth/LoginSignup/forgotPassword';
 
 // Importing Admin Dashboard components

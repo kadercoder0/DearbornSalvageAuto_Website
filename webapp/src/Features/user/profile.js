@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { auth, db } from '../firebase'; // Adjust the import path as necessary
+import { auth, db } from '../../firebase'; // Adjust the import path as necessary
 import { updatePassword, signOut, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import "./profile.component.css"
