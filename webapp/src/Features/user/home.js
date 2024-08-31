@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import lineup from '../Assets/lineup.png';
+import lineup from '../../Assets/lineup.png';
 import './home.css'; // Import the CSS file
 
 const Home = () => {

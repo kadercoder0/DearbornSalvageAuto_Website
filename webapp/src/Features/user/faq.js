@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'; 
 import React, { useState, useEffect } from 'react';
-import { db, auth } from '../firebase'; 
+import { db, auth } from '../../firebase'; 
 import { collection, addDoc, serverTimestamp, onSnapshot } from 'firebase/firestore';
 import { format } from 'date-fns';
 import styles from './faq.module.css'; // Assuming you want to move the styles to a separate CSS file
