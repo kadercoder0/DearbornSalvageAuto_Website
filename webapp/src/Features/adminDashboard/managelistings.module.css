@@ -1,0 +1,25 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  thead {
+    background-color: #f8f9fa;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #e9ecef;
+    font-weight: bold;
+  }
+  
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+  
