@@ -3,14 +3,15 @@ import Modal from 'react-modal'; // Import React Modal
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db, storage } from '../../firebase'; // Import Firestore and Storage
+import styles from "../adminDashboard/managelisting.module.css";
 import "../adminDashboard/managelistings.module.css"
 
-Modal.setAppElement('#root'); // Set the root element for accessibility
+Modal.setAppElement('#root');
 
 const ManageListings = () => {
   const [carListings, setCarListings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [modalIsOpen, setModalIsOpen] = useState(false); // Modal state
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [carData, setCarData] = useState({
     make: '',
     model: '',
@@ -22,7 +23,7 @@ const ManageListings = () => {
     drivetrain: '',
     engineSize: '',
     titleStatus: '',
-    color: '', 
+    color: '',
     imageUrl: '',
   });
   const [imageFile, setImageFile] = useState(null);
@@ -50,23 +51,17 @@ const ManageListings = () => {
     fetchCarListings();
   }, []);
 
-  // Open modal
   const openModal = () => setModalIsOpen(true);
-
-  // Close modal
   const closeModal = () => setModalIsOpen(false);
 
-  // Handle input changes in form
   const handleInputChange = (e) => {
     setCarData({ ...carData, [e.target.name]: e.target.value });
   };
 
-  // Handle image selection
   const handleImageChange = (e) => {
     setImageFile(e.target.files[0]);
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -114,7 +109,7 @@ const ManageListings = () => {
       {carListings.length === 0 ? (
         <p>No car listings available.</p>
       ) : (
-        <table>
+        <table className={styles.table}>
           <thead>
             <tr>
               <th>Make</th>
@@ -137,7 +132,7 @@ const ManageListings = () => {
                 <td>{car.make}</td>
                 <td>{car.model}</td>
                 <td>{car.year}</td>
-                <td>{car.odometer} miles</td>
+                <td>{car.odometer}</td>
                 <td>${car.price}</td>
                 <td>{car.color}</td>
                 <td>{car.cylinders}</td>
@@ -147,7 +142,7 @@ const ManageListings = () => {
                 <td>{car.vin}</td>
                 <td>
                   {car.imageUrl && (
-                    <img src={car.imageUrl} alt={`${car.make} ${car.model}`} style={{ width: '100px', height: '60px', objectFit: 'cover' }} />
+                    <img className={styles.image} src={car.imageUrl} alt={`${car.make} ${car.model}`} />
                   )}
                 </td>
               </tr>
@@ -159,7 +154,7 @@ const ManageListings = () => {
       {/* Modal for Adding a New Car */}
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Add Car Listing">
         <h2>Add Car Listing</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.modalForm}>
           <input type="text" name="make" placeholder="Make" onChange={handleInputChange} required />
           <input type="text" name="model" placeholder="Model" onChange={handleInputChange} required />
           <input type="number" name="year" placeholder="Year" onChange={handleInputChange} required />
@@ -169,7 +164,7 @@ const ManageListings = () => {
           <input type="text" name="engineSize" placeholder="Engine Size" onChange={handleInputChange} required />
           <input type="text" name="drivetrain" placeholder="Drivetrain" onChange={handleInputChange} required />
           <input type="text" name="titleStatus" placeholder="Title Status (e.g., Clean, Salvage)" onChange={handleInputChange} required />
-          <input type="text" name="color" placeholder="Color" onChange={handleInputChange} required /> {/* Added color field */}
+          <input type="text" name="color" placeholder="Color" onChange={handleInputChange} required />
           <input type="text" name="vin" placeholder="Vin" onChange={handleInputChange} required />
           <input type="file" onChange={handleImageChange} required />
           <button type="submit">Submit</button>
