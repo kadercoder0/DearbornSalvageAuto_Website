@@ -18,7 +18,7 @@ const ManageListings = () => {
     odometer: '',
     price: '',
     cylinders: '',
-    description: '',
+    vin: '',
     drivetrain: '',
     engineSize: '',
     titleStatus: '',
@@ -127,7 +127,7 @@ const ManageListings = () => {
               <th>Engine Size</th>
               <th>Drivetrain</th>
               <th>Title Status</th>
-              <th>Description</th>
+              <th>Vin</th>
               <th>Image</th>
             </tr>
           </thead>
@@ -144,7 +144,7 @@ const ManageListings = () => {
                 <td>{car.engineSize}</td>
                 <td>{car.drivetrain}</td>
                 <td>{car.titleStatus}</td>
-                <td>{car.description}</td>
+                <td>{car.vin}</td>
                 <td>
                   {car.imageUrl && (
                     <img src={car.imageUrl} alt={`${car.make} ${car.model}`} style={{ width: '100px', height: '60px', objectFit: 'cover' }} />
@@ -170,7 +170,7 @@ const ManageListings = () => {
           <input type="text" name="drivetrain" placeholder="Drivetrain" onChange={handleInputChange} required />
           <input type="text" name="titleStatus" placeholder="Title Status (e.g., Clean, Salvage)" onChange={handleInputChange} required />
           <input type="text" name="color" placeholder="Color" onChange={handleInputChange} required /> {/* Added color field */}
-          <textarea name="description" placeholder="Description" onChange={handleInputChange} required></textarea>
+          <input type="text" name="vin" placeholder="Vin" onChange={handleInputChange} required />
           <input type="file" onChange={handleImageChange} required />
           <button type="submit">Submit</button>
           <button type="button" onClick={closeModal}>Cancel</button>
