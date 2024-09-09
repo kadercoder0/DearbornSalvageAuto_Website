@@ -1,80 +1,138 @@
-import React, { useState, useEffect, useRef } from 'react'; 
-import CreateListing from './CreateListing'; 
-import CarList from './CarList'; 
-import { Link } from 'react-router-dom'; 
-import Filter from './Filter'; 
-import './inventory.css';
+import React, { useState, useEffect } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../../firebase'; // Import Firestore
+import styles from './inventory.module.css'; // Import the CSS for styling
 
-const Inventory = () => { 
-    const [cars, setCars] = useState([]); 
-    const [filteredCars, setFilteredCars] = useState([]); 
-    const [originalCars, setOriginalCars] = useState([]); 
-    const resetFiltersRef = useRef(null);
+const Inventory = () => {
+  const [carListings, setCarListings] = useState([]);
+  const [filteredCars, setFilteredCars] = useState([]);
+  const [searchFilters, setSearchFilters] = useState({
+    make: '',
+    model: '',
+    year: '',
+    minPrice: '',
+    maxPrice: '',
+    condition: ''
+  });
 
-    const addListing = (car) => { 
-        const updatedCars = [...cars, car]; 
-        setCars(updatedCars); 
-        setOriginalCars(updatedCars); 
-        setFilteredCars(updatedCars); 
-    };
+  // Fetch car listings from Firestore
+  const fetchCarListings = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'carListings'));
+      const cars = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setCarListings(cars);
+      setFilteredCars(cars); // Set both carListings and filteredCars to the fetched data
+    } catch (error) {
+      console.error('Error fetching car listings: ', error);
+    }
+  };
 
-    const applyFilter = (filters) => { 
-        const filtered = originalCars.filter((car) => { 
-            const odometerRange = filters.odometer.split('-'); 
-            const minOdometer = odometerRange[0] ? parseInt(odometerRange[0]) : 0; 
-            const maxOdometer = odometerRange[1] ? parseInt(odometerRange[1]) : Infinity;
+  // Call fetchCarListings when the component mounts
+  useEffect(() => {
+    fetchCarListings();
+  }, []);
 
-            return (
-                (filters.make === '' || car.make === filters.make) &&
-                (filters.model === '' || car.model === filters.model) &&
-                (filters.year === '' || car.year.toString() === filters.year) &&
-                (filters.minPrice === '' || car.price >= parseInt(filters.minPrice)) &&
-                (filters.maxPrice === '' || car.price <= parseInt(filters.maxPrice)) &&
-                (filters.drivetrain === '' || car.drivetrain === filters.drivetrain) &&
-                (filters.engineSize === '' || car.engineSize === filters.engineSize) &&
-                (filters.odometer === '' || (car.odometer >= minOdometer && car.odometer <= maxOdometer)) &&
-                (filters.titleStatus === '' || car.titleStatus === filters.titleStatus) &&
-                (filters.cylinders === '' || car.cylinders.toString() === filters.cylinders)
-            );
-        });
-        setFilteredCars(filtered);
-    };
+  // Handle input changes for the search filter
+  const handleInputChange = (e) => {
+    setSearchFilters({
+      ...searchFilters,
+      [e.target.name]: e.target.value
+    });
+  };
 
-    const resetFilters = () => { 
-        setFilteredCars(originalCars); 
-        if (resetFiltersRef.current) { 
-            resetFiltersRef.current(); 
-        } 
-    };
+  // Filter the cars based on the search filters
+  const handleSearch = () => {
+    let filtered = carListings.filter(car => {
+      return (
+        (searchFilters.make === '' || car.make.toLowerCase().includes(searchFilters.make.toLowerCase())) &&
+        (searchFilters.model === '' || car.model.toLowerCase().includes(searchFilters.model.toLowerCase())) &&
+        (searchFilters.year === '' || car.year === parseInt(searchFilters.year)) &&
+        (searchFilters.minPrice === '' || car.price >= parseInt(searchFilters.minPrice)) &&
+        (searchFilters.maxPrice === '' || car.price <= parseInt(searchFilters.maxPrice)) &&
+        (searchFilters.condition === '' || car.condition.toLowerCase() === searchFilters.condition.toLowerCase())
+      );
+    });
+    setFilteredCars(filtered);
+  };
 
-    useEffect(() => { 
-        setFilteredCars(cars); 
-        setOriginalCars(cars); 
-    }, [cars]);
+  return (
+    <div className={styles.inventoryPage}>
+      {/* Search Bar Section */}
+      <div className={styles.searchFilterContainer}>
+        <div className={styles.searchFilters}>
+          <input
+            type="text"
+            name="make"
+            placeholder="Make"
+            onChange={handleInputChange}
+            className={styles.searchInput}
+          />
+          <input
+            type="text"
+            name="model"
+            placeholder="Model"
+            onChange={handleInputChange}
+            className={styles.searchInput}
+          />
+          <input
+            type="number"
+            name="year"
+            placeholder="Year"
+            onChange={handleInputChange}
+            className={styles.searchInput}
+          />
+          <input
+            type="number"
+            name="minPrice"
+            placeholder="Min Price"
+            onChange={handleInputChange}
+            className={styles.searchInput}
+          />
+          <input
+            type="number"
+            name="maxPrice"
+            placeholder="Max Price"
+            onChange={handleInputChange}
+            className={styles.searchInput}
+          />
+          <select
+            name="condition"
+            onChange={handleInputChange}
+            className={styles.searchInput}
+          >
+            <option value="">Condition</option>
+            <option value="clean">Clean</option>
+            <option value="salvage">Salvage</option>
+          </select>
+          <button onClick={handleSearch} className={styles.searchButton}>Search</button>
+        </div>
+      </div>
 
-    return ( 
-        <div className="inventory-page"> 
-            <div className="filter-container"> 
-                <Filter applyFilter={applyFilter} resetFilters={resetFiltersRef} /> 
-                <button onClick={resetFilters}>Reset Filters</button> 
-            </div> 
-            <div className="main-content"> 
-                <div className="listings-container"> 
-                    <h1>Inventory</h1> 
-                    <nav className="navbar"> 
-                        <Link to="/home" className="nav-link">Back to Home</Link> 
-                    </nav> 
-                    <CarList cars={filteredCars} /> 
-                </div> 
-                <div className="create-listing-container"> 
-                    <h2>Create Listing</h2> 
-                    <CreateListing addListing={addListing} /> 
-                </div> 
-            </div> 
-        </div> 
-    ); 
+      {/* Car Listings Section */}
+      <div className={styles.carListingsContainer}>
+        {filteredCars.length === 0 ? (
+          <p>No cars available.</p>
+        ) : (
+          filteredCars.map((car) => (
+            <div key={car.id} className={styles.carCard}>
+              <img src={car.imageUrl} alt={`${car.make} ${car.model}`} className={styles.carImage} />
+              <div className={styles.carDetails}>
+                <h3>{car.year} {car.make} {car.model}</h3>
+                <p><strong>Price:</strong> ${car.price}</p>
+                <p><strong>Mileage:</strong> {car.odometer} miles</p>
+                <p><strong>Condition:</strong> {car.condition}</p>
+                <p><strong>Engine:</strong> {car.engineSize}</p>
+                <p><strong>Color:</strong> {car.color}</p>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Inventory;
-
-
