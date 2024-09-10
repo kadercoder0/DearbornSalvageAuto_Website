@@ -52,7 +52,7 @@ const Inventory = () => {
       return (
         (searchFilters.make === '' || car.make.toLowerCase().includes(searchFilters.make.toLowerCase())) &&
         (searchFilters.model === '' || car.model.toLowerCase().includes(searchFilters.model.toLowerCase())) &&
-        (searchFilters.year === '' || car.year === parseInt(searchFilters.year)) &&
+        (searchFilters.year === '' || car.year.toLowerCase().includes(searchFilters.year.toLowerCase())) &&
         (searchFilters.minPrice === '' || car.price >= parseInt(searchFilters.minPrice)) &&
         (searchFilters.maxPrice === '' || car.price <= parseInt(searchFilters.maxPrice)) &&
         (searchFilters.condition === '' || car.titleStatus.toLowerCase() === searchFilters.condition.toLowerCase())

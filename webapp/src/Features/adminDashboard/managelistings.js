@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal'; // Import React Modal
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db, storage } from '../../firebase'; // Import Firestore and Storage
 import styles from "/Users/mohammedhaidous/Downloads/Developer/DearbornSalvageAuto_Website/webapp/src/Features/adminDashboard/managelistings.module.css";
 import "/Users/mohammedhaidous/Downloads/Developer/DearbornSalvageAuto_Website/webapp/src/Features/adminDashboard/managelistings.module.css";
+import { useNavigate } from 'react-router-dom';
 
 Modal.setAppElement('#root');
 
 const ManageListings = () => {
+  const navigate = useNavigate();
   const [carListings, setCarListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -25,6 +27,101 @@ const ManageListings = () => {
     titleStatus: '',
     color: '',
   });
+
+  /*const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on('state_changed', 
+      null, 
+      (error) => console.error(error), 
+      async () => {
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        console.log('File available at', downloadURL); // Verify the URL after upload
+      }
+    );*/
+
+
+  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+  const [currentCar, setCurrentCar] = useState(null); // Store the car being edited
+
+  // Open edit modal and set the current car data
+  const openEditModal = (car) => {
+    setCurrentCar(car);
+    setEditModalIsOpen(true);
+  };
+
+  // Close edit modal
+  const closeEditModal = () => setEditModalIsOpen(false);
+
+
+// The function that handles submitting the edited car
+const handleEditSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const carDocRef = doc(db, 'carListings', currentCar.id); // Reference to the specific car document
+
+    let outsideURL = currentCar.images.outside;
+    let interiorDashURL = currentCar.images.interiorDash;
+    let backSeatURL = currentCar.images.backSeat;
+
+    // Check if a new image is uploaded and upload it if needed
+    if (outsideImageFile) {
+      const outsideRef = ref(storage, `cars/outside/${outsideImageFile.name}`);
+      const uploadOutsideTask = uploadBytesResumable(outsideRef, outsideImageFile);
+      const outsideSnap = await uploadOutsideTask;
+      outsideURL = await getDownloadURL(outsideSnap.ref);
+    }
+
+    if (interiorDashImageFile) {
+      const interiorDashRef = ref(storage, `cars/interiorDash/${interiorDashImageFile.name}`);
+      const uploadInteriorDashTask = uploadBytesResumable(interiorDashRef, interiorDashImageFile);
+      const interiorDashSnap = await uploadInteriorDashTask;
+      interiorDashURL = await getDownloadURL(interiorDashSnap.ref);
+    }
+
+    if (backSeatImageFile) {
+      const backSeatRef = ref(storage, `cars/backSeat/${backSeatImageFile.name}`);
+      const uploadBackSeatTask = uploadBytesResumable(backSeatRef, backSeatImageFile);
+      const backSeatSnap = await uploadBackSeatTask;
+      backSeatURL = await getDownloadURL(backSeatSnap.ref);
+    }
+
+    // Update the car document with new data and image URLs
+    await updateDoc(carDocRef, {
+      make: carData.make || currentCar.make,
+      model: carData.model || currentCar.model,
+      year: carData.year || currentCar.year,
+      odometer: carData.odometer || currentCar.odometer,
+      price: carData.price || currentCar.price,
+      color: carData.color || currentCar.color,
+      images: {
+        outside: outsideURL,
+        interiorDash: interiorDashURL,
+        backSeat: backSeatURL
+      }
+    });
+
+    alert('Car listing updated successfully!');
+    closeEditModal(); // Close the modal after successful edit
+    fetchCarListings(); // Refresh the listings
+  } catch (error) {
+    console.error('Error updating car listing: ', error);
+  }
+};
+
+
+  
+
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, 'carListings', id));
+      alert('Car listing deleted successfully!');
+      fetchCarListings(); // Refresh the car listings after deletion
+    } catch (error) {
+      console.error('Error deleting car listing: ', error);
+    }
+  };
+  
 
   // State for multiple image files
   const [outsideImageFile, setOutsideImageFile] = useState(null);
@@ -68,6 +165,7 @@ const ManageListings = () => {
     if (name === "interiorDash") setInteriorDashImageFile(files[0]);
     if (name === "backSeat") setBackSeatImageFile(files[0]);
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,8 +214,10 @@ const ManageListings = () => {
   return (
     <div>
       <h2>Manage Car Listings</h2>
+
       <button onClick={openModal}>Add New Listing</button>
-  
+      <button onClick={() => navigate('/admin/dashboard')}>Back to Dashboard</button>
+
       {carListings.length === 0 ? (
         <p>No car listings available.</p>
       ) : (
@@ -141,34 +241,123 @@ const ManageListings = () => {
               </tr>
             </thead>
             <tbody>
-              {carListings.map((car) => (
-                <tr key={car.id}>
-                  <td>{car.make}</td>
-                  <td>{car.model}</td>
-                  <td>{car.year}</td>
-                  <td>{car.odometer}</td>
-                  <td>${car.price}</td>
-                  <td>{car.color}</td>
-                  <td>{car.cylinders}</td>
-                  <td>{car.engineSize}</td>
-                  <td>{car.drivetrain}</td>
-                  <td>{car.titleStatus}</td>
-                  <td>{car.vin}</td>
-                  <td>
-                    {car.images && (
-                      <>
-                        <img src={car.images.outside} alt="Outside" className={styles.image} />
-                        <img src={car.images.interiorDash} alt="Interior Dash" className={styles.image} />
-                        <img src={car.images.backSeat} alt="Back Seat" className={styles.image} />
-                      </>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+                {carListings.map((car) => (
+                  <tr key={car.id}>
+                    <td>{car.make}</td>
+                    <td>{car.model}</td>
+                    <td>{car.year}</td>
+                    <td>{car.odometer}</td>
+                    <td>${car.price}</td>
+                    <td>{car.color}</td>
+                    <td>{car.cylinders}</td>
+                    <td>{car.engineSize}</td>
+                    <td>{car.drivetrain}</td>
+                    <td>{car.titleStatus}</td>
+                    <td>{car.vin}</td>
+                    <td>
+                      {car.images && (
+                        <>
+                          <img src={car.images.outside} alt="Outside" className={styles.image}  />
+                          <img src={car.images.interiorDash} alt="Interior Dash" className={styles.image} />
+                          <img src={car.images.backSeat} alt="Back Seat" className={styles.image} />
+                        </>
+                      )}
+                    </td>
+                    <td>
+                      {/* Delete button should be placed here without nesting inside <td> */}
+                      <button onClick={() => handleDelete(car.id)} className={styles.deleteButton}>
+                        <i className="fas fa-trash"></i>
+                      </button>
+                    </td>
+                    <td>
+                      {/* Edit button should be placed here without nesting inside <td> */}
+                      <button onClick={() => openEditModal(car)} className={styles.editButton}>
+                        <i className="fas fa-pen-to-square"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
           </table>
         </div>
       )}
+
+      <Modal isOpen={editModalIsOpen} onRequestClose={closeEditModal} contentLabel="Edit Car Listing">
+      <h2>Edit Car Listing</h2>
+      <form onSubmit={handleEditSubmit} className={styles.modalForm}>
+        <input
+          type="text"
+          name="make"
+          placeholder="Make"
+          defaultValue={currentCar?.make}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="text"
+          name="model"
+          placeholder="Model"
+          defaultValue={currentCar?.model}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="number"
+          name="year"
+          placeholder="Year"
+          defaultValue={currentCar?.year}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="number"
+          name="odometer"
+          placeholder="Odometer"
+          defaultValue={currentCar?.odometer}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="number"
+          name="price"
+          placeholder="Price"
+          defaultValue={currentCar?.price}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="text"
+          name="color"
+          placeholder="Color"
+          defaultValue={currentCar?.color}
+          onChange={handleInputChange}
+          required
+        />
+        
+        {/* Display current images */}
+        <div>
+          <h4>Current Images</h4>
+            <img src={currentCar?.images?.outside} alt="Outside" className={styles.editImage} />
+            <img src={currentCar?.images?.interiorDash} alt="Interior Dash" className={styles.editImage} />
+            <img src={currentCar?.images?.backSeat} alt="Back Seat" className={styles.editImage} />
+      </div>
+
+
+        {/* Upload new images if necessary */}
+        <label>Edit Outside Image</label>
+        <input type="file" name="outside" onChange={handleImageChange} />
+        <label>Edit Interior Dash Image</label>
+        <input type="file" name="interiorDash" onChange={handleImageChange} />
+        <label>Edit Back Seat Image</label>
+        <input type="file" name="backSeat" onChange={handleImageChange} />
+
+        <button type="submit">Submit</button>
+        <button type="button" onClick={closeEditModal}>Cancel</button>
+        </form>
+      </Modal>
+
+
+
   
       {/* Modal for Adding a New Car */}
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Add Car Listing">

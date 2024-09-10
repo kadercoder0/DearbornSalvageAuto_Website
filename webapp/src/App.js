@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { AuthProvider } from './Features/auth/authContext'; // Import the AuthProvider
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 import Login from './Features/auth/LoginSignup/login';
 import Signup from './Features/auth/LoginSignup/signup';
