@@ -19,7 +19,7 @@ thead {
 th, td {
   border: 1px solid #ddd;
   padding: 8px;
-  text-align: left;
+  text-align: center;
 }
 
 th {
@@ -34,3 +34,55 @@ table img {
   display: block;
   margin: 0 auto; /* Center images */
 }
+
+.deleteButton {
+  background-color: #e74c3c; /* Red background */
+  color: white; /* White icon */
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 50%; /* Circular button */
+  font-size: 18px;
+  width: 30px; /* Fixed width for circle */
+  height: 30px; /* Fixed height for circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.deleteButton:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+.editButton {
+  background-color: #3498db; /* Blue background */
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 50%;
+  font-size: 18px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.editButton:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}
+
+
+/* Add this to your CSS file */
+.editImage {
+  width: 100px; /* Adjust the width */
+  height: auto; /* Maintain aspect ratio */
+  margin: 10px 0; /* Add some space around the image */
+  border: 1px solid #ddd; /* Optional: Add border */
+  border-radius: 5px; /* Optional: Rounded corners */
+  object-fit: cover; /* Ensure image fits in container */
+}
+
