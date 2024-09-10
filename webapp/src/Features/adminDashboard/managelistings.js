@@ -3,8 +3,8 @@ import Modal from 'react-modal'; // Import React Modal
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db, storage } from '../../firebase'; // Import Firestore and Storage
-import styles from "../adminDashboard/managelisting.module.css";
-import "../adminDashboard/managelistings.module.css";
+import styles from "/Users/mohammedhaidous/Downloads/Developer/DearbornSalvageAuto_Website/webapp/src/Features/adminDashboard/managelistings.module.css";
+import "/Users/mohammedhaidous/Downloads/Developer/DearbornSalvageAuto_Website/webapp/src/Features/adminDashboard/managelistings.module.css";
 
 Modal.setAppElement('#root');
 
@@ -117,56 +117,59 @@ const ManageListings = () => {
     <div>
       <h2>Manage Car Listings</h2>
       <button onClick={openModal}>Add New Listing</button>
-
+  
       {carListings.length === 0 ? (
         <p>No car listings available.</p>
       ) : (
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Make</th>
-              <th>Model</th>
-              <th>Year</th>
-              <th>Odometer</th>
-              <th>Price</th>
-              <th>Color</th>
-              <th>Cylinders</th>
-              <th>Engine Size</th>
-              <th>Drivetrain</th>
-              <th>Title Status</th>
-              <th>Vin</th>
-              <th>Images</th>
-            </tr>
-          </thead>
-          <tbody>
-            {carListings.map((car) => (
-              <tr key={car.id}>
-                <td>{car.make}</td>
-                <td>{car.model}</td>
-                <td>{car.year}</td>
-                <td>{car.odometer}</td>
-                <td>${car.price}</td>
-                <td>{car.color}</td>
-                <td>{car.cylinders}</td>
-                <td>{car.engineSize}</td>
-                <td>{car.drivetrain}</td>
-                <td>{car.titleStatus}</td>
-                <td>{car.vin}</td>
-                <td>
-                  {car.images && (
-                    <>
-                      <img src={car.images.outside} alt="Outside" className={styles.image} />
-                      <img src={car.images.interiorDash} alt="Interior Dash" className={styles.image} />
-                      <img src={car.images.backSeat} alt="Back Seat" className={styles.image} />
-                    </>
-                  )}
-                </td>
+        // Wrap the table in a .tableWrapper div
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Odometer</th>
+                <th>Price</th>
+                <th>Color</th>
+                <th>Cylinders</th>
+                <th>Engine Size</th>
+                <th>Drivetrain</th>
+                <th>Title Status</th>
+                <th>Vin</th>
+                <th>Images</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {carListings.map((car) => (
+                <tr key={car.id}>
+                  <td>{car.make}</td>
+                  <td>{car.model}</td>
+                  <td>{car.year}</td>
+                  <td>{car.odometer}</td>
+                  <td>${car.price}</td>
+                  <td>{car.color}</td>
+                  <td>{car.cylinders}</td>
+                  <td>{car.engineSize}</td>
+                  <td>{car.drivetrain}</td>
+                  <td>{car.titleStatus}</td>
+                  <td>{car.vin}</td>
+                  <td>
+                    {car.images && (
+                      <>
+                        <img src={car.images.outside} alt="Outside" className={styles.image} />
+                        <img src={car.images.interiorDash} alt="Interior Dash" className={styles.image} />
+                        <img src={car.images.backSeat} alt="Back Seat" className={styles.image} />
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
-
+  
       {/* Modal for Adding a New Car */}
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Add Car Listing">
         <h2>Add Car Listing</h2>
@@ -182,7 +185,7 @@ const ManageListings = () => {
           <input type="text" name="titleStatus" placeholder="Title Status" onChange={handleInputChange} required />
           <input type="text" name="color" placeholder="Color" onChange={handleInputChange} required />
           <input type="text" name="vin" placeholder="Vin" onChange={handleInputChange} required />
-
+  
           {/* Three file inputs for three images */}
           <label>Outside Image</label>
           <input type="file" name="outside" onChange={handleImageChange} required />
@@ -190,7 +193,7 @@ const ManageListings = () => {
           <input type="file" name="interiorDash" onChange={handleImageChange} required />
           <label>Back Seat Image</label>
           <input type="file" name="backSeat" onChange={handleImageChange} required />
-
+  
           <button type="submit">Submit</button>
           <button type="button" onClick={closeModal}>Cancel</button>
         </form>
@@ -198,6 +201,8 @@ const ManageListings = () => {
       </Modal>
     </div>
   );
+  
+  
 };
 
 export default ManageListings;
