@@ -1,60 +1,36 @@
+/* Table wrapper to control overflow */
+.tableWrapper {
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 60vh; /* Limit the table height to 60% of the viewport */
+  padding: 20px; /* Add padding for better spacing */
+  margin-top: 20px; /* Space between table and other content */
+  border: 1px solid #ccc; /* Optional: Add a border to distinguish table */
+}
+
 table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  thead {
-    background-color: #f8f9fa;
-  }
-  
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  th {
-    background-color: #e9ecef;
-    font-weight: bold;
-  }
-  
-  img {
-    display: block;
-    margin: 0 auto;
-  }
-  .carousel {
-    position: relative;
-    width: 150px;
-    height: 100px;
-  }
-  
-  .carousel img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-  }
-  
-  .arrowLeft, .arrowRight {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 50%;
-  }
-  
-  .arrowLeft {
-    left: 0;
-  }
-  
-  .arrowRight {
-    right: 0;
-  }
-  
-  .arrowLeft:hover, .arrowRight:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
-  
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #f8f9fa;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #e9ecef;
+  font-weight: bold;
+}
+
+/* Limit the size of car images */
+table img {
+  max-width: 100px; /* Limit the image width inside the table */
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+  margin: 0 auto; /* Center images */
+}
