@@ -53,7 +53,7 @@
   align-content: center;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
-  margin-top: 400px; /* Create space between the search bar and listings */
+  margin-top: 100px; /* Create space between the search bar and listings */
 }
 
 .carCard {
@@ -86,4 +86,49 @@
 .carDetails p {
   margin: 5px 0;
   font-size: 1rem;
+}
+
+/* Carousel Styling */
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.carousel img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.arrowLeft, .arrowRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.8); /* Light background for visibility */
+  color: #333; /* Dark arrow color for contrast */
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%; /* Circular arrows */
+  width: 30px; /* Fixed width for circle */
+  height: 30px; /* Fixed height for circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+}
+
+.arrowLeft {
+  left: 10px;
+}
+
+.arrowRight {
+  right: 10px;
+}
+
+.arrowLeft:hover, .arrowRight:hover {
+  background-color: rgba(255, 255, 255, 1); /* Brighter on hover for interactivity */
+
 }

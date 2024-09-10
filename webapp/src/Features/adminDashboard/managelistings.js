@@ -4,7 +4,7 @@ import { collection, getDocs, addDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db, storage } from '../../firebase'; // Import Firestore and Storage
 import styles from "../adminDashboard/managelisting.module.css";
-import "../adminDashboard/managelistings.module.css"
+import "../adminDashboard/managelistings.module.css";
 
 Modal.setAppElement('#root');
 
@@ -24,9 +24,13 @@ const ManageListings = () => {
     engineSize: '',
     titleStatus: '',
     color: '',
-    imageUrl: '',
   });
-  const [imageFile, setImageFile] = useState(null);
+
+  // State for multiple image files
+  const [outsideImageFile, setOutsideImageFile] = useState(null);
+  const [interiorDashImageFile, setInteriorDashImageFile] = useState(null);
+  const [backSeatImageFile, setBackSeatImageFile] = useState(null);
+  // eslint-disable-next-line
   const [progress, setProgress] = useState(0);
 
   // Fetch car listings from Firestore
@@ -46,7 +50,6 @@ const ManageListings = () => {
     }
   };
 
-  // Call fetchCarListings when the component mounts
   useEffect(() => {
     fetchCarListings();
   }, []);
@@ -58,44 +61,53 @@ const ManageListings = () => {
     setCarData({ ...carData, [e.target.name]: e.target.value });
   };
 
+  // Update the image file states based on file input
   const handleImageChange = (e) => {
-    setImageFile(e.target.files[0]);
+    const { name, files } = e.target;
+    if (name === "outside") setOutsideImageFile(files[0]);
+    if (name === "interiorDash") setInteriorDashImageFile(files[0]);
+    if (name === "backSeat") setBackSeatImageFile(files[0]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (imageFile) {
-      const storageRef = ref(storage, `cars/${imageFile.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, imageFile);
+    if (outsideImageFile && interiorDashImageFile && backSeatImageFile) {
+      const outsideRef = ref(storage, `cars/outside/${outsideImageFile.name}`);
+      const interiorDashRef = ref(storage, `cars/interiorDash/${interiorDashImageFile.name}`);
+      const backSeatRef = ref(storage, `cars/backSeat/${backSeatImageFile.name}`);
 
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setProgress(progress); // Track upload progress
-        },
-        (error) => {
-          console.error('Error uploading image: ', error);
-        },
-        async () => {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+      const uploadOutsideTask = uploadBytesResumable(outsideRef, outsideImageFile);
+      const uploadInteriorDashTask = uploadBytesResumable(interiorDashRef, interiorDashImageFile);
+      const uploadBackSeatTask = uploadBytesResumable(backSeatRef, backSeatImageFile);
 
-          try {
-            await addDoc(collection(db, 'carListings'), {
-              ...carData,
-              imageUrl: downloadURL,
-            });
-            alert('Car listing added successfully!');
-            closeModal(); // Close modal after successful submission
-            fetchCarListings(); // Refresh car listings
-          } catch (error) {
-            console.error('Error adding car listing to Firestore: ', error);
-          }
+      // Upload all three images in parallel
+      Promise.all([uploadOutsideTask, uploadInteriorDashTask, uploadBackSeatTask]).then(async ([outsideSnap, interiorDashSnap, backSeatSnap]) => {
+        const outsideURL = await getDownloadURL(outsideSnap.ref);
+        const interiorDashURL = await getDownloadURL(interiorDashSnap.ref);
+        const backSeatURL = await getDownloadURL(backSeatSnap.ref);
+
+        try {
+          // Store car data with image URLs
+          await addDoc(collection(db, 'carListings'), {
+            ...carData,
+            images: {
+              outside: outsideURL,
+              interiorDash: interiorDashURL,
+              backSeat: backSeatURL,
+            },
+          });
+          alert('Car listing added successfully!');
+          closeModal(); // Close modal after successful submission
+          fetchCarListings(); // Refresh car listings
+        } catch (error) {
+          console.error('Error adding car listing to Firestore: ', error);
         }
-      );
+      }).catch((error) => {
+        console.error('Error uploading images: ', error);
+      });
     } else {
-      alert('Please upload an image.');
+      alert('Please upload all three images.');
     }
   };
 
@@ -123,7 +135,7 @@ const ManageListings = () => {
               <th>Drivetrain</th>
               <th>Title Status</th>
               <th>Vin</th>
-              <th>Image</th>
+              <th>Images</th>
             </tr>
           </thead>
           <tbody>
@@ -141,8 +153,12 @@ const ManageListings = () => {
                 <td>{car.titleStatus}</td>
                 <td>{car.vin}</td>
                 <td>
-                  {car.imageUrl && (
-                    <img className={styles.image} src={car.imageUrl} alt={`${car.make} ${car.model}`} />
+                  {car.images && (
+                    <>
+                      <img src={car.images.outside} alt="Outside" className={styles.image} />
+                      <img src={car.images.interiorDash} alt="Interior Dash" className={styles.image} />
+                      <img src={car.images.backSeat} alt="Back Seat" className={styles.image} />
+                    </>
                   )}
                 </td>
               </tr>
@@ -163,10 +179,18 @@ const ManageListings = () => {
           <input type="text" name="cylinders" placeholder="Cylinders" onChange={handleInputChange} required />
           <input type="text" name="engineSize" placeholder="Engine Size" onChange={handleInputChange} required />
           <input type="text" name="drivetrain" placeholder="Drivetrain" onChange={handleInputChange} required />
-          <input type="text" name="titleStatus" placeholder="Title Status (e.g., Clean, Salvage)" onChange={handleInputChange} required />
+          <input type="text" name="titleStatus" placeholder="Title Status" onChange={handleInputChange} required />
           <input type="text" name="color" placeholder="Color" onChange={handleInputChange} required />
           <input type="text" name="vin" placeholder="Vin" onChange={handleInputChange} required />
-          <input type="file" onChange={handleImageChange} required />
+
+          {/* Three file inputs for three images */}
+          <label>Outside Image</label>
+          <input type="file" name="outside" onChange={handleImageChange} required />
+          <label>Interior Dash Image</label>
+          <input type="file" name="interiorDash" onChange={handleImageChange} required />
+          <label>Back Seat Image</label>
+          <input type="file" name="backSeat" onChange={handleImageChange} required />
+
           <button type="submit">Submit</button>
           <button type="button" onClick={closeModal}>Cancel</button>
         </form>

@@ -15,6 +15,9 @@ const Inventory = () => {
     condition: ''
   });
 
+  // Store image indexes for each car by its ID
+  const [imageIndexes, setImageIndexes] = useState({});
+
   // Fetch car listings from Firestore
   const fetchCarListings = async () => {
     try {
@@ -52,10 +55,25 @@ const Inventory = () => {
         (searchFilters.year === '' || car.year === parseInt(searchFilters.year)) &&
         (searchFilters.minPrice === '' || car.price >= parseInt(searchFilters.minPrice)) &&
         (searchFilters.maxPrice === '' || car.price <= parseInt(searchFilters.maxPrice)) &&
-        (searchFilters.condition === '' || car.condition.toLowerCase() === searchFilters.condition.toLowerCase())
+        (searchFilters.condition === '' || car.titleStatus.toLowerCase() === searchFilters.condition.toLowerCase())
       );
     });
     setFilteredCars(filtered);
+  };
+
+  // Slideshow logic for each car's image set
+  const handleNextImage = (carId, totalImages) => {
+    setImageIndexes((prevIndexes) => ({
+      ...prevIndexes,
+      [carId]: (prevIndexes[carId] === undefined ? 1 : (prevIndexes[carId] + 1) % totalImages), // Cycle through images
+    }));
+  };
+
+  const handlePreviousImage = (carId, totalImages) => {
+    setImageIndexes((prevIndexes) => ({
+      ...prevIndexes,
+      [carId]: (prevIndexes[carId] === undefined ? totalImages - 1 : (prevIndexes[carId] - 1 + totalImages) % totalImages), // Cycle back through images
+    }));
   };
 
   return (
@@ -116,19 +134,33 @@ const Inventory = () => {
         {filteredCars.length === 0 ? (
           <p>No cars available.</p>
         ) : (
-          filteredCars.map((car) => (
-            <div key={car.id} className={styles.carCard}>
-              <img src={car.imageUrl} alt={`${car.make} ${car.model}`} className={styles.carImage} />
-              <div className={styles.carDetails}>
-                <h3>{car.year} {car.make} {car.model}</h3>
-                <p><strong>Price:</strong> ${car.price}</p>
-                <p><strong>Mileage:</strong> {car.odometer} miles</p>
-                <p><strong>Condition:</strong> {car.condition}</p>
-                <p><strong>Engine:</strong> {car.engineSize}</p>
-                <p><strong>Color:</strong> {car.color}</p>
+          filteredCars.map((car) => {
+            const imagesArray = [car.images?.outside, car.images?.interiorDash, car.images?.backSeat];
+            const totalImages = imagesArray.length;
+            const currentImageIndex = imageIndexes[car.id] || 0; // Default to 0 if undefined
+
+            return (
+              <div key={car.id} className={styles.carCard}>
+                <div className={styles.carousel}>
+                  <img
+                    src={imagesArray[currentImageIndex]}
+                    alt={`${car.make} ${car.model}`}
+                    className={styles.carImage}
+                  />
+                  <button className={styles.arrowLeft} onClick={() => handlePreviousImage(car.id, totalImages)}>&#8249;</button>
+                  <button className={styles.arrowRight} onClick={() => handleNextImage(car.id, totalImages)}>&#8250;</button>
+                </div>
+                <div className={styles.carDetails}>
+                  <h3>{car.year} {car.make} {car.model}</h3>
+                  <p><strong>Price:</strong> ${car.price}</p>
+                  <p><strong>Mileage:</strong> {car.odometer} miles</p>
+                  <p><strong>Condition:</strong> {car.titleStatus}</p>
+                  <p><strong>Engine:</strong> {car.engineSize}</p>
+                  <p><strong>Color:</strong> {car.color}</p>
+                </div>
               </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
     </div>

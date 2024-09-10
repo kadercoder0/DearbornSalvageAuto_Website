@@ -22,4 +22,39 @@ table {
     display: block;
     margin: 0 auto;
   }
+  .carousel {
+    position: relative;
+    width: 150px;
+    height: 100px;
+  }
+  
+  .carousel img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .arrowLeft, .arrowRight {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+  }
+  
+  .arrowLeft {
+    left: 0;
+  }
+  
+  .arrowRight {
+    right: 0;
+  }
+  
+  .arrowLeft:hover, .arrowRight:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
   
