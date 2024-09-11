@@ -3,8 +3,8 @@ import Modal from 'react-modal'; // Import React Modal
 import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db, storage } from '../../firebase'; // Import Firestore and Storage
-import styles from "/Users/mohammedhaidous/Downloads/Developer/DearbornSalvageAuto_Website/webapp/src/Features/adminDashboard/managelistings.module.css";
-import "/Users/mohammedhaidous/Downloads/Developer/DearbornSalvageAuto_Website/webapp/src/Features/adminDashboard/managelistings.module.css";
+import styles from "./managelistings.module.css";
+import "./managelistings.module.css";
 import { useNavigate } from 'react-router-dom';
 
 Modal.setAppElement('#root');
