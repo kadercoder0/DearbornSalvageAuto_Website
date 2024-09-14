@@ -13,6 +13,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 30px;
+  transition: width 0.3s ease;
 }
 
 .navbar {
@@ -36,8 +37,16 @@ body {
   text-align: center;
   color: #333;
   font-size: 28px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-weight: bold;
+}
+
+.intro-text {
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 40px;
+  line-height: 1.6;
 }
 
 .faq-section {
@@ -45,6 +54,7 @@ body {
 }
 
 .faq-question {
+  position: relative;
   padding: 20px 0;
   border-bottom: 1px solid #ddd;
   cursor: pointer;
@@ -55,6 +65,16 @@ body {
   font-size: 18px;
   color: #333;
   margin: 0;
+  display: inline-block;
+}
+
+.arrow {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #007bff;
 }
 
 .faq-answer {
@@ -65,14 +85,24 @@ body {
   display: none;
 }
 
-.faq-question:hover {
-  background-color: #f9f9f9;
-}
-
-.faq-answer {
+.faq-question.active .faq-answer {
   display: block;
   background-color: #f7f7f7;
   padding: 15px;
   border-radius: 5px;
   margin-top: 10px;
+}
+
+.faq-question:hover {
+  background-color: #f9f9f9;
+}
+
+.faq-question.active .arrow {
+  color: #333;
+}
+
+@media screen and (max-width: 768px) {
+  .faq-container {
+    width: 90%;
+  }
 }
