@@ -1,94 +1,55 @@
 import { Link } from 'react-router-dom'; 
-import React, { useState, useEffect } from 'react';
-import { db, auth } from '../../firebase'; 
-import { collection, addDoc, serverTimestamp, onSnapshot } from 'firebase/firestore';
-import { format } from 'date-fns';
-import styles from './faq.module.css'; // Assuming you want to move the styles to a separate CSS file
+import React, { useState } from 'react';
+import './faq.css';
 
 const FAQ = () => {
-  const [questionText, setQuestionText] = useState('');
-  const [questions, setQuestions] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(null);
 
-  useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, 'questions'), (snapshot) => {
-      const questionsData = snapshot.docs.map(doc => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          ...data,
-          formattedTimestamp: data.timestamp ? format(data.timestamp.toDate(), 'MMMM dd, yyyy HH:mm') : null,
-          formattedResponseTimestamp: data.responseTimestamp ? format(data.responseTimestamp.toDate(), 'MMMM dd, yyyy HH:mm') : null,
-        };
-      });
-      setQuestions(questionsData);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const currentUser = auth.currentUser;
-
-    if (!currentUser) {
-      alert('You must be logged in to submit a question.');
-      return;
-    }
-
-    try {
-      await addDoc(collection(db, 'questions'), {
-        uid: currentUser.uid,
-        questionText: questionText,
-        responseText: '',
-        timestamp: serverTimestamp(),
-        responseTimestamp: null, // Initially null since there's no response yet
-      });
-      setQuestionText('');
-      alert('Your question has been submitted.');
-    } catch (error) {
-      console.error('Error submitting question: ', error);
-      alert('There was an error submitting your question.');
+  const toggleFAQ = (index) => {
+    if (activeIndex === index) {
+      setActiveIndex(null);
+    } else {
+      setActiveIndex(index);
     }
   };
 
   return (
-    <div className={styles.faqContainer}>
-      <h2>Frequently Asked Questions</h2>
-      
-      {/* Display existing FAQs */}
-      <div className={styles.questionList}>
-        {questions.length > 0 ? (
-          questions.map((question) => (
-            <div key={question.id} className={styles.questionBlock}>
-              <p><strong>Question:</strong> {question.questionText}</p>
-              {question.formattedTimestamp && <p><em>Asked on {question.formattedTimestamp}</em></p>}
-              <p>
-                <strong>Response:</strong> {question.responseText 
-                  ? `System Admin: ${question.responseText} on ${question.formattedResponseTimestamp}` 
-                  : 'No response yet'}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p>No questions have been asked yet.</p>
-        )}
+    <div className="faq-container">
+      <nav className="navbar">
+        <Link to="/home" className="nav-link">Back to Home</Link>
+      </nav>
+
+      <h1 className="faq-title">Frequently Asked Questions</h1>
+
+      <div className="faq-section">
+        <div className="faq-question" onClick={() => toggleFAQ(0)}>
+          <h3>What cars do you offer for sale?</h3>
+          {activeIndex === 0 && (
+            <p className="faq-answer">We offer a variety of rebuilt cars, including sedans, SUVs, and trucks, all sourced from auctions and expertly repaired.</p>
+          )}
+        </div>
+
+        <div className="faq-question" onClick={() => toggleFAQ(1)}>
+          <h3>How are the cars repaired?</h3>
+          {activeIndex === 1 && (
+            <p className="faq-answer">Each car is thoroughly inspected and repaired by certified technicians to ensure it meets safety and performance standards.</p>
+          )}
+        </div>
+
+        <div className="faq-question" onClick={() => toggleFAQ(2)}>
+          <h3>Can I test drive the car before buying?</h3>
+          {activeIndex === 2 && (
+            <p className="faq-answer">Yes, we offer test drives for all vehicles at our location. Contact us to schedule an appointment.</p>
+          )}
+        </div>
+
+        <div className="faq-question" onClick={() => toggleFAQ(3)}>
+          <h3>What is your return policy?</h3>
+          {activeIndex === 3 && (
+            <p className="faq-answer">We provide a 7-day return policy on all vehicles if they do not meet your satisfaction.</p>
+          )}
+        </div>
       </div>
-      
-      {/* Form to submit a new question */}
-      <form onSubmit={handleSubmit} className={styles.submitForm}>
-        <textarea
-          value={questionText}
-          onChange={(e) => setQuestionText(e.target.value)}
-          placeholder="Have a question? Ask here..."
-          required
-          className={styles.textarea}
-        />
-        <button type="submit" className={styles.submitButton}>
-          Submit Question
-        </button>
-        <Link to="/home" className={styles.backLink}>Back to Home</Link>
-      </form>
     </div>
   );
 };
