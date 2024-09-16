@@ -108,6 +108,7 @@ const AdminProfile = () => {
           onChange={handleCurrentPasswordChange} 
           className="input"
         />
+        <br />
         <input 
           type="password" 
           placeholder="New Password" 
@@ -115,6 +116,7 @@ const AdminProfile = () => {
           onChange={handleNewPasswordChange} 
           className="input"
         />
+        <br />
         <button className="button" onClick={handlePasswordUpdate}>Update Password</button>
       </div>
 
