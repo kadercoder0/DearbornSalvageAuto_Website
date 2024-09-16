@@ -62,12 +62,12 @@ const Inventory = () => {
   };
 
   // Slideshow logic for each car's image set
-  const handleNextImage = (carId, totalImages) => {
-    setImageIndexes((prevIndexes) => ({
-      ...prevIndexes,
-      [carId]: (prevIndexes[carId] === undefined ? 1 : (prevIndexes[carId] + 1) % totalImages), // Cycle through images
-    }));
-  };
+const handleNextImage = (carId, totalImages) => {
+  setImageIndexes((prevIndexes) => ({
+    ...prevIndexes,
+    [carId]: (prevIndexes[carId] === undefined ? 1 : (prevIndexes[carId] + 1) % totalImages),
+  }));
+};
 
   const handlePreviousImage = (carId, totalImages) => {
     setImageIndexes((prevIndexes) => ({
