@@ -12,12 +12,7 @@ const Home = () => {
   };
 
   return (
-    <div className="home-container">
-      {/* Login button at the top right */}
-      <button onClick={handleLogin} className="login-button">
-        Login
-      </button>
-
+    <div className="home-container">      
       <h1 className="home-title">Dearborn Salvage Auto</h1>
       
       <p className="home-subtitle">Quality Cars that Don't Break your Bank!</p>
