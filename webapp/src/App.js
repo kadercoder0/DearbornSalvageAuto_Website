@@ -14,12 +14,9 @@ import FAQ from './Features/user/faq';
 import ForgotPassword from './Features/auth/LoginSignup/forgotPassword';
 
 // Importing Admin Dashboard components
-import DashboardHome from './Features/adminDashboard/DashboardHome';
 import ManageListings from './Features/adminDashboard/managelistings';
-import ViewUsers from './Features/adminDashboard/viewUsers';
 import ViewListing from './Features/adminDashboard/viewListings';
 import AdminProfile from './Features/adminDashboard/adminProfile';
-import ManageFAQs from './Features/adminDashboard/manageFaqs';
 
 // Importing the PrivateRoute component
 import PrivateRoute from './Features/auth/privateRoute';
@@ -47,26 +44,10 @@ function App() {
 
             {/* Admin Routes */}
             <Route
-              path="/admin/dashboard"
-              element={
-                <PrivateRoute adminOnly>
-                  <DashboardHome />
-                </PrivateRoute>
-              }
-            />
-            <Route
               path="/admin/managelistings"
               element={
                 <PrivateRoute adminOnly>
                   <ManageListings />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/viewusers"
-              element={
-                <PrivateRoute adminOnly>
-                  <ViewUsers />
                 </PrivateRoute>
               }
             />
@@ -83,14 +64,6 @@ function App() {
               element={
                 <PrivateRoute adminOnly>
                   <AdminProfile />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/manageFaqs"
-              element={
-                <PrivateRoute adminOnly>
-                  <ManageFAQs />
                 </PrivateRoute>
               }
             />

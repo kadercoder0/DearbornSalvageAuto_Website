@@ -71,6 +71,7 @@ table img {
   transition: background-color 0.3s ease;
 }
 
+
 .editButton:hover {
   background-color: #2980b9; /* Darker blue on hover */
 }
@@ -86,3 +87,25 @@ table img {
   object-fit: cover; /* Ensure image fits in container */
 }
 
+.containter{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px; /* Adjust as needed for spacing */
+  position: relative;
+}
+
+.profileIcon{
+  position: absolute;
+  top: 20px;  /* Adjust the position as needed */
+  right: 20px;
+  color: #289ed8; /* Profile icon color */
+  font-size: 24px; /* Profile icon size */
+  cursor: pointer; /* Pointer on hover */
+}
+
+.h2{
+  color: green;
+  margin: 0; /* Remove default margin */
+  font-size: 24px; /* Adjust as necessary */
+}
