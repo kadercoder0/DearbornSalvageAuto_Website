@@ -23,7 +23,7 @@ const Login = () => {
 
         // Redirect based on admin status
         if (isAdmin) {
-          navigate('/admin/dashboard'); // Redirect to admin dashboard if the user is an admin
+          navigate('/admin/managelistings'); // Redirect to listings manager if the user is an admin
         } else {
           navigate('/home'); // Redirect to home page if the user is not an admin
         }

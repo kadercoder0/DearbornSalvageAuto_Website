@@ -22,7 +22,7 @@ const FAQ = () => {
       <h1 className="faq-title">Frequently Asked Questions</h1>
 
       <p className="intro-text">
-        At Dearborn Salvage Auto, we believe that finding the right vehicle should be hassle-free and enjoyable.
+        At Greenfield Auto Center, we believe that finding the right vehicle should be hassle-free and enjoyable.
         That’s why we offer expertly rebuilt cars from auctions, ensuring they meet all safety and performance
         standards. Whether you're looking for a family SUV, a durable truck, or a stylish sedan, we have it all.
       </p>

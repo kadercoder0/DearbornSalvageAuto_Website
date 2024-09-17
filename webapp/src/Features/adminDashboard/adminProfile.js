@@ -86,9 +86,6 @@ const AdminProfile = () => {
 
   return (
     <div>
-      <h1>
-        <Link to="/admin/dashboard" className="nav-link">Back to Dashboard</Link>
-      </h1>
       <h2>Profile</h2>
       <button className="button" onClick={handleLogout}>Logout</button>
 
@@ -119,14 +116,17 @@ const AdminProfile = () => {
         <br />
         <button className="button" onClick={handlePasswordUpdate}>Update Password</button>
       </div>
-
       {showSuccessAlert && (
         <div className="alert">
           <span className="closebtn" onClick={() => setShowSuccessAlert(false)}>&times;</span> 
           Password updated successfully!
         </div>
       )}
-    </div>
+      
+      <h2>
+      <Link to="/admin/managelistings" className="nav-link"> View Inventory</Link>
+      </h2>
+      </div>
   );
 };
 
