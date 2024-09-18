@@ -1,45 +1,59 @@
 /* Inventory Page Wrapper */
 .inventoryPage {
   display: flex;
-  flex-direction: column;
+  gap: 20px;
   background-color: #f5f5f5;
-  padding-top: 230px; /* Add space for the search bar */
+  padding-top: 140px; /* Space for the fixed header */
+  overflow-x: hidden; /* Prevents horizontal scrolling */
+  margin: 0 auto; /* Centers the page content */
+  max-width: 1200px; /* Adjusts the content width */
 }
 
-/* Search Bar Section */
+/* Filter Sidebar */
 .searchFilterContainer {
-  width: 100%;
-  padding: 20px;
-  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 230px;
+  background-color: #ffffff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  top: 140px; /* Ensures it starts below the header */
+  height: fit-content;
+  margin-left: 0; /* Aligns properly with the page */
 }
 
+/* Filter Input Styling */
 .searchFilters {
   display: flex;
+  flex-direction: column;
   gap: 10px;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
 }
 
+/* Input Field Styling */
 .searchInput {
-  padding: 10px;
-  font-size: 16px;
+  padding: 8px;
+  font-size: 14px;
   border-radius: 4px;
   border: 1px solid #ccc;
-  min-width: 150px;
+  width: 100%; /* Full width within the sidebar */
+  box-sizing: border-box; /* Includes padding and border in width */
+  margin-bottom: 10px;
 }
 
+/* Search Button Styling */
 .searchButton {
-  padding: 10px 20px;
+  padding: 8px 16px;
   background-color: #007bff;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 4px;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Makes the button fit the width of the filter section */
 }
 
 .searchButton:hover {
@@ -48,46 +62,95 @@
 
 /* Car Listings Section */
 .carListingsContainer {
-  display: grid;
-  justify-content: center; /* Center the grid horizontally */
-  width: 95%; /* Full width */
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Keep the grid layout */
-  gap: 30px;
-  margin-top: 100px; /* Create space between the search bar and listings */
-  padding: 0 20px; /* Add some padding to prevent content from sticking to edges */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 1;
+  padding: 0 20px;
+  margin-top: 0; /* Aligns car listings right under the filter */
+  overflow-y: auto; /* Allows scrolling if content overflows vertically */
 }
 
-
+/* Car Card Styling */
 .carCard {
+  display: flex;
+  gap: 15px;
+  background-color: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  align-items: center;
 }
 
-.carCard:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+/* Image Container */
+.imageContainer {
+  position: relative;
+  width: 150px; /* Small but visible size */
+  height: 100px;
+  margin-right: 15px; /* Adds space between the image and details */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carImage {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
+  border-radius: 4px;
 }
 
+/* Arrows for Image Navigation */
+.arrowLeft, .arrowRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.arrowLeft {
+  left: 5px;
+}
+
+.arrowRight {
+  right: 5px;
+}
+
+.arrowLeft:hover, .arrowRight:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Car Details */
 .carDetails {
-  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1; /* Allows details to take the remaining space */
 }
 
 .carDetails h3 {
-  margin-top: 0;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
+  margin: 0;
 }
 
 .carDetails p {
-  margin: 5px 0;
-  font-size: 1rem;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
 }
 
 /* Carousel Styling */
@@ -96,7 +159,7 @@
   width: 100%;
   height: 200px;
   overflow: hidden;
-  transition: opacity 0.5s ease-in-out; /* Added smooth transition effect */
+  transition: opacity 0.5s ease-in-out;
 }
 
 .carousel img {
@@ -109,19 +172,19 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5); /* Updated for a darker background */
-  color: white; /* Changed to white for better contrast */
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
   border: none;
   cursor: pointer;
   padding: 10px;
-  border-radius: 50%; /* Circular arrows */
-  width: 30px; /* Fixed width for circle */
-  height: 30px; /* Fixed height for circle */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-  transition: background-color 0.3s ease; /* Smooth transition on hover */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
 }
 
 .arrowLeft {
@@ -133,5 +196,67 @@
 }
 
 .arrowLeft:hover, .arrowRight:hover {
-  background-color: rgba(0, 0, 0, 0.7); /* Darker on hover for better interactivity */
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Header Styling */
+.header {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: fixed; /* Fixes the header at the top */
+  top: 0;
+  z-index: 1000; /* Keeps the header above other content */
+  left: 0; /* Ensures header spans the full width */
+}
+
+/* Header Content */
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+  margin: 0 auto; /* Centers the header content */
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.contactInfo {
+  text-align: right;
+}
+
+/* Navigation Styling */
+.nav {
+  margin-top: 10px;
+  background-color: #007bff;
+  width: 110%;
+  display: flex;
+  justify-content: center;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+}
+
+.nav a:hover {
+  background-color: #0056b3;
+  border-radius: 4px;
 }
