@@ -1,7 +1,8 @@
+// Existing imports
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../../firebase'; // Import Firestore
-import styles from './inventory.module.css'; // Import the CSS for styling
+import { db } from '../../../firebase';
+import styles from './inventory.module.css';
 
 const Inventory = () => {
   const [carListings, setCarListings] = useState([]);
@@ -12,43 +13,38 @@ const Inventory = () => {
     year: '',
     minPrice: '',
     maxPrice: '',
-    condition: ''
+    condition: '',
   });
 
-  // Store image indexes for each car by its ID
   const [imageIndexes, setImageIndexes] = useState({});
 
-  // Fetch car listings from Firestore
   const fetchCarListings = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, 'carListings'));
-      const cars = querySnapshot.docs.map(doc => ({
+      const cars = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setCarListings(cars);
-      setFilteredCars(cars); // Set both carListings and filteredCars to the fetched data
+      setFilteredCars(cars);
     } catch (error) {
       console.error('Error fetching car listings: ', error);
     }
   };
 
-  // Call fetchCarListings when the component mounts
   useEffect(() => {
     fetchCarListings();
   }, []);
 
-  // Handle input changes for the search filter
   const handleInputChange = (e) => {
     setSearchFilters({
       ...searchFilters,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  // Filter the cars based on the search filters
   const handleSearch = () => {
-    let filtered = carListings.filter(car => {
+    let filtered = carListings.filter((car) => {
       return (
         (searchFilters.make === '' || car.make.toLowerCase().includes(searchFilters.make.toLowerCase())) &&
         (searchFilters.model === '' || car.model.toLowerCase().includes(searchFilters.model.toLowerCase())) &&
@@ -61,26 +57,45 @@ const Inventory = () => {
     setFilteredCars(filtered);
   };
 
-  // Slideshow logic for each car's image set
-const handleNextImage = (carId, totalImages) => {
-  setImageIndexes((prevIndexes) => ({
-    ...prevIndexes,
-    [carId]: (prevIndexes[carId] === undefined ? 1 : (prevIndexes[carId] + 1) % totalImages),
-  }));
-};
+  const handleNextImage = (carId, totalImages) => {
+    setImageIndexes((prevIndexes) => ({
+      ...prevIndexes,
+      [carId]: (prevIndexes[carId] === undefined ? 1 : (prevIndexes[carId] + 1) % totalImages),
+    }));
+  };
 
   const handlePreviousImage = (carId, totalImages) => {
     setImageIndexes((prevIndexes) => ({
       ...prevIndexes,
-      [carId]: (prevIndexes[carId] === undefined ? totalImages - 1 : (prevIndexes[carId] - 1 + totalImages) % totalImages), // Cycle back through images
+      [carId]: (prevIndexes[carId] === undefined ? totalImages - 1 : (prevIndexes[carId] - 1 + totalImages) % totalImages),
     }));
   };
 
   return (
     <div className={styles.inventoryPage}>
+    {/* Header Section */}
+    <header className={styles.header}>
+      <div className={styles.headerContent}>
+        <h1 className={styles.logo}>Dearborn Salvage Auto</h1>
+        <div className={styles.contactInfo}>
+          <p>1234 N. Telegraph Road, Dearborn, MI 48127</p>
+          <p>(555) 123-4567</p>
+        </div>
+      </div>
+      <nav className={styles.nav}>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
       {/* Search Bar Section */}
       <div className={styles.searchFilterContainer}>
         <div className={styles.searchFilters}>
+
+          
+          {/* Search Inputs */}
           <input
             type="text"
             name="make"
@@ -137,11 +152,12 @@ const handleNextImage = (carId, totalImages) => {
           filteredCars.map((car) => {
             const imagesArray = [car.images?.outside, car.images?.interiorDash, car.images?.backSeat];
             const totalImages = imagesArray.length;
-            const currentImageIndex = imageIndexes[car.id] || 0; // Default to 0 if undefined
+            const currentImageIndex = imageIndexes[car.id] || 0;
 
             return (
               <div key={car.id} className={styles.carCard}>
-                <div className={styles.carousel}>
+                {/* Image Section */}
+                <div className={styles.imageContainer}>
                   <img
                     src={imagesArray[currentImageIndex]}
                     alt={`${car.make} ${car.model}`}
@@ -150,6 +166,8 @@ const handleNextImage = (carId, totalImages) => {
                   <button className={styles.arrowLeft} onClick={() => handlePreviousImage(car.id, totalImages)}>&#8249;</button>
                   <button className={styles.arrowRight} onClick={() => handleNextImage(car.id, totalImages)}>&#8250;</button>
                 </div>
+
+                {/* Car Details Section */}
                 <div className={styles.carDetails}>
                   <h3>{car.year} {car.make} {car.model}</h3>
                   <p><strong>Price:</strong> ${car.price}</p>
