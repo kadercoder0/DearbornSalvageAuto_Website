@@ -150,7 +150,8 @@ const Inventory = () => {
           <p>No cars available.</p>
         ) : (
           filteredCars.map((car) => {
-            const imagesArray = [car.images?.outside, car.images?.interiorDash, car.images?.backSeat];
+            // Assuming the images are stored as an array
+            const imagesArray = car.images || []; // Retrieve the array of images
             const totalImages = imagesArray.length;
             const currentImageIndex = imageIndexes[car.id] || 0;
 
