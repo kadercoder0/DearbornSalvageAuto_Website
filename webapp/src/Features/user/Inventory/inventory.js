@@ -157,8 +157,7 @@ const Inventory = () => {
 
             return (
               <div key={car.id} className={styles.carCard}>
-                {/* Image Section */}
-                <div className={styles.imageContainer}>
+                <div className={styles.carousel}>
                   <img
                     src={imagesArray[currentImageIndex]}
                     alt={`${car.make} ${car.model}`}
