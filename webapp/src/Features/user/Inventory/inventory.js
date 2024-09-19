@@ -135,20 +135,37 @@ const Inventory = () => {
           <p>No cars available.</p>
         ) : (
           filteredCars.map((car) => {
-            const imagesArray = [car.images?.outside, car.images?.interiorDash, car.images?.backSeat];
+            // Assuming the images are stored as an array
+            const imagesArray = car.images || []; // Retrieve the array of images
             const totalImages = imagesArray.length;
             const currentImageIndex = imageIndexes[car.id] || 0; // Default to 0 if undefined
 
             return (
               <div key={car.id} className={styles.carCard}>
                 <div className={styles.carousel}>
-                  <img
-                    src={imagesArray[currentImageIndex]}
-                    alt={`${car.make} ${car.model}`}
-                    className={styles.carImage}
-                  />
-                  <button className={styles.arrowLeft} onClick={() => handlePreviousImage(car.id, totalImages)}>&#8249;</button>
-                  <button className={styles.arrowRight} onClick={() => handleNextImage(car.id, totalImages)}>&#8250;</button>
+                  {totalImages > 0 ? (
+                    <>
+                      <img
+                        src={imagesArray[currentImageIndex]}
+                        alt={`${car.make} ${car.model}`}
+                        className={styles.carImage}
+                      />
+                      <button
+                        className={styles.arrowLeft}
+                        onClick={() => handlePreviousImage(car.id, totalImages)}
+                      >
+                        &#8249;
+                      </button>
+                      <button
+                        className={styles.arrowRight}
+                        onClick={() => handleNextImage(car.id, totalImages)}
+                      >
+                        &#8250;
+                      </button>
+                    </>
+                  ) : (
+                    <p>No images available</p>
+                  )}
                 </div>
                 <div className={styles.carDetails}>
                   <h3>{car.year} {car.make} {car.model}</h3>

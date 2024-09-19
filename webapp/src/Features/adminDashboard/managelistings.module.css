@@ -1,16 +1,24 @@
 /* Table wrapper to control overflow */
 .tableWrapper {
-  overflow-y: auto; /* Enable vertical scrolling */
-  max-height: 60vh; /* Limit the table height to 60% of the viewport */
-  padding: 20px; /* Add padding for better spacing */
-  margin-top: 20px; /* Space between table and other content */
-  border: 1px solid #ccc; /* Optional: Add a border to distinguish table */
+  overflow-y: auto;
+  max-height: 80vh; /* Increase height to 80% of the viewport */
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid #ccc;
 }
 
 table {
-  width: 100%;
+  width: 100%; /* Ensure the table takes full width */
   border-collapse: collapse;
 }
+
+.profileIcon{ 
+  position: absolute; 
+  top: 20px;  /* Adjust the position as needed */ 
+  right: 20px; color: #289ed8; /* Profile icon color */ 
+  font-size: 24px; /* Profile icon size */ 
+  cursor: pointer; /* Pointer on hover */ 
+  }
 
 thead {
   background-color: #f8f9fa;
@@ -18,7 +26,7 @@ thead {
 
 th, td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px; /* Increase padding for bigger cells */
   text-align: center;
 }
 
@@ -27,85 +35,85 @@ th {
   font-weight: bold;
 }
 
-/* Limit the size of car images */
+/* Make the images larger in the table */
 table img {
-  max-width: 100px; /* Limit the image width inside the table */
-  height: auto; /* Maintain aspect ratio */
+  max-width: 200px; /* Increase image width */
+  height: auto;
   display: block;
-  margin: 0 auto; /* Center images */
+  margin: 0 auto;
+  border-radius: 8px; /* Optional: rounded corners for images */
 }
 
-.deleteButton {
-  background-color: #e74c3c; /* Red background */
-  color: white; /* White icon */
+/* Move the arrows onto the image */
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 200px; /* Ensure this matches the height of your images */
+  overflow: hidden;
+}
+
+.carousel img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.arrowLeft, .arrowRight {
+  position: absolute; 
+  top: 50%; 
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.8); 
+  color: #333;
   border: none;
   cursor: pointer;
-  padding: 5px 10px;
-  border-radius: 50%; /* Circular button */
-  font-size: 18px;
-  width: 30px; /* Fixed width for circle */
-  height: 30px; /* Fixed height for circle */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease;
-}
-
-.deleteButton:hover {
-  background-color: #c0392b; /* Darker red on hover */
-}
-
-.editButton {
-  background-color: #3498db; /* Blue background */
-  color: white;
-  border: none;
-  cursor: pointer;
-  padding: 5px 10px;
+  padding: 10px;
   border-radius: 50%;
-  font-size: 18px;
-  width: 30px;
+  width: 30px; 
   height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.arrowLeft {
+  left: 10px;
+}
+
+.arrowRight {
+  right: 10px;
+}
+
+.arrowLeft:hover, .arrowRight:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+
+/* Adjust the action buttons */
+.deleteButton, .editButton {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 18px;
+  width: 40px; /* Larger button size */
+  height: 40px; /* Larger button size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background-color 0.3s ease;
 }
 
+.editButton {
+  background-color: #3498db;
+}
+
+.deleteButton:hover {
+  background-color: #c0392b;
+}
 
 .editButton:hover {
-  background-color: #2980b9; /* Darker blue on hover */
-}
-
-
-/* Add this to your CSS file */
-.editImage {
-  width: 100px; /* Adjust the width */
-  height: auto; /* Maintain aspect ratio */
-  margin: 10px 0; /* Add some space around the image */
-  border: 1px solid #ddd; /* Optional: Add border */
-  border-radius: 5px; /* Optional: Rounded corners */
-  object-fit: cover; /* Ensure image fits in container */
-}
-
-.containter{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px; /* Adjust as needed for spacing */
-  position: relative;
-}
-
-.profileIcon{
-  position: absolute;
-  top: 20px;  /* Adjust the position as needed */
-  right: 20px;
-  color: #289ed8; /* Profile icon color */
-  font-size: 24px; /* Profile icon size */
-  cursor: pointer; /* Pointer on hover */
-}
-
-.h2{
-  color: green;
-  margin: 0; /* Remove default margin */
-  font-size: 24px; /* Adjust as necessary */
+  background-color: #2980b9;
 }
