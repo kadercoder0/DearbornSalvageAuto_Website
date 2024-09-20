@@ -78,8 +78,8 @@ const Inventory = () => {
       <div className={styles.headerContent}>
         <h1 className={styles.logo}>Dearborn Salvage Auto</h1>
         <div className={styles.contactInfo}>
-          <p>1234 N. Telegraph Road, Dearborn, MI 48127</p>
-          <p>(555) 123-4567</p>
+          <p>14041 Greenfield Rd, Detroit, MI, United States</p>
+          <p>+1 (313)203-6018</p>
         </div>
       </div>
       <nav className={styles.nav}>
@@ -157,7 +157,8 @@ const Inventory = () => {
 
             return (
               <div key={car.id} className={styles.carCard}>
-                <div className={styles.carousel}>
+                {/* Image Section */}
+                <div className={styles.imageContainer}>
                   <img
                     src={imagesArray[currentImageIndex]}
                     alt={`${car.make} ${car.model}`}
