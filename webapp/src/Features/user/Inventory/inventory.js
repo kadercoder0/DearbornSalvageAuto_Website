@@ -131,15 +131,7 @@ const Inventory = () => {
             onChange={handleInputChange}
             className={styles.searchInput}
           />
-          <select
-            name="condition"
-            onChange={handleInputChange}
-            className={styles.searchInput}
-          >
-            <option value="">Condition</option>
-            <option value="clean">Clean</option>
-            <option value="salvage">Salvage</option>
-          </select>
+
           <button onClick={handleSearch} className={styles.searchButton}>Search</button>
         </div>
       </div>
@@ -173,7 +165,6 @@ const Inventory = () => {
                   <h3>{car.year} {car.make} {car.model}</h3>
                   <p><strong>Price:</strong> ${car.price}</p>
                   <p><strong>Mileage:</strong> {car.odometer} miles</p>
-                  <p><strong>Condition:</strong> {car.titleStatus}</p>
                   <p><strong>Engine:</strong> {car.engineSize}</p>
                   <p><strong>Color:</strong> {car.color}</p>
                 </div>
