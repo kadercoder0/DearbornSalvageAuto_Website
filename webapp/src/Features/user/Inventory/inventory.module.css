@@ -326,3 +326,44 @@ html {
 .toggleButton:hover {
   background-color: #0056b3;
 }
+
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+  .carListingsContainer {
+    grid-template-columns: 1fr; /* Stacks items vertically */
+    padding: 10px;
+    gap: 15px;
+  }
+
+  .carCard {
+    width: 100%;
+    max-width: none; /* Remove max-width constraint */
+    height: auto; /* Allow the height to adjust based on content */
+  }
+
+  .imageContainer {
+    height: 250px; /* Increase height for better image visibility */
+  }
+
+  .carDetails {
+    padding: 10px 5px; /* Adjust padding for better use of space on mobile */
+  }
+  .videoSection {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  /* Video Element */
+  .backgroundVideo {
+    position: relative;
+    top: 0; /* Adjust to make sure video starts at the top */
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    transform: translateX(-50%);
+  }
+}
