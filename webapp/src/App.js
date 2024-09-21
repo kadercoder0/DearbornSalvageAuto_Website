@@ -37,7 +37,7 @@ function App() {
             <Route path="/reset" element={<ForgotPassword />} />
             
             {/* Redirect root to home */}
-            <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="/" element={<Navigate to="/inventory" />} />
             
             {/* Admin Login Route */}
             <Route path="/login" element={<Login />} />
