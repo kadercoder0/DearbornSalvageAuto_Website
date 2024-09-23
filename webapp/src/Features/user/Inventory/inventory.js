@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import styles from './inventory.module.css';
-import testVideo from './images/test4-1542298376.mp4';
+import testVideo from '../../../Assets/test4-1542298376.mp4';
 
 const Inventory = () => {
   const [carListings, setCarListings] = useState([]);
