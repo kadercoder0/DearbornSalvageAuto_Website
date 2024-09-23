@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'; 
+
 import React, { useState } from 'react';
 import './faq.css';
 
@@ -15,9 +15,7 @@ const FAQ = () => {
 
   return (
     <div className="faq-container">
-      <nav className="navbar">
-        <Link to="/home" className="nav-link">Back to Home</Link>
-      </nav>
+
 
       <h1 className="faq-title">Frequently Asked Questions</h1>
 

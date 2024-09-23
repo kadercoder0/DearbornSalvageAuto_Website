@@ -1,8 +1,8 @@
-// Existing imports
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import styles from './inventory.module.css';
+import testVideo from './images/test4-1542298376.mp4';
 
 const Inventory = () => {
   const [carListings, setCarListings] = useState([]);
@@ -15,10 +15,14 @@ const Inventory = () => {
     maxPrice: '',
     condition: '',
   });
-
   const [imageIndexes, setImageIndexes] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showFilters, setShowFilters] = useState(false); // State for toggling filters
 
   const fetchCarListings = async () => {
+    setLoading(true);
+    setError(null);
     try {
       const querySnapshot = await getDocs(collection(db, 'carListings'));
       const cars = querySnapshot.docs.map((doc) => ({
@@ -28,7 +32,9 @@ const Inventory = () => {
       setCarListings(cars);
       setFilteredCars(cars);
     } catch (error) {
-      console.error('Error fetching car listings: ', error);
+      setError('Error fetching car listings. Please try again later.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -45,16 +51,29 @@ const Inventory = () => {
 
   const handleSearch = () => {
     let filtered = carListings.filter((car) => {
+      const { make, model, year, minPrice, maxPrice, condition } = searchFilters;
       return (
-        (searchFilters.make === '' || car.make.toLowerCase().includes(searchFilters.make.toLowerCase())) &&
-        (searchFilters.model === '' || car.model.toLowerCase().includes(searchFilters.model.toLowerCase())) &&
-        (searchFilters.year === '' || car.year.toLowerCase().includes(searchFilters.year.toLowerCase())) &&
-        (searchFilters.minPrice === '' || car.price >= parseInt(searchFilters.minPrice)) &&
-        (searchFilters.maxPrice === '' || car.price <= parseInt(searchFilters.maxPrice)) &&
-        (searchFilters.condition === '' || car.titleStatus.toLowerCase() === searchFilters.condition.toLowerCase())
+        (!make || car.make.toLowerCase().includes(make.toLowerCase())) &&
+        (!model || car.model.toLowerCase().includes(model.toLowerCase())) &&
+        (!year || car.year.toString().includes(year)) &&
+        (!minPrice || car.price >= parseInt(minPrice)) &&
+        (!maxPrice || car.price <= parseInt(maxPrice)) &&
+        (!condition || car.titleStatus.toLowerCase() === condition.toLowerCase())
       );
     });
     setFilteredCars(filtered);
+  };
+
+  const resetSearch = () => {
+    setSearchFilters({
+      make: '',
+      model: '',
+      year: '',
+      minPrice: '',
+      maxPrice: '',
+      condition: '',
+    });
+    setFilteredCars(carListings);
   };
 
   const handleNextImage = (carId, totalImages) => {
@@ -73,114 +92,134 @@ const Inventory = () => {
 
   return (
     <div className={styles.inventoryPage}>
-    {/* Header Section */}
-    <header className={styles.header}>
-      <div className={styles.headerContent}>
-        <h1 className={styles.logo}>Dearborn Salvage Auto</h1>
-        <div className={styles.contactInfo}>
-          <p>14041 Greenfield Rd, Detroit, MI, United States</p>
-          <p>+1 (313)203-6018</p>
+      <header className={styles.header}>
+        <div className={styles.headerContent}>
+          <h1 className={styles.logo}>Dearborn Salvage Auto</h1>
+          <div className={styles.contactInfo}>
+            <p>14041 Greenfield Rd, Detroit, MI, United States</p>
+            <p>+1 (313)203-6018</p>
+          </div>
         </div>
-      </div>
-      <nav className={styles.nav}>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About Us</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </nav>
-    </header>
-      {/* Search Bar Section */}
-      <div className={styles.searchFilterContainer}>
-        <div className={styles.searchFilters}>
+        <nav className={styles.nav}>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/faq">FAQ</a></li>
+          </ul>
+        </nav>
+      </header>
 
-          
-          {/* Search Inputs */}
-          <input
-            type="text"
-            name="make"
-            placeholder="Make"
-            onChange={handleInputChange}
-            className={styles.searchInput}
-          />
-          <input
-            type="text"
-            name="model"
-            placeholder="Model"
-            onChange={handleInputChange}
-            className={styles.searchInput}
-          />
-          <input
-            type="number"
-            name="year"
-            placeholder="Year"
-            onChange={handleInputChange}
-            className={styles.searchInput}
-          />
-          <input
-            type="number"
-            name="minPrice"
-            placeholder="Min Price"
-            onChange={handleInputChange}
-            className={styles.searchInput}
-          />
-          <input
-            type="number"
-            name="maxPrice"
-            placeholder="Max Price"
-            onChange={handleInputChange}
-            className={styles.searchInput}
-          />
-          <select
-            name="condition"
-            onChange={handleInputChange}
-            className={styles.searchInput}
-          >
-            <option value="">Condition</option>
-            <option value="clean">Clean</option>
-            <option value="salvage">Salvage</option>
-          </select>
-          <button onClick={handleSearch} className={styles.searchButton}>Search</button>
-        </div>
+      <div className={styles.videoSection}>
+        <video
+          className={styles.backgroundVideo}
+          src={testVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        />
       </div>
 
-      {/* Car Listings Section */}
+      <button className={styles.toggleButton} onClick={() => setShowFilters(!showFilters)}>
+        {showFilters ? 'Hide Filters' : 'Show Filters'}
+      </button>
+
+      {showFilters && (
+        <div className={styles.searchFilterContainer}>
+          <div className={styles.searchFilters}>
+            <input
+              type="text"
+              name="make"
+              placeholder="Make"
+              value={searchFilters.make}
+              onChange={handleInputChange}
+              className={styles.searchInput}
+            />
+            <input
+              type="text"
+              name="model"
+              placeholder="Model"
+              value={searchFilters.model}
+              onChange={handleInputChange}
+              className={styles.searchInput}
+            />
+            <input
+              type="number"
+              name="year"
+              placeholder="Year"
+              value={searchFilters.year}
+              onChange={handleInputChange}
+              className={styles.searchInput}
+            />
+            <input
+              type="number"
+              name="minPrice"
+              placeholder="Min Price"
+              value={searchFilters.minPrice}
+              onChange={handleInputChange}
+              className={styles.searchInput}
+            />
+            <input
+              type="number"
+              name="maxPrice"
+              placeholder="Max Price"
+              value={searchFilters.maxPrice}
+              onChange={handleInputChange}
+              className={styles.searchInput}
+            />
+            <button onClick={handleSearch} className={styles.searchButton}>Filter</button>
+            <button onClick={resetSearch} className={styles.resetButton}>Reset</button>
+          </div>
+        </div>
+      )}
+
       <div className={styles.carListingsContainer}>
-        {filteredCars.length === 0 ? (
-          <p>No cars available.</p>
-        ) : (
-          filteredCars.map((car) => {
-            // Assuming the images are stored as an array
-            const imagesArray = car.images || []; // Retrieve the array of images
-            const totalImages = imagesArray.length;
-            const currentImageIndex = imageIndexes[car.id] || 0;
+        {loading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
+        {filteredCars.length === 0 && !loading && <p>No cars available.</p>}
+        {filteredCars.map((car) => {
+          const imagesArray = car.images || [];
+          const totalImages = imagesArray.length;
+          const currentImageIndex = imageIndexes[car.id] || 0;
 
-            return (
-              <div key={car.id} className={styles.carCard}>
-                {/* Image Section */}
-                <div className={styles.imageContainer}>
-                  <img
-                    src={imagesArray[currentImageIndex]}
-                    alt={`${car.make} ${car.model}`}
-                    className={styles.carImage}
-                  />
-                  <button className={styles.arrowLeft} onClick={() => handlePreviousImage(car.id, totalImages)}>&#8249;</button>
-                  <button className={styles.arrowRight} onClick={() => handleNextImage(car.id, totalImages)}>&#8250;</button>
-                </div>
-
-                {/* Car Details Section */}
-                <div className={styles.carDetails}>
-                  <h3>{car.year} {car.make} {car.model}</h3>
-                  <p><strong>Price:</strong> ${car.price}</p>
-                  <p><strong>Mileage:</strong> {car.odometer} miles</p>
-                  <p><strong>Condition:</strong> {car.titleStatus}</p>
-                  <p><strong>Engine:</strong> {car.engineSize}</p>
-                  <p><strong>Color:</strong> {car.color}</p>
-                </div>
+          return (
+            <div key={car.id} className={styles.carCard}>
+              <div className={styles.imageContainer}>
+                <img
+                  src={imagesArray[currentImageIndex]}
+                  alt={`${car.make} ${car.model}`}
+                  className={styles.carImage}
+                />
+                {totalImages > 1 && (
+                  <>
+                    <button 
+                      className={styles.arrowLeft} 
+                      onClick={() => handlePreviousImage(car.id, totalImages)} 
+                      aria-label="Previous Image"
+                    >
+                      &#8249;
+                    </button>
+                    <button 
+                      className={styles.arrowRight} 
+                      onClick={() => handleNextImage(car.id, totalImages)} 
+                      aria-label="Next Image"
+                    >
+                      &#8250;
+                    </button>
+                  </>
+                )}
               </div>
-            );
-          })
-        )}
+
+              <div className={styles.carDetails}>
+                <h3>{car.year} {car.make} {car.model}</h3>
+                <p><strong>Price:</strong> ${car.price.toLocaleString()}</p>
+                <p><strong>Mileage:</strong> {car.odometer.toLocaleString()} miles</p>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

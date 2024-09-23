@@ -1,36 +1,59 @@
-/* Inventory Page Wrapper */
-.inventoryPage {
-  display: flex;
-  gap: 20px;
-  background-color: #f5f5f5;
-  padding-top: 140px; /* Space for the fixed header */
-  overflow-x: hidden; /* Prevents horizontal scrolling */
-  margin: 0 auto; /* Centers the page content */
-  max-width: 1200px; /* Adjusts the content width */
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Filter Sidebar */
+/* Body Styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header Styling */
+header {
+  background-color: #343a40;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+/* Main Content Section */
+main {
+  padding: 20px;
+}
+
+/* Main Container for Video and Content */
+.mainContainer {
+  position: relative;
+  width: 100%;
+}
+
+/* Search Bar and Filter Section */
 .searchFilterContainer {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 230px;
-  background-color: #ffffff;
-  padding: 15px;
+  justify-content: center; /* Center the filters */
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
   border: 1px solid #ddd;
   border-radius: 5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 140px; /* Ensures it starts below the header */
-  height: fit-content;
-  margin-left: 0; /* Aligns properly with the page */
 }
 
 /* Filter Input Styling */
 .searchFilters {
   display: flex;
-  flex-direction: column;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 /* Input Field Styling */
@@ -39,11 +62,8 @@
   font-size: 14px;
   border-radius: 4px;
   border: 1px solid #ccc;
-  width: 100%; /* Ensures full width */
-  max-width: 100%; /* Ensures it doesn't exceed container */
-  box-sizing: border-box; /* Includes padding and border in width */
-  margin-bottom: 10px;
-  display: block; /* Ensures inputs behave as block elements */
+  width: 120px;
+  box-sizing: border-box;
 }
 
 /* Search Button Styling */
@@ -55,54 +75,10 @@
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s ease;
-  width: 100%; /* Makes the button fit the width of the filter section */
 }
 
 .searchButton:hover {
   background-color: #0056b3;
-}
-
-/* Car Listings Section */
-.carListingsContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  flex-grow: 1;
-  padding: 0 20px;
-  margin-top: 0; /* Aligns car listings right under the filter */
-  overflow-y: auto; /* Allows scrolling if content overflows vertically */
-}
-
-/* Car Card Styling */
-.carCard {
-  display: flex;
-  gap: 15px;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  align-items: center;
-  width: 600px;
-}
-
-/* Image Container */
-.imageContainer {
-  position: relative;
-  width: 300px; /* Small but visible size */
-  height: 150px;
-  margin-right: 15px; /* Adds space between the image and details */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.carImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 4px;
 }
 
 /* Arrows for Image Navigation */
@@ -126,15 +102,21 @@
 }
 
 .arrowLeft {
-  left: 5px;
+  left: 50px;
+  color: green;
+  background-color: white;
 }
 
 .arrowRight {
   right: 5px;
+  color: green;
+  background-color: white;
+
 }
 
 .arrowLeft:hover, .arrowRight:hover {
   background-color: rgba(0, 0, 0, 0.7);
+  
 }
 
 /* Car Details */
@@ -142,79 +124,19 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  flex: 1; /* Allows details to take the remaining space */
+  padding: 10px;
 }
 
 .carDetails h3 {
   font-size: 1.1rem;
   margin: 0;
+  color: #007bff;
 }
 
 .carDetails p {
   margin: 0;
   font-size: 0.9rem;
   color: #333;
-}
-
-/* Carousel Styling */
-.carousel {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.carousel img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-.arrowLeft, .arrowRight {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease;
-}
-
-.arrowLeft {
-  left: 10px;
-}
-
-.arrowRight {
-  right: 10px;
-}
-
-.arrowLeft:hover, .arrowRight:hover {
-  background-color: rgba(0, 0, 0, 0.7);
-}
-
-/* Header Styling */
-.header {
-  background-color: #f8f9fa;
-  padding: 20px;
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  position: fixed; /* Fixes the header at the top */
-  top: 0;
-  z-index: 1000; /* Keeps the header above other content */
-  left: 0; /* Ensures header spans the full width */
 }
 
 /* Header Content */
@@ -225,7 +147,6 @@
   width: 100%;
   max-width: 1200px;
   padding: 0 20px;
-  margin: 0 auto; /* Centers the header content */
 }
 
 .logo {
@@ -242,7 +163,7 @@
 .nav {
   margin-top: 10px;
   background-color: #007bff;
-  width: 110%;
+  width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -262,4 +183,187 @@
 .nav a:hover {
   background-color: #0056b3;
   border-radius: 4px;
+}
+
+/* Inventory Page Wrapper */
+.inventoryPage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #f5f5f5;
+  padding-top: 0;
+  overflow-x: hidden;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+/* Video Section */
+.videoSection {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Video Element */
+.backgroundVideo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+}
+
+/* Content Section */
+.contentSection {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding-top: 80px;
+}
+
+/* Fixed Header */
+.header {
+  background-color: #ffffff;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  transition: top 0.3s;
+}
+
+/* Car Listings Section */
+.carListingsContainer {
+  display: grid; /* Use grid layout */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust for responsiveness */
+  gap: 20px; /* Space between grid items */
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+
+}
+
+/* Car Card Styling */
+.carCard {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  position: relative;
+  width: 100%;
+  height: 350px; /* Fixed height for consistency */
+  max-width: 300px; /* Optional: Set a max width */
+  overflow: hidden; /* Ensure content doesn't overflow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Image Container */
+.imageContainer {
+  width: 100%;
+  height: 200px; /* Fixed height for images */
+  overflow: hidden;
+}
+
+.carImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image fits nicely */
+}
+
+
+/* Reset Button Styling */
+.resetButton {
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.resetButton:hover {
+  background-color: #c82333;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Toggle Button */
+.toggleButton {
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggleButton:hover {
+  background-color: #0056b3;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+  .carListingsContainer {
+    grid-template-columns: 1fr; /* Stacks items vertically */
+    padding: 10px;
+    gap: 15px;
+  }
+
+  .carCard {
+    width: 100%;
+    max-width: none; /* Remove max-width constraint */
+    height: auto; /* Allow the height to adjust based on content */
+  }
+
+  .imageContainer {
+    height: 250px; /* Increase height for better image visibility */
+  }
+
+  .carDetails {
+    padding: 10px 5px; /* Adjust padding for better use of space on mobile */
+  }
+  .videoSection {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  /* Video Element */
+  .backgroundVideo {
+    position: relative;
+    top: 0; /* Adjust to make sure video starts at the top */
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    transform: translateX(-50%);
+  }
 }
