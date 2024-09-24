@@ -6,22 +6,14 @@ import testVideo from '../../../Assets/test4-1542298376.mp4';
 import "../Inventory/inventoryHeader";
 import InventoryHeader from '../Inventory/inventoryHeader';
 import CarComp from "../Inventory/carComp/carComp.js";
+import FilterSidebar from '../Inventory/filterSideBar.js';
 
 const Inventory = () => {
   const [carListings, setCarListings] = useState([]);
   const [filteredCars, setFilteredCars] = useState([]);
-  const [searchFilters, setSearchFilters] = useState({
-    make: '',
-    model: '',
-    year: '',
-    minPrice: '',
-    maxPrice: '',
-    condition: '',
-  });
   const [imageIndexes, setImageIndexes] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showFilters, setShowFilters] = useState(false); // State for toggling filters
 
   const fetchCarListings = async () => {
     setLoading(true);
@@ -34,6 +26,7 @@ const Inventory = () => {
       }));
       setCarListings(cars);
       setFilteredCars(cars);
+      console.log('Car Listings from Firestore:', cars); // Log fetched car listings
     } catch (error) {
       setError('Error fetching car listings. Please try again later.');
     } finally {
@@ -45,38 +38,36 @@ const Inventory = () => {
     fetchCarListings();
   }, []);
 
-  const handleInputChange = (e) => {
-    setSearchFilters({
-      ...searchFilters,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSearch = () => {
+  const applyFilters = (filters) => {
     let filtered = carListings.filter((car) => {
-      const { make, model, year, minPrice, maxPrice, condition } = searchFilters;
-      return (
-        (!make || car.make.toLowerCase().includes(make.toLowerCase())) &&
-        (!model || car.model.toLowerCase().includes(model.toLowerCase())) &&
-        (!year || car.year.toString().includes(year)) &&
-        (!minPrice || car.price >= parseInt(minPrice)) &&
-        (!maxPrice || car.price <= parseInt(maxPrice)) &&
-        (!condition || car.titleStatus.toLowerCase() === condition.toLowerCase())
-      );
+      const { make, model, year, price, drivetrain } = filters;
+  
+      // Check if each filter matches, allow empty filters to be considered as matches
+      const matchesMake = !make || car.make.toLowerCase() === make.toLowerCase();
+      const matchesModel = !model || car.model.toLowerCase() === model.toLowerCase();
+      const matchesYear = !year || (car.year >= year[0] && car.year <= year[1]);
+      const matchesPrice = !price || (car.price >= price[0] && car.price <= price[1]);
+      const matchesDriveTrain = !drivetrain || drivetrain === car.drivetrain;
+  
+
+      {/*console.log(`Make: ${car.make} vs Filter: ${make} | Matches: ${matchesMake}`);
+      console.log(`Model: ${car.model} vs Filter: ${model} | Matches: ${matchesModel}`);
+      console.log(`Year: ${car.year} vs Filter: ${year} | Matches: ${matchesYear}`);
+      console.log(`Price: ${car.price} vs Filter: ${price} | Matches: ${matchesPrice}`);
+      console.log(`Drivetrain: ${car.drivetrain} vs Filter: ${drivetrain} | Matches: ${matchesDriveTrain}`); */}
+  
+      const overallMatch = matchesMake && matchesModel && matchesYear && matchesPrice && matchesDriveTrain;
+      console.log(`Overall Matches: ${overallMatch}`);
+      
+      return overallMatch;
     });
+  
+    console.log('Filtered Cars:', filtered);
     setFilteredCars(filtered);
   };
-
-  const resetSearch = () => {
-    setSearchFilters({
-      make: '',
-      model: '',
-      year: '',
-      minPrice: '',
-      maxPrice: '',
-      condition: '',
-    });
-    setFilteredCars(carListings);
+  
+  const resetFilters = () => {
+    setFilteredCars(carListings); // Reset the filtered cars list
   };
 
   const handleNextImage = (carId, totalImages) => {
@@ -95,62 +86,11 @@ const Inventory = () => {
 
   return (
     <div className={styles.inventoryPage}>
-      <InventoryHeader />
-    
-      <CarComp />
-
-      {/* <button className={styles.toggleButton} onClick={() => setShowFilters(!showFilters)}>
-        {showFilters ? 'Hide Filters' : 'Show Filters'}
-        </button> */}
-
-      {showFilters && (
-        <div className={styles.searchFilterContainer}>
-          <div className={styles.searchFilters}>
-            <input
-              type="text"
-              name="make"
-              placeholder="Make"
-              value={searchFilters.make}
-              onChange={handleInputChange}
-              className={styles.searchInput}
-            />
-            <input
-              type="text"
-              name="model"
-              placeholder="Model"
-              value={searchFilters.model}
-              onChange={handleInputChange}
-              className={styles.searchInput}
-            />
-            <input
-              type="number"
-              name="year"
-              placeholder="Year"
-              value={searchFilters.year}
-              onChange={handleInputChange}
-              className={styles.searchInput}
-            />
-            <input
-              type="number"
-              name="minPrice"
-              placeholder="Min Price"
-              value={searchFilters.minPrice}
-              onChange={handleInputChange}
-              className={styles.searchInput}
-            />
-            <input
-              type="number"
-              name="maxPrice"
-              placeholder="Max Price"
-              value={searchFilters.maxPrice}
-              onChange={handleInputChange}
-              className={styles.searchInput}
-            />
-            <button onClick={handleSearch} className={styles.searchButton}>Filter</button>
-            <button onClick={resetSearch} className={styles.resetButton}>Reset</button>
-          </div>
-        </div>
-      )}
+      <FilterSidebar applyFilters={applyFilters} resetFilters={resetFilters} />
+      <div className={styles.mainContent}>
+        <InventoryHeader />
+        <CarComp carListings={filteredCars} />
+      </div>
     </div>
   );
 };

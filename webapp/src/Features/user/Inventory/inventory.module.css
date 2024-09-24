@@ -596,3 +596,15 @@ html {
     transform: translateX(-50%);
   }
 }
+
+/* inventory.module.css */
+.inventoryPage {
+  display: flex;
+  margin-left: 250px; /* Ensure this matches the sidebar width */
+  padding: 20px;
+}
+
+.mainContent {
+  flex: 1;
+  padding-left: 20px;
+}
