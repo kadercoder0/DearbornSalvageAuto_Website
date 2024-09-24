@@ -1,0 +1,78 @@
+.sliderWrapper {
+  border: 2px solid #e8e8e8;
+  border-radius: 5px;
+  background-color: #fff;
+  width: 100%;
+  min-height: 40px;
+  position: relative;
+}
+
+.headerWrapper2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.checkboxText {
+  color: black;
+  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif !important;
+}
+
+.dropdownArrow {
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.25);
+  font-style: normal;
+  line-height: 1;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -0.125em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  inset-inline-start: auto;
+  inset-inline-end: 11px;
+  height: 12px;
+  margin-top: -6px;
+  font-size: 12px;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.dropdownWrapper {
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: height 0.5s ease, opacity 0.5s ease;
+}
+
+/* .labelClass {
+  color: black;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif !important;
+  padding-inline: 7px;
+  padding-bottom: 12px;
+  padding-top: ;
+} */
+
+.sliderClass {
+  margin-top: 2.8rem;
+}
+
+.sliderLinesClass {
+  width: 100%;
+  margin-bottom: 1rem;
+  margin-top: -7px;
+}

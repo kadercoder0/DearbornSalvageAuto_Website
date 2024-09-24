@@ -1,0 +1,130 @@
+h1 {
+  margin: 0;
+}
+
+p {
+  all: unset;
+  padding: 0;
+  margin: 0;
+}
+
+/* car comp styles */
+
+.carCardWrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 12px;
+  grid-row-gap: 12px;
+  margin-top: 1000px;
+  gap: 20px;
+  
+}
+
+
+/* For medium-sized screens */
+@media (max-width: 770px) {
+  .carCardWrapper {
+    grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+  }
+}
+
+/* For smaller screens */
+@media (max-width: 576px) {
+  .carCardWrapper {
+    grid-template-columns: repeat(1, 1fr); /* 1 item per row */
+  }
+}
+
+.cardDetail {
+  margin-top: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  img {
+    width: 100%;
+    margin: 0;
+  }
+}
+.cardHeader {
+  text-align: start;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  margin-top: 12px;
+
+  span {
+    font-size: 16px;
+  }
+}
+
+.priceWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stock {
+  color: black;
+  font-size: 16px;
+
+  span {
+    font-weight: 600;
+  }
+}
+
+.carCardPrice {
+  font-size: 22px;
+  font-weight: 700;
+  color: black;
+  @media (max-width: 1300px) {
+    font-size: 20px;
+  }
+}
+
+.autoSales {
+  color: black;
+  font-size: 18px;
+  font-weight: 300;
+
+  @media (max-width: 1300px) {
+    font-size: 16px;
+  }
+}
+
+.carSpecsWrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 12px;
+  grid-row-gap: 12px;
+  padding-top: 8px;
+
+  @media (max-width: 1300px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.carSpecsTextWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 6px;
+  padding: 8px 0;
+  border: 1px solid #007bff;
+
+  p {
+    font-size: 14px;
+  }
+}
+
+/* car comp styles */
