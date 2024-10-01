@@ -1,21 +1,66 @@
-/* filterSideBar.module.css */
 .sidebar {
-  margin-top: 235px;
-  margin-left: 20px;
   position: fixed;
-  top: 0;
+  top: 150px; /* Ensures it's below the header */
   left: 0;
-  width: 250px; /* Adjust the width as needed */
-  height: 100%;
+  width: 250px;
+  height: calc(100vh - 150px); /* Ensure full height minus top space */
   background-color: #fff;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  overflow-y: auto;
-  z-index: 1000; /* Make sure it's above other content */
+  padding: 20px; 
+  overflow-y: auto; /* Enable scrolling */
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
 }
 
 .filterWrapper {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
+  flex-grow: 1; /* Allows it to grow and fill space */
 }
+
+.textField {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.textField input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  margin: 0;
+}
+
+.buttonsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px; /* Extra space for buttons */
+  flex-shrink: 0; /* Prevent buttons from shrinking or collapsing */
+}
+
+
+.searchButton, .resetButton {
+  padding: 10px;
+  background-color: #28a745; /* Green color for the button */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.resetButton {
+  background-color: #dc3545; /* Red color for reset */
+}
+
+.searchButton:hover, .resetButton:hover {
+  opacity: 0.9; /* Add hover effect */
+}
+
