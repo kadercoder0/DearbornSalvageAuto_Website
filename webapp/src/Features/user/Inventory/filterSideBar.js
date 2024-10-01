@@ -9,14 +9,18 @@ import styles from '../Inventory/filterSideBar.module.css';
 const FilterSidebar = ({ applyFilters, resetFilters }) => {
   const [makeOptions, setMakeOptions] = useState([]);
   const [modelOptions, setModelOptions] = useState([]);
-  const [yearRange, setYearRange] = useState([2004, 2024]);
+  const [yearRange, setYearRange] = useState([2004, 2024]); 
   const [priceRange, setPriceRange] = useState([7995, 179995]);
   const [driveTrainOptions, setDriveTrainOptions] = useState([]);
+
+  // Updated price filters using minPrice and maxPrice
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
 
   const [selectedFilters, setSelectedFilters] = useState({
     make: '',
     model: '',
-    year: yearRange,
+    minYear: yearRange[0], // Only track minYear
     price: priceRange,
     drivetrain: '',
   });
@@ -50,77 +54,127 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
       [type]: value
     }));
   };
+  
 
   // Trigger search function with selected filters
   const handleSearch = () => {
-    applyFilters(selectedFilters);
+    const filtersToApply = {
+      ...selectedFilters,
+      drivetrain: selectedFilters.drivetrain.toLowerCase(), // Convert drivetrain filter to lowercase
+      make: selectedFilters.make.toLowerCase(),
+      model: selectedFilters.model.toLowerCase(),
+      price: [parseInt(minPrice) || 0, parseInt(maxPrice) || Number.MAX_SAFE_INTEGER], // Add price range to filters
+    };
+  
+    applyFilters(filtersToApply); // Call the applyFilters function with the updated filters
   };
+  
 
-  // Reset filters to default values
-  const handleReset = () => {
+   // Reset filters to default values
+   const handleReset = () => {
     const defaultFilters = {
       make: '',
       model: '',
-      year: yearRange,
-      price: priceRange,
+      minYear: yearRange[0], // Reset to default min year
       drivetrain: '',
     };
 
-    setSelectedFilters(defaultFilters); // Reset the filter fields to default
+    // Reset all fields to default
+    setSelectedFilters(defaultFilters);
+    setMinPrice('');  // Reset price filters
+    setMaxPrice('');
     resetFilters(); // Reset car listings
   };
 
   return (
     <div className={styles.sidebar}>
       <p>Filter Cars</p>
+      
       <div className={styles.filterWrapper}>
-        <SliderComp
-          label="Year"
-          min={yearRange[0]}
-          max={yearRange[1]}
-          value={selectedFilters.year} // Use value instead of defaultValue
-          onChange={(value) => handleFilterChange('year', value)}
-        />
+        {/* Min Year Field */}
+        <div className={styles.textField}>
+          <label htmlFor="minYear">Min Year</label>
+          <input
+            type="number"
+            id="minYear"
+            value={selectedFilters.year}
+            onChange={(e) => handleFilterChange('year', e.target.value)}
+            placeholder="Enter minimum year"
+          />
+        </div>
         
-        <AntdSelect
-          defaultValue="Make"
-          options={makeOptions}
-          value={selectedFilters.make} // Bind the value prop to selectedFilters
-          onChange={(value) => handleFilterChange('make', value)}
-        />
+        {/* Make Field */}
+        <div className={styles.textField}>
+          <label htmlFor="make">Make</label>
+          <input
+            type="text"
+            id="make"
+            value={selectedFilters.make}
+            onChange={(e) => handleFilterChange('make', e.target.value.toLowerCase())}
+            placeholder="Enter car make"
+          />
+        </div>
         
-        <AntdSelect
-          defaultValue="Model"
-          options={modelOptions}
-          value={selectedFilters.model} // Bind the value prop to selectedFilters
-          onChange={(value) => handleFilterChange('model', value)}
-        />
-        
-        <SliderComp
-          label="Price"
-          min={priceRange[0]}
-          max={priceRange[1]}
-          value={selectedFilters.price} // Use value instead of defaultValue
-          onChange={(value) => handleFilterChange('price', value)}
-        />
+        {/* Model Field */}
+        <div className={styles.textField}>
+          <label htmlFor="model">Model</label>
+          <input
+            type="text"
+            id="model"
+            value={selectedFilters.model}
+            onChange={(e) => handleFilterChange('model', e.target.value.toLowerCase())}
+            placeholder="Enter car model"
+          />
+        </div>
+  
+        {/* Min Price Field */}
+        <div className={styles.textField}>
+          <label htmlFor="minPrice">Min Price</label>
+          <input
+            type="number"
+            id="minPrice"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+            placeholder="Enter minimum price"
+          />
+        </div>
+  
+        {/* Max Price Field */}
+        <div className={styles.textField}>
+          <label htmlFor="maxPrice">Max Price</label>
+          <input
+            type="number"
+            id="maxPrice"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+            placeholder="Enter maximum price"
+          />
+        </div>
+  
+        {/* Drivetrain Field */}
+        <div className={styles.textField}>
+          <label htmlFor="drivetrain">DriveTrain</label>
+          <input
+            type="text"
+            id="drivetrain"
+            value={selectedFilters.drivetrain}
+            onChange={(e) => handleFilterChange('drivetrain', e.target.value)} // Input remains as entered
+            placeholder="Enter drivetrain"
+          />
+        </div>
 
-        <CheckboxComp
-          label="DriveTrain"
-          checkboxData={driveTrainOptions}
-          value={selectedFilters.drivetrain} // Bind the value prop to selectedFilters
-          onChange={(value) => handleFilterChange('drivetrain', value)}
-        />
-
-        {/* Search and Reset Buttons */}
-        <button className={styles.searchButton} onClick={handleSearch}>
-          Search
-        </button>
-        <button className={styles.resetButton} onClick={handleReset}>
-          Reset
-        </button>
+        {/* Buttons */}
+        <div className={styles.buttonsWrapper}>
+          <button className={styles.searchButton} onClick={handleSearch}>
+            Search
+          </button>
+          <button className={styles.resetButton} onClick={handleReset}>
+            Reset
+          </button>
+        </div>
       </div>
     </div>
-  );
+  );  
 };
 
 export default FilterSidebar;

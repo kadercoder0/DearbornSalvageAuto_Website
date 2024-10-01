@@ -39,32 +39,24 @@ const Inventory = () => {
   }, []);
 
   const applyFilters = (filters) => {
-    let filtered = carListings.filter((car) => {
-      const { make, model, year, price, drivetrain } = filters;
+    const { make, model, minYear, price, drivetrain } = filters;
   
-      // Check if each filter matches, allow empty filters to be considered as matches
-      const matchesMake = !make || car.make.toLowerCase() === make.toLowerCase();
-      const matchesModel = !model || car.model.toLowerCase() === model.toLowerCase();
-      const matchesYear = !year || (car.year >= year[0] && car.year <= year[1]);
-      const matchesPrice = !price || (car.price >= price[0] && car.price <= price[1]);
-      const matchesDriveTrain = !drivetrain || drivetrain === car.drivetrain;
-  
-
-      {/*console.log(`Make: ${car.make} vs Filter: ${make} | Matches: ${matchesMake}`);
-      console.log(`Model: ${car.model} vs Filter: ${model} | Matches: ${matchesModel}`);
-      console.log(`Year: ${car.year} vs Filter: ${year} | Matches: ${matchesYear}`);
-      console.log(`Price: ${car.price} vs Filter: ${price} | Matches: ${matchesPrice}`);
-      console.log(`Drivetrain: ${car.drivetrain} vs Filter: ${drivetrain} | Matches: ${matchesDriveTrain}`); */}
-  
-      const overallMatch = matchesMake && matchesModel && matchesYear && matchesPrice && matchesDriveTrain;
-      console.log(`Overall Matches: ${overallMatch}`);
-      
-      return overallMatch;
+    const filtered = carListings.filter((car) => {
+      return (
+        (!make || car.make.toLowerCase().includes(make)) &&
+        (!model || car.model.toLowerCase().includes(model)) &&
+        (!minYear || car.year >= parseInt(minYear)) &&
+        (!drivetrain || car.drivetrain.toLowerCase().includes(drivetrain.toLowerCase())) && // Convert both to lowercase
+        (!price || (car.price >= price[0] && car.price <= price[1]))
+      );
     });
   
-    console.log('Filtered Cars:', filtered);
-    setFilteredCars(filtered);
+    setFilteredCars(filtered); // Update filtered cars list
   };
+  
+  
+  
+  
   
   const resetFilters = () => {
     setFilteredCars(carListings); // Reset the filtered cars list

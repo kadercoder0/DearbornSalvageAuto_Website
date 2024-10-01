@@ -3,19 +3,9 @@ import "./sliderStyle.css";
 import { Slider } from "antd";
 import sliderLines from "../../../../../Assets/sliderLines.png";
 
-const SliderComp = ({ label, min, max, defaultValue }) => {
+const SliderComp = ({ label, min, max, defaultValue, onChange }) => {
   const [show, setShow] = useState(false);
   const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    if (show && dropdownRef.current) {
-      dropdownRef.current.style.height = `${dropdownRef.current.scrollHeight}px`;
-      dropdownRef.current.style.opacity = "1";
-    } else if (dropdownRef.current) {
-      dropdownRef.current.style.height = "0px";
-      dropdownRef.current.style.opacity = "0";
-    }
-  }, [show]);
 
   return (
     <div className="sliderWrapper">
@@ -36,7 +26,14 @@ const SliderComp = ({ label, min, max, defaultValue }) => {
         </span>
       </div>
 
-      <div className="dropdownWrapper" ref={dropdownRef}>
+      <div
+        className="dropdownWrapper"
+        ref={dropdownRef}
+        style={{
+          maxHeight: show ? `${dropdownRef.current?.scrollHeight}px` : "0px",
+          opacity: show ? "1" : "0",
+        }}
+      >
         <Slider
           tooltip={{ open: show && true }}
           range
@@ -44,6 +41,7 @@ const SliderComp = ({ label, min, max, defaultValue }) => {
           min={min}
           max={max}
           className="sliderClass"
+          onChange={onChange}
         />
         {label === "Year" ? (
           ""
