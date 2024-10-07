@@ -38,6 +38,7 @@ const CarDetailsPage = () => {
       {/* Render the image carousel */}
       <InventoryHeader />
       <ImageCarousel carImages={carData.images} />
+      
       {/* Here, you can add other car details and specs placeholders */}
     </div>
   );
