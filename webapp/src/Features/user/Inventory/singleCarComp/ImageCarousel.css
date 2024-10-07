@@ -1,0 +1,24 @@
+/* ImageCarousel.css */
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Ensures the image covers the available space without stretching */
+    max-height: 500px; /* Ensures a maximum height for the image */
+    transition: transform 0.3s ease-in-out; /* Smooth transition */
+  }
+  
+  .carousel-item {
+    display: flex;
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically */
+  }
+  
+  .carousel-item img.loading {
+    opacity: 0; /* Hide the image while it's loading */
+  }
+  
+  .carousel-item img.loaded {
+    opacity: 1; /* Show the image once it's loaded */
+    transition: opacity 0.5s ease-in-out; /* Smooth opacity transition */
+  }
+  
