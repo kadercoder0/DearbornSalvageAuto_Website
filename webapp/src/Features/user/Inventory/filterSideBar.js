@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import SliderComp from "../Inventory/component/sliderComp";
+//import SliderComp from "../Inventory/component/sliderComp";
 import AntdSelect from "../Inventory/component/selectCom";
-import CheckboxComp from "../Inventory/component/checkboxComp";
+//import CheckboxComp from "../Inventory/component/checkboxComp";
 import { db } from "../../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import styles from '../Inventory/filterSideBar.module.css';
@@ -77,7 +77,7 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
     const defaultFilters = {
       make: '',
       model: '',
-      minYear: yearRange[0], // Reset to default min year
+      minYear: '', // Reset to default min year
       drivetrain: '',
     };
 
