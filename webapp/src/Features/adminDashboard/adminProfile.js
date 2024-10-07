@@ -77,7 +77,7 @@ const AdminProfile = () => {
     signOut(auth)
       .then(() => {
         console.log('User signed out successfully');
-        navigate('/home');
+        navigate('/inventory');
       })
       .catch((error) => {
         console.error('Error signing out:', error);
