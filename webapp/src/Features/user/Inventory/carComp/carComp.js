@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const CarComp = ({ carListings }) => {
   const navigate = useNavigate();
+
   return (
     <div>
       <div className={styles.carCardWrapper}>
@@ -13,7 +14,7 @@ const CarComp = ({ carListings }) => {
             <div
               className={styles.cardDetail}
               key={index}
-              onClick={() => navigate(`/inventory/car/${car.id}`)} // Navigate to the specific car page
+              onClick={() => navigate(`/inventory/car/${car.id}`)} // Navigates to CarDetailsPage with carId
             >
               <img src={car.images[0]} alt={`${car.make} ${car.model}`} />
               <h2 className={styles.cardHeader}>
@@ -67,4 +68,3 @@ const CarComp = ({ carListings }) => {
 };
 
 export default CarComp;
-
