@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ImageCarousel from './ImageCarousel'; // Assuming ImageCarousel is a separate component
+import CarFeatures from './carFeatures';
 import { db } from '../../../../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import InventoryHeader from '../../Inventory/inventoryHeader';
@@ -35,10 +36,9 @@ const CarDetailsPage = () => {
 
   return (
     <div>
-      {/* Render the image carousel */}
       <InventoryHeader />
       <ImageCarousel carImages={carData.images} />
-      {/* Here, you can add other car details and specs placeholders */}
+      <CarFeatures carId={carId}/>
     </div>
   );
 };
