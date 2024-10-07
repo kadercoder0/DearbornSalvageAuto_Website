@@ -51,7 +51,7 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
   const handleFilterChange = (type, value) => {
     setSelectedFilters(prevFilters => ({
       ...prevFilters,
-      [type]: value
+      [type]: type === 'year' ? value.toString() : value // Convert year to string for Firestore comparison
     }));
   };
   
@@ -64,10 +64,12 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
       make: selectedFilters.make.toLowerCase(),
       model: selectedFilters.model.toLowerCase(),
       price: [parseInt(minPrice) || 0, parseInt(maxPrice) || Number.MAX_SAFE_INTEGER], // Add price range to filters
+      minYear: selectedFilters.minYear.toString(), // Convert minYear to string for comparison
     };
-  
+
     applyFilters(filtersToApply); // Call the applyFilters function with the updated filters
   };
+
   
 
    // Reset filters to default values
@@ -93,15 +95,16 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
       <div className={styles.filterWrapper}>
         {/* Min Year Field */}
         <div className={styles.textField}>
-          <label htmlFor="minYear">Min Year</label>
+        <label htmlFor="minYear">Min Year</label>
           <input
             type="number"
             id="minYear"
-            value={selectedFilters.year}
-            onChange={(e) => handleFilterChange('year', e.target.value)}
+            value={selectedFilters.minYear}
+            onChange={(e) => handleFilterChange('minYear', e.target.value)}
             placeholder="Enter minimum year"
           />
         </div>
+
         
         {/* Make Field */}
         <div className={styles.textField}>

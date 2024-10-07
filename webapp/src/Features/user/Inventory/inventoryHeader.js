@@ -10,10 +10,11 @@ const InventoryHeader = () => {
           <h1 className={styles.logo}>Dearborn Salvage Auto</h1>
           <div className={styles.contactInfo}>
             <div className={styles.searchWrapper}>
-              <input placeholder="Search" />
+            {/*<input placeholder="Search" /> 
               <div className={styles.iconWrapper}>
                 <img src={searchIcon} alt="Search" />
               </div>
+              */}
             </div>
             <p>14041 Greenfield Rd, Detroit, MI,48227</p>
             <br />

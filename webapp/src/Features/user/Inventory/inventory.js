@@ -54,9 +54,7 @@ const Inventory = () => {
     setFilteredCars(filtered); // Update filtered cars list
   };
   
-  
-  
-  
+
   
   const resetFilters = () => {
     setFilteredCars(carListings); // Reset the filtered cars list
