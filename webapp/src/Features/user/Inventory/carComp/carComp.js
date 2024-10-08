@@ -34,11 +34,11 @@ const CarComp = ({ carListings }) => {
               <div className={styles.carSpecsWrapper}>
                 <div className={styles.carSpecsTextWrapper}>
                   <p>Mileage:</p>
-                  <p>{car.mileage}</p>
+                  <p>{car.odometer}</p>
                 </div>
                 <div className={styles.carSpecsTextWrapper}>
                   <p>Fuel:</p>
-                  <p>{car.fuelType || 'N/A'}</p>
+                  <p>{car.fuelType || 'Gasoline'}</p>
                 </div>
                 <div className={styles.carSpecsTextWrapper}>
                   <p>Exterior:</p>

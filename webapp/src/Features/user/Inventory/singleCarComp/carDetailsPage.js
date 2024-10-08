@@ -1,14 +1,14 @@
-// CarDetailsPage.js
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ImageCarousel from './ImageCarousel'; // Assuming ImageCarousel is a separate component
+import ImageCarousel from './ImageCarousel';
 import CarFeatures from './carFeatures';
 import { db } from '../../../../firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import InventoryHeader from '../../Inventory/inventoryHeader';
+import InventoryHeader from '../../Inventory/inventoryHeader'; // Import InventoryHeader
+import styles from './carDetails.module.css'; // Import your CSS
 
 const CarDetailsPage = () => {
-  const { carId } = useParams(); // Get carId from the URL
+  const { carId } = useParams();
   const [carData, setCarData] = useState(null);
 
   useEffect(() => {
@@ -36,9 +36,18 @@ const CarDetailsPage = () => {
 
   return (
     <div>
+      {/* Inventory Header */}
       <InventoryHeader />
-      <ImageCarousel carImages={carData.images} />
-      <CarFeatures carId={carId}/>
+
+      {/* Main Content */}
+      <div className={styles.container}>
+        <div className={styles.carouselSection}>
+          <ImageCarousel carImages={carData.images} />
+        </div>
+        <div className={styles.vehicleInfoSection}>
+          <CarFeatures carId={carId} />
+        </div>
+      </div>
     </div>
   );
 };

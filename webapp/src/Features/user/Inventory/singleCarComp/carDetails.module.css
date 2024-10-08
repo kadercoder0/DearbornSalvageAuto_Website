@@ -1,0 +1,47 @@
+/* carDetailsPage.module.css */
+
+/* Container for the carousel and vehicle info sections */
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 20px;
+  margin-top: 50px; /* Adjusted to ensure it aligns below the header */
+}
+
+/* Styles for the carousel section */
+.carouselSection {
+  flex: 2;
+  margin-right: 20px;
+  height: auto; 
+  max-width: 900px; /* Fix the width of the carousel */
+  min-width: 600px; /* Set a minimum width to prevent shrinking */
+  max-height: 500px; /* Set a max height */
+  overflow: hidden; /* Prevent overflow issues */
+  margin-top: 100px;
+}
+
+
+/* Styles for the vehicle info section */
+.vehicleInfoSection {
+  flex: 1;
+  padding: 20px;
+  margin-bottom: 20px;
+  height: auto;
+  max-width: 355px; /* Fix width for vehicle info section */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+/* Remove list bullets and ensure list takes up full height */
+.vehicleInfoSection ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1; /* Ensure the ul grows to fill the space */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
