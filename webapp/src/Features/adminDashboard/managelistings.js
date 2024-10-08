@@ -28,13 +28,33 @@ const ManageListings = () => {
     titleStatus: '',
     color: '',
     images: [],
+    carSpecifications: [], // Store the car specifications dynamically
   });
 
   const [imageFiles, setImageFiles] = useState([]); // For uploading multiple images
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [currentCar, setCurrentCar] = useState(null); // Store the car being edited
   const [imageIndexes, setImageIndexes] = useState({}); // Store image indexes for each car
-  const closeModal = () => setModalIsOpen(false);
+  const [newSpec, setNewSpec] = useState(''); // To store the current input specification
+
+  const closeModal = () => {
+    setCarData({
+      make: '',
+      model: '',
+      year: '',
+      odometer: '',
+      price: '',
+      cylinders: '',
+      vin: '',
+      drivetrain: '',
+      engineSize: '',
+      titleStatus: '',
+      color: '',
+      images: [],
+      carSpecifications: [],
+    });
+    setModalIsOpen(false);
+  };
 
   const handleProfileClick = () => {
     navigate('/admin/adminprofile'); // Navigate to the admin profile page
@@ -43,6 +63,21 @@ const ManageListings = () => {
   // Open edit modal and set the current car data
   const openEditModal = (car) => {
     setCurrentCar(car);
+    setCarData({
+      make: car.make,
+      model: car.model,
+      year: car.year,
+      odometer: car.odometer,
+      price: car.price,
+      cylinders: car.cylinders,
+      vin: car.vin,
+      drivetrain: car.drivetrain,
+      engineSize: car.engineSize,
+      titleStatus: car.titleStatus,
+      color: car.color,
+      images: car.images,
+      carSpecifications: car.carSpecifications || [], // Load the correct car specifications
+    });
     setEditModalIsOpen(true);
   };
 
@@ -51,10 +86,10 @@ const ManageListings = () => {
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const carDocRef = doc(db, 'carListings', currentCar.id); // Reference to the specific car document
-  
+
       // Collect updated form data
       const updatedCarData = {
         make: carData.make || currentCar.make,
@@ -67,11 +102,12 @@ const ManageListings = () => {
         engineSize: carData.engineSize || currentCar.engineSize,
         drivetrain: carData.drivetrain || currentCar.drivetrain,
         titleStatus: carData.titleStatus || currentCar.titleStatus,
+        carSpecifications: carData.carSpecifications || currentCar.carSpecifications,
       };
-  
+
       // Update the car document with the new data
       await updateDoc(carDocRef, updatedCarData);
-  
+
       alert('Car listing updated successfully!');
       closeEditModal(); // Close the modal after successful edit
       fetchCarListings(); // Refresh the listings
@@ -79,7 +115,6 @@ const ManageListings = () => {
       console.error('Error updating car listing: ', error);
     }
   };
-  
 
   // Handle the form submit for adding a new listing
   const handleSubmit = async (e) => {
@@ -98,6 +133,7 @@ const ManageListings = () => {
       await addDoc(collection(db, 'carListings'), {
         ...carData,
         images: imageURLs,
+        carSpecifications: carData.carSpecifications, // Add the car specifications here
       });
 
       alert('Car listing added successfully!');
@@ -122,7 +158,44 @@ const ManageListings = () => {
     const { name, value } = e.target;
     setCarData({ ...carData, [name]: value });
   };
-  
+
+  // Handle image file selection
+  const handleImageChange = (e) => {
+    setImageFiles([...e.target.files]); // Set the selected image files
+  };
+
+  // Slideshow logic for each car's image set
+  const handleNextImage = (carId, totalImages) => {
+    setImageIndexes((prevIndexes) => ({
+      ...prevIndexes,
+      [carId]: (prevIndexes[carId] === undefined ? 1 : (prevIndexes[carId] + 1) % totalImages), // Cycle through images
+    }));
+  };
+
+  const handlePreviousImage = (carId, totalImages) => {
+    setImageIndexes((prevIndexes) => ({
+      ...prevIndexes,
+      [carId]: (prevIndexes[carId] === undefined ? totalImages - 1 : (prevIndexes[carId] - 1 + totalImages) % totalImages), // Cycle back through images
+    }));
+  };
+
+  const addCarSpecification = () => {
+    if (newSpec.trim() !== '') {
+      setCarData(prevData => ({
+        ...prevData,
+        carSpecifications: [...prevData.carSpecifications, newSpec],
+      }));
+      setNewSpec(''); // Clear the input after adding the spec
+    }
+  };
+
+  // Function to remove a specific car specification by index
+  const removeCarSpecification = (index) => {
+    setCarData(prevData => ({
+      ...prevData,
+      carSpecifications: prevData.carSpecifications.filter((_, i) => i !== index),
+    }));
+  };
 
   // Fetch car listings from Firestore
   const fetchCarListings = async () => {
@@ -144,26 +217,6 @@ const ManageListings = () => {
   useEffect(() => {
     fetchCarListings();
   }, []);
-
-  // Handle image file selection
-  const handleImageChange = (e) => {
-    setImageFiles([...e.target.files]); // Set the selected image files
-  };
-
-  // Slideshow logic for each car's image set
-  const handleNextImage = (carId, totalImages) => {
-    setImageIndexes((prevIndexes) => ({
-      ...prevIndexes,
-      [carId]: (prevIndexes[carId] === undefined ? 1 : (prevIndexes[carId] + 1) % totalImages), // Cycle through images
-    }));
-  };
-
-  const handlePreviousImage = (carId, totalImages) => {
-    setImageIndexes((prevIndexes) => ({
-      ...prevIndexes,
-      [carId]: (prevIndexes[carId] === undefined ? totalImages - 1 : (prevIndexes[carId] - 1 + totalImages) % totalImages), // Cycle back through images
-    }));
-  };
 
   return (
     <div className={styles.container}>
@@ -191,6 +244,7 @@ const ManageListings = () => {
                 <th>Price</th>
                 <th>Color</th>
                 <th>Images</th>
+                <th>Specifications</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -231,12 +285,22 @@ const ManageListings = () => {
                       )}
                     </td>
                     <td>
+                      <ul>
+                        {/* Display car specifications without remove button */}
+                        {car.carSpecifications && car.carSpecifications.map((spec, index) => (
+                          <li key={index}>
+                            {spec} 
+                          </li>
+                        ))}
+                      </ul>
+                    </td>
+                    <td>
                       <button onClick={() => handleDelete(car.id)} className={styles.deleteButton}>
                         <i className="fas fa-trash"></i>
                       </button>
                       <button onClick={() => openEditModal(car)} className={styles.editButton}>
-                      <i className="fas fa-pen-to-square"></i>
-                    </button>
+                        <i className="fas fa-pen-to-square"></i>
+                      </button>
                     </td>
                   </tr>
                 );
@@ -265,104 +329,170 @@ const ManageListings = () => {
           <label>Upload Images</label>
           <input type="file" name="images" multiple onChange={handleImageChange} />
 
+          <h3>Car Specifications</h3>
+          <div className={styles.specificationInput}>
+            <input
+              type="text"
+              placeholder="Enter a specification"
+              value={newSpec}
+              onChange={(e) => setNewSpec(e.target.value)} // Update the new spec input field
+            />
+            <button type="button" onClick={() => addCarSpecification()}>
+              + {/* Plus button to add the specification */}
+            </button>
+          </div>
+          <ul>
+            {carData.carSpecifications.map((spec, index) => (
+              <li key={index}>
+                {spec} 
+                <button
+                  type="button"
+                  onClick={() => removeCarSpecification(index)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: 'red',
+                    fontSize: '16px',
+                    marginLeft: '10px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  x
+                </button>
+              </li>
+            ))}
+          </ul>
+
           <button type="submit">Submit</button>
           <button type="button" onClick={closeModal}>Cancel</button>
         </form>
       </Modal>
 
-
       <Modal isOpen={editModalIsOpen} onRequestClose={closeEditModal} contentLabel="Edit Car Listing">
-  <h2>Edit Car Listing</h2>
-  {currentCar && (
-    <form onSubmit={handleEditSubmit} className={styles.modalForm}>
-      <input
-        type="text"
-        name="make"
-        placeholder="Make"
-        defaultValue={currentCar.make}
-        onChange={handleInputChange}
-        required
-      />
-      <input
-        type="text"
-        name="model"
-        placeholder="Model"
-        defaultValue={currentCar.model}
-        onChange={handleInputChange}
-        required
-      />
-      <input
-        type="number"
-        name="year"
-        placeholder="Year"
-        defaultValue={currentCar.year}
-        onChange={handleInputChange}
-        required
-      />
-      <input
-        type="number"
-        name="odometer"
-        placeholder="Odometer"
-        defaultValue={currentCar.odometer}
-        onChange={handleInputChange}
-        required
-      />
-      <input
-        type="number"
-        name="price"
-        placeholder="Price"
-        defaultValue={currentCar.price}
-        onChange={handleInputChange}
-        required
-      />
-      <input
-        type="text"
-        name="color"
-        placeholder="Color"
-        defaultValue={currentCar.color}
-        onChange={handleInputChange}
-        required
-      />
-      <input
-        type="text"
-        name="cylinders"
-        placeholder="Cylinders"
-        defaultValue={currentCar.cylinders}
-        onChange={handleInputChange}
-        required
-      />
-      <input
-        type="text"
-        name="engineSize"
-        placeholder="Engine Size"
-        defaultValue={currentCar.engineSize}
-        onChange={handleInputChange}
-        required
-      />
-      <input
-        type="text"
-        name="drivetrain"
-        placeholder="Drivetrain"
-        defaultValue={currentCar.drivetrain}
-        onChange={handleInputChange}
-        required
-      />
-      <input
-        type="text"
-        name="titleStatus"
-        placeholder="Title Status"
-        defaultValue={currentCar.titleStatus}
-        onChange={handleInputChange}
-        required
-      />
-      
-      <button type="submit">Submit</button>
-      <button type="button" onClick={closeEditModal}>Cancel</button>
-    </form>
-  )}
-</Modal>
+        <h2>Edit Car Listing</h2>
+        {currentCar && (
+          <form onSubmit={handleEditSubmit} className={styles.modalForm}>
+            <input
+              type="text"
+              name="make"
+              placeholder="Make"
+              defaultValue={currentCar.make}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="text"
+              name="model"
+              placeholder="Model"
+              defaultValue={currentCar.model}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="number"
+              name="year"
+              placeholder="Year"
+              defaultValue={currentCar.year}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="number"
+              name="odometer"
+              placeholder="Odometer"
+              defaultValue={currentCar.odometer}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="number"
+              name="price"
+              placeholder="Price"
+              defaultValue={currentCar.price}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="text"
+              name="color"
+              placeholder="Color"
+              defaultValue={currentCar.color}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="text"
+              name="cylinders"
+              placeholder="Cylinders"
+              defaultValue={currentCar.cylinders}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="text"
+              name="engineSize"
+              placeholder="Engine Size"
+              defaultValue={currentCar.engineSize}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="text"
+              name="drivetrain"
+              placeholder="Drivetrain"
+              defaultValue={currentCar.drivetrain}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="text"
+              name="titleStatus"
+              placeholder="Title Status"
+              defaultValue={currentCar.titleStatus}
+              onChange={handleInputChange}
+              required
+            />
 
+            {/* Car Specifications - Add/Edit/Delete */}
+            <h3>Car Specifications</h3>
+            <div className={styles.specificationInput}>
+              <input
+                type="text"
+                placeholder="Enter a specification"
+                value={newSpec}
+                onChange={(e) => setNewSpec(e.target.value)} // Update the new spec input field
+              />
+              <button type="button" onClick={() => addCarSpecification()}>
+                + {/* Plus button to add the specification */}
+              </button>
+            </div>
+            <ul>
+              {carData.carSpecifications && carData.carSpecifications.map((spec, index) => (
+                <li key={index}>
+                  {spec} 
+                  <button
+                    type="button"
+                    onClick={() => removeCarSpecification(index)}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: 'red',
+                      fontSize: '16px',
+                      marginLeft: '10px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    x
+                  </button>
+                </li>
+              ))}
+            </ul>
 
+            <button type="submit">Submit</button>
+            <button type="button" onClick={closeEditModal}>Cancel</button>
+          </form>
+        )}
+      </Modal>
     </div>
   );
 };
