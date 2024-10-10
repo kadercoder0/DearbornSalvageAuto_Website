@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ImageCarousel from './ImageCarousel';
 import CarFeatures from './carFeatures';
+import CarSpecs from './CarSpecs';
 import { db } from '../../../../firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import InventoryHeader from '../../Inventory/inventoryHeader'; // Import InventoryHeader
-import styles from './carDetails.module.css'; // Import your CSS
+import InventoryHeader from '../../Inventory/inventoryHeader';
+import styles from './carDetails.module.css';
 
 const CarDetailsPage = () => {
   const { carId } = useParams();
   const [carData, setCarData] = useState(null);
 
   useEffect(() => {
-    // Fetch the car data from Firestore using carId
     const fetchCarData = async () => {
       try {
         const carDocRef = doc(db, 'carListings', carId);
@@ -36,17 +36,30 @@ const CarDetailsPage = () => {
 
   return (
     <div>
-      {/* Inventory Header */}
+      {/* Fixed Header */}
       <InventoryHeader />
-
+      
       {/* Main Content */}
       <div className={styles.container}>
+        {/* Display Car Make, Model, and Year */}
+        <div className={styles.carInfo}>
+          <h2 className={styles.carTitle}>{carData.make} {carData.model} ({carData.year})</h2>
+        </div>
+
+        {/* Image Carousel Section */}
         <div className={styles.carouselSection}>
           <ImageCarousel carImages={carData.images} />
         </div>
+
+        {/* Vehicle Info Section */}
         <div className={styles.vehicleInfoSection}>
           <CarFeatures carId={carId} />
         </div>
+      </div>
+
+      {/* Car Specs Section */}
+      <div className={styles.carSpecsContainer}>
+        <CarSpecs />
       </div>
     </div>
   );

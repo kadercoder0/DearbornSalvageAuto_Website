@@ -1,6 +1,6 @@
 // carComp.js
 import React from "react";
-import styles from "./carCompStyle.module.css";
+import styles from "../carComp/carCompStyle.module.css";
 import { useNavigate } from "react-router-dom";
 
 const CarComp = ({ carListings }) => {

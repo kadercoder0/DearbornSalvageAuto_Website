@@ -1,66 +1,126 @@
+/* Sidebar Styling for Desktop */
 .sidebar {
   position: fixed;
-  top: 150px; /* Ensures it's below the header */
-  left: 0;
+  top: 160px;
+  left: 10px;
   width: 250px;
-  height: calc(100vh - 150px); /* Ensure full height minus top space */
+  height: calc(100vh - 160px);
   background-color: #fff;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  padding: 20px; 
-  overflow-y: auto; /* Enable scrolling */
+  padding: 20px;
+  overflow-y: auto;
   z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  margin-left: 20px;
+  transition: transform 0.3s ease; /* Add transition for smooth opening/closing */
 }
 
-.filterWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex-grow: 1; /* Allows it to grow and fill space */
+.sidebar.open {
+  transform: translateX(0); /* Sidebar visible */
+  padding-top: 20px; /* Provide space between filters and the toggle button */
 }
 
-.textField {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 10px;
-  width: 100%;
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    transform: translateX(-100%); /* Sidebar hidden off-screen */
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    transform: translateX(0); /* Slide in */
+    padding-top: 220px; /* Ensure padding so filters don't clash with button */
+  }
+}
+
+/* Toggle Button */
+.toggleButton {
+  display: none;
+  position: fixed; /* Fixed button for scrolling */
+  top: 160px; /* Set below the header */
+  left: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+@media (max-width: 768px) {
+  .toggleButton {
+    display: block; /* Show toggle button on mobile */
+    top: 170px; /* Set position below the fixed header */
+  }
+}
+
+.toggleButton:hover {
+  background-color: #007bff; /* Darken on hover */
 }
 
 .textField input {
   width: 100%;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  margin: 0;
-}
-
-.buttonsWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px; /* Extra space for buttons */
-  flex-shrink: 0; /* Prevent buttons from shrinking or collapsing */
-}
-
-
-.searchButton, .resetButton {
+  max-width: 250px; /* Set a reasonable max-width */
   padding: 10px;
-  background-color: #28a745; /* Green color for the button */
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+
+/* Style for the Search Button */
+.searchButton {
+  background-color: #007bff; /* Main color for the button */
   color: white;
   border: none;
-  border-radius: 4px;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+.searchButton:hover {
+  background-color: #0056b3; /* Darken on hover */
+  transform: translateY(-3px); /* Slight lift on hover */
+}
+
+.searchButton:active {
+  transform: translateY(0px); /* Remove lift on click */
+  background-color: #004080; /* Darker shade on click */
+}
+
+/* Style for the Reset Button */
 .resetButton {
-  background-color: #dc3545; /* Red color for reset */
+  background-color: #dc3545; /* Red for reset */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-left: 10px; /* Add space between buttons */
 }
 
-.searchButton:hover, .resetButton:hover {
-  opacity: 0.9; /* Add hover effect */
+.resetButton:hover {
+  background-color: #c82333; /* Darker red on hover */
+  transform: translateY(-3px); /* Slight lift on hover */
 }
 
+.resetButton:active {
+  transform: translateY(0px); /* Remove lift on click */
+  background-color: #a71d2a; /* Darker red on click */
+}
+
+/* Add responsive layout if needed */
+.buttonsWrapper {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: flex-start; /* Align buttons to the left */
+}

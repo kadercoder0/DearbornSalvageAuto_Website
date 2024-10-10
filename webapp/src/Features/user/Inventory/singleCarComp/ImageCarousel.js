@@ -12,7 +12,7 @@ const ImageCarousel = ({ carImages }) => {
   const imageStyle = {
     width: '100%',
     height: '500px',
-    minHeight: '500px',  // Ensure consistent height for images
+    minHeight: '300px',  // Ensure consistent height for images
     objectFit: 'contain',
     transition: 'opacity 0.5s ease-in-out',
   };
