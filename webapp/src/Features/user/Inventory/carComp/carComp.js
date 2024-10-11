@@ -1,10 +1,15 @@
-// carComp.js
 import React from "react";
+import Carousel from "react-bootstrap/Carousel"; // Import the Bootstrap carousel
 import styles from "../carComp/carCompStyle.module.css";
 import { useNavigate } from "react-router-dom";
 
 const CarComp = ({ carListings }) => {
   const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    // This will prevent navigation when clicking on the carousel controls
+    e.stopPropagation();
+  };
 
   return (
     <div>
@@ -14,9 +19,27 @@ const CarComp = ({ carListings }) => {
             <div
               className={styles.cardDetail}
               key={index}
-              onClick={() => navigate(`/inventory/car/${car.id}`)} // Navigates to CarDetailsPage with carId
+              onClick={() => navigate(`/inventory/car/${car.id}`)} // Navigate to single car page
             >
-              <img src={car.images[0]} alt={`${car.make} ${car.model}`} />
+              {/* Carousel inside each car card */}
+              <Carousel
+                interval={null}
+                slide={false}
+                className={styles.cardCarousel}
+                onClick={handleClick} // Prevent propagation when clicking on the carousel
+              >
+                {car.images.map((image, imgIndex) => (
+                  <Carousel.Item key={imgIndex}>
+                    <img
+                      src={image}
+                      alt={`${car.make} ${car.model} image ${imgIndex + 1}`}
+                      className={styles.carouselImage}
+                      onClick={handleClick} // Ensure clicks on the image don't navigate away
+                    />
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+
               <h2 className={styles.cardHeader}>
                 {car.year} {car.make} {car.model}
                 <br /> <span>{car.trim}</span>
