@@ -286,13 +286,12 @@ const ManageListings = () => {
                     </td>
                     <td>
                       <ul>
-                        {/* Display car specifications without remove button */}
-                        {car.carSpecifications && car.carSpecifications.map((spec, index) => (
+                        {car.carSpecifications && Array.isArray(car.carSpecifications) && car.carSpecifications.map((spec, index) => (
                           <li key={index}>
-                            {spec} 
+                            {spec} {/* Ensure only the value is displayed */}
                           </li>
                         ))}
-                      </ul>
+                    </ul>
                     </td>
                     <td>
                       <button onClick={() => handleDelete(car.id)} className={styles.deleteButton}>
