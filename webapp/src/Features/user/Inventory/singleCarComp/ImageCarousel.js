@@ -11,14 +11,15 @@ const ImageCarousel = ({ carImages }) => {
 
   const imageStyle = {
     width: '100%',
-    height: '500px', 
+    height: '500px',
+    minHeight: '300px',  // Ensure consistent height for images
     objectFit: 'contain',
     transition: 'opacity 0.5s ease-in-out',
   };
 
   return (
     <div style={containerStyle}>
-      <Carousel interval={null}> {/* Disable auto slide */}
+    <Carousel interval={null} slide={false}> {/* Disable slide animation */}
         {carImages.map((image, index) => (
           <Carousel.Item key={index}>
             <img

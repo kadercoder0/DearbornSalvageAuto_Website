@@ -1,0 +1,123 @@
+/* carDetailsPage.module.css */
+
+/* Container for the carousel and vehicle info sections */
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap; /* Allow wrapping of content */
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  padding-top: 0;
+  position: relative;
+  margin-top: 400px;
+}
+
+/* Styles for the carousel section */
+.carouselSection {
+  flex: 2;
+  margin-right: 20px;
+  width: 60%;
+  max-width: 900px;
+  height: auto; 
+}
+
+/* Styles for the vehicle info section */
+.vehicleInfoSection {
+  flex: 1;
+  padding: 20px;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Car Specs Section - Separate and independent */
+.carSpecsContainer {
+  max-height: 400px;  /* Set max height */
+  overflow-y: auto;  /* Enable scrolling */
+}
+
+/* Car Specs list styling */
+.carSpecsList {
+  columns: 2;
+  list-style-position: inside;
+  column-gap: 40px;
+}
+
+.carSpecsList li {
+  margin-bottom: 10px;
+}
+
+.carouselSection, .vehicleInfoSection {
+  flex-shrink: 0;  /* Prevent shrinking of these sections */
+}
+
+/* Web/Desktop Layout */
+@media only screen and (min-width: 1024px) {
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; /* Center the image vertically */
+
+  }
+
+  .carouselSection {
+    width: 60%; /* Image carousel takes up 60% */
+  }
+
+  .vehicleInfoSection {
+    width: 35%; /* Vehicle info takes up 35% */
+  }
+}
+
+/* Mobile Layout */
+@media only screen and (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Stack content vertically */
+    margin-top: 1150px;
+  }
+
+  .carouselSection {
+    width: 100%; /* Full width on mobile */
+    margin: 0 auto; /* Center carousel on mobile */
+    margin-top: 20px;
+  }
+
+  .vehicleInfoSection {
+    width: 100%; /* Full width for vehicle info */
+  }
+  
+  .carSpecsContainer{
+    margin-bottom: 50px;
+  }
+}
+
+
+/* Car Info section - Make, Model, and Year */
+.carInfo {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  border-bottom: 2px solid #ddd; /* Add a subtle divider */
+}
+
+.carInfo h2 {
+  font-size: 32px; /* Increase font size for emphasis */
+  font-weight: 700; /* Bold for more prominence */
+  color: #2c3e50; /* Darker color for a professional look */
+  margin: 0;
+  padding: 0;
+}
+
+.carInfo p {
+  font-size: 18px; /* Subtle font size for supporting text */
+  color: #7f8c8d; /* Lighter color for contrast */
+  margin-top: 5px; /* Small spacing for better readability */
+}
+
+/* Carousel section styles */
+.carouselSection {
+  margin-top: 20px; /* Space between car info and carousel */
+}

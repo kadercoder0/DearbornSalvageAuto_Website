@@ -1,20 +1,21 @@
+/*inventoryModule.css*/
 /* Header Styling */
 .headerWrapper {
   background-color: #f8f9fa;
   border-bottom: 1px solid #ddd;
   padding: 16px 0;
+  z-index: 1000;
 }
 
 .header {
-  position: sticky; /* Fixes the header at the top */
+  position: fixed; /* Change from absolute to fixed */
   top: 0;
-  display: flex;
-  flex-direction: column;
-  max-width: 1536px;
-  margin: 0 auto;
-  align-items: center;
-  padding: 0 16px;
-  z-index: 1000; /* Keeps the header above other content */
+  left: 0;
+  width: 100%;
+  height: 150px; /* This is fine if the height works for your design */
+  z-index: 1000;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
 }
 
 /* Header Content */
@@ -141,7 +142,7 @@ p {
   top: 8px;
   height: fit-content;
   width: 300px;
-  background: #fff;
+  background: #d51616;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.15);
   border-radius: 12px;
   padding: 16px 14px;
@@ -264,8 +265,8 @@ main {
 
 /* Main Container for Video and Content */
 .mainContainer {
-  position: relative;
-  width: 100%;
+  flex: 1;
+  padding-left: 20px; 
 }
 
 /* Search Bar and Filter Section */
@@ -417,14 +418,11 @@ main {
 /* Inventory Page Wrapper */
 .inventoryPage {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background-color: #f5f5f5;
-  padding-top: 0;
-  overflow-x: hidden;
-  margin: 0 auto;
-  max-width: 1200px;
+  margin-left: 250px; /* Matches sidebar width */
+  padding-top: 170px; /* Adjust padding to match the header height */
+  padding-left: 20px;
 }
+
 
 /* Video Section */
 .videoSection {
@@ -475,31 +473,31 @@ main {
 
 /* Car Listings Section */
 .carListingsContainer {
-  display: grid; /* Use grid layout */
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust for responsiveness */
-  gap: 20px; /* Space between grid items */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row on larger screens */
+  gap: 20px;
   padding: 20px;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-
 }
 
 /* Car Card Styling */
-.carCard {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: white;
-  position: relative;
-  width: 100%;
-  height: 350px; /* Fixed height for consistency */
-  max-width: 300px; /* Optional: Set a max width */
-  overflow: hidden; /* Ensure content doesn't overflow */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+@media (max-width: 768px) {
+  .carListingsContainer {
+    grid-template-columns: 1fr; /* Stacks items vertically */
+    padding: 10px;
+    gap: 15px; /* Add some spacing */
+  }
+
+  .carCard {
+    width: 100%; /* Ensure the car cards use the full width */
+    max-width: none; /* Remove max-width constraint */
+    height: auto; /* Allow the height to adjust based on content */
+    
+  }
 }
+
 
 .carCard:hover {
   transform: translateY(-5px);
@@ -599,12 +597,15 @@ html {
 
 /* inventory.module.css */
 .inventoryPage {
-  display: flex;
-  margin-left: 250px; /* Ensure this matches the sidebar width */
-  padding: 20px;
+
+    display: flex;
+    margin-left: 250px; /* Matches sidebar width */
+    padding-top: 0; /* Set this to 0 to start under the header */
+    padding-left: 20px;
 }
 
 .mainContent {
   flex: 1;
   padding-left: 20px;
 }
+

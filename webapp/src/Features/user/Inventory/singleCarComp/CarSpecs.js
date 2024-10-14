@@ -1,14 +1,23 @@
 import React from 'react';
+import styles from './carSpecs.module.css';
 
 const CarSpecs = () => {
   return (
-    <div>
+    <div className={styles.carSpecsContainer}>
       <h2>Car Specifications</h2>
-      <ul>
+      <ul className={styles.carSpecsList}>
         <li>Engine: Placeholder</li>
         <li>Horsepower: Placeholder</li>
-        <li>Torque: Placeholder</li>
-        <li>Fuel Efficiency: Placeholder</li>
+        <li>Horsepower: Placeholder</li>
+        <li>Horsepower: Placeholder</li>
+        <li>Horsepower: Placeholder</li>
+        <li>Horsepower: Placeholder</li>
+        <li>Horsepower: Placeholder</li>
+        <li>Horsepower: Placeholder</li>
+        <li>Horsepower: Placeholder</li>
+        <li>Horsepower: Placeholder</li>
+        <li>Horsepower: Placeholder</li>
+        <li>Horsepower: Placeholder</li>
       </ul>
     </div>
   );

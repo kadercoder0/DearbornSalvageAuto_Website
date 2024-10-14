@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import styles from './inventory.module.css';
-import testVideo from '../../../Assets/test4-1542298376.mp4';
 import "../Inventory/inventoryHeader";
 import InventoryHeader from '../Inventory/inventoryHeader';
 import CarComp from "../Inventory/carComp/carComp.js";
 import FilterSidebar from '../Inventory/filterSideBar.js';
+import '/Users/mohammedhaidous/Downloads/Developer/DearbornSalvageAuto_Website/webapp/src/Features/user/Inventory/carComp/carCompStyle.module.css';
 
 const Inventory = () => {
   const [carListings, setCarListings] = useState([]);
@@ -14,6 +14,7 @@ const Inventory = () => {
   const [imageIndexes, setImageIndexes] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isFiltered, setIsFiltered] = useState(false); // New state to track if filters are applied
 
   const fetchCarListings = async () => {
     setLoading(true);
@@ -26,7 +27,7 @@ const Inventory = () => {
       }));
       setCarListings(cars);
       setFilteredCars(cars);
-      console.log('Car Listings from Firestore:', cars); // Log fetched car listings
+      console.log('Car Listings from Firestore:', cars);
     } catch (error) {
       setError('Error fetching car listings. Please try again later.');
     } finally {
@@ -40,38 +41,24 @@ const Inventory = () => {
 
   const applyFilters = (filters) => {
     const { make, model, minYear, price, drivetrain } = filters;
-  
+
     const filtered = carListings.filter((car) => {
       return (
         (!make || car.make.toLowerCase().includes(make)) &&
         (!model || car.model.toLowerCase().includes(model)) &&
         (!minYear || car.year >= parseInt(minYear)) &&
-        (!drivetrain || car.drivetrain.toLowerCase().includes(drivetrain.toLowerCase())) && // Convert both to lowercase
+        (!drivetrain || car.drivetrain.toLowerCase().includes(drivetrain.toLowerCase())) &&
         (!price || (car.price >= price[0] && car.price <= price[1]))
       );
     });
-  
-    setFilteredCars(filtered); // Update filtered cars list
-  };
-  
 
-  
+    setFilteredCars(filtered);
+    setIsFiltered(true); // Set filter state to true when filters are applied
+  };
+
   const resetFilters = () => {
-    setFilteredCars(carListings); // Reset the filtered cars list
-  };
-
-  const handleNextImage = (carId, totalImages) => {
-    setImageIndexes((prevIndexes) => ({
-      ...prevIndexes,
-      [carId]: (prevIndexes[carId] === undefined ? 1 : (prevIndexes[carId] + 1) % totalImages),
-    }));
-  };
-
-  const handlePreviousImage = (carId, totalImages) => {
-    setImageIndexes((prevIndexes) => ({
-      ...prevIndexes,
-      [carId]: (prevIndexes[carId] === undefined ? totalImages - 1 : (prevIndexes[carId] - 1 + totalImages) % totalImages),
-    }));
+    setFilteredCars(carListings);
+    setIsFiltered(false); // Reset filter state
   };
 
   return (
@@ -79,7 +66,10 @@ const Inventory = () => {
       <FilterSidebar applyFilters={applyFilters} resetFilters={resetFilters} />
       <div className={styles.mainContent}>
         <InventoryHeader />
-        <CarComp carListings={filteredCars} />
+        {/* Apply the 'filtered' class conditionally based on the filter state */}
+        <div className={`${styles.carCardWrapper} ${isFiltered ? styles.filtered : ''}`}>
+          <CarComp carListings={filteredCars} />
+        </div>
       </div>
     </div>
   );

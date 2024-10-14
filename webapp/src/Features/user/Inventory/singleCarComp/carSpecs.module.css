@@ -1,0 +1,21 @@
+/*carSpecs.module.css*/
+
+.carSpecsContainer {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    width: 100%;  
+    margin-top: 20px; /* Space above */
+    margin-bottom: 20px;
+  }
+  
+  .carSpecsList {
+    columns: 2;
+    list-style-position: inside;
+    column-gap: 40px;
+  }
+  
+  .carSpecsList li {
+    padding: 5px 0;
+  }
+  

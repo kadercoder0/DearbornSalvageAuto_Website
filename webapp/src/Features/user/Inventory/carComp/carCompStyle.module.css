@@ -1,3 +1,4 @@
+/* General styles */
 h1 {
   margin: 0;
 }
@@ -8,36 +9,45 @@ p {
   margin: 0;
 }
 
-/* car comp styles */
-
+/* Car Card Wrapper */
 .carCardWrapper {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
   grid-column-gap: 12px;
   grid-row-gap: 12px;
-  margin-top: 865px;
-  gap: 20px;
-  
+  margin-top: 740px;
+  padding: 0 10px;
+  justify-content: center;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-
-/* For medium-sized screens */
 @media (max-width: 770px) {
   .carCardWrapper {
-    grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
-/* For smaller screens */
 @media (max-width: 576px) {
   .carCardWrapper {
-    grid-template-columns: repeat(1, 1fr); /* 1 item per row */
+    grid-template-columns: 1fr; /* 1 card per row on small screens */
+    justify-content: center;
+    align-items: center;
+    margin-top: 2200px;
+    padding: 0; /* Remove extra padding on mobile */
+    margin-left: auto;
+    margin-right: 10rem;
+    margin-bottom: 200px;
+    width: 100%; /* Ensure full width */
+    max-width: 400px; /* Limit width for better centering */
   }
 }
 
 .cardDetail {
-  margin-top: 1rem;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.15);
@@ -47,56 +57,60 @@ p {
   gap: 6px;
   cursor: pointer;
   transition: transform 0.3s ease;
-
-  img {
-    width: 100%;
-    margin: 0;
-  }
 }
+
+.cardCarousel {
+  width: 100%;
+  height: 250px; /* Adjust height as needed */
+  margin-bottom: 10px;
+}
+
+.carouselImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.carCardWrapper.filtered .cardDetail {
+  margin-top: 100rem !important; /* Reduce or reset the margin on filtered listings */
+}
+
+.cardDetail img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
 .cardHeader {
   text-align: start;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
-  margin: 0;
-  margin-top: 12px;
-
-  span {
-    font-size: 16px;
-  }
+  margin: 12px 0 0 0;
 }
 
 .priceWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.stock {
-  color: black;
-  font-size: 16px;
-
-  span {
-    font-weight: 600;
-  }
+  margin-top: 10px;
 }
 
 .carCardPrice {
   font-size: 22px;
   font-weight: 700;
   color: black;
-  @media (max-width: 1300px) {
-    font-size: 20px;
-  }
+}
+
+.stock {
+  color: black;
+  font-size: 16px;
 }
 
 .autoSales {
   color: black;
   font-size: 18px;
   font-weight: 300;
-
-  @media (max-width: 1300px) {
-    font-size: 16px;
-  }
 }
 
 .carSpecsWrapper {
@@ -106,10 +120,6 @@ p {
   grid-column-gap: 12px;
   grid-row-gap: 12px;
   padding-top: 8px;
-
-  @media (max-width: 1300px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 .carSpecsTextWrapper {
@@ -121,10 +131,4 @@ p {
   border-radius: 6px;
   padding: 8px 0;
   border: 1px solid #007bff;
-
-  p {
-    font-size: 14px;
-  }
 }
-
-/* car comp styles */

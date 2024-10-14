@@ -2,7 +2,7 @@
 .carousel-item img {
     width: 100%;
     height: auto;
-    object-fit: cover; /* Ensures the image covers the available space without stretching */
+    object-fit: contain; /* Ensures the image covers the available space without stretching */
     max-height: 500px; /* Ensures a maximum height for the image */
     transition: transform 0.3s ease-in-out; /* Smooth transition */
   }
