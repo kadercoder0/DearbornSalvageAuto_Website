@@ -46,8 +46,8 @@ const CarSpecs = ({ carId }) => {
     <div className={styles.carSpecsContainer}>
       <h2>Car Specifications</h2>
       <ul className={styles.carSpecsList}>
-        {Object.entries(carSpecs).map(([spec, value], index) => (
-          <li key={index}>{`${spec}: ${value}`}</li>
+        {carSpecs.map((spec, index) => (
+          <li key={index}>{spec}</li>
         ))}
       </ul>
     </div>
