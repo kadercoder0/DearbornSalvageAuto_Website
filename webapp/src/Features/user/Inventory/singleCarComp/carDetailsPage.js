@@ -59,7 +59,7 @@ const CarDetailsPage = () => {
 
       {/* Car Specs Section */}
       <div className={styles.carSpecsContainer}>
-        <CarSpecs />
+       <CarSpecs carId={carId} />
       </div>
     </div>
   );
