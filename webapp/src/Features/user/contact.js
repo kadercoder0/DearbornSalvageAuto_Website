@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import emailjs from 'emailjs-com';  // Import EmailJS SDK
 import './contact.css';  // Import your custom styles
+import InventoryHeader from './Inventory/inventoryHeader';
+
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -85,13 +87,20 @@ const Contact = () => {
   };
 
   return (
+
     <div className="contact-container">
+
+      <InventoryHeader />
+
       <h1>Contact Us</h1>
 
       <div className="contact-details">
-        <p><strong>Phone number:</strong> +13132036018</p>
+        <p><strong>Phone number:</strong> +1(313) 203 - 6018</p>
+        <br />
         <p><strong>Shop email:</strong> <a href="mailto:ahmadali.usedcars@gmail.com">ahmadali.usedcars@gmail.com</a></p>
+        <br />
         <p><strong>Shop address:</strong> 14041 Greenfield Rd, Detroit, MI, United States</p>
+        <br />
         <p><strong>Shop name:</strong> Greenfield Auto Center</p>
       </div>
 
