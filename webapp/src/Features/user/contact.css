@@ -1,79 +1,135 @@
+/* Container for the contact page */
 .contact-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px; /* Standard padding for the container */
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Add spacing to the contact details */
+.contact-details {
+  margin-top: 350px; /* Add top margin to ensure it's below the header */
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-left: 4px solid #007bff;
+  border-radius: 5px;
+}
+
+/* Heading Spacing */
+h1 {
+  margin-top: 20px; /* Optional: Adjust this if needed */
+  text-align: center;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
+
+.contact-details p {
+  margin: 5px 0;
+}
+
+.contact-details a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.contact-details a:hover {
+  text-decoration: underline;
+}
+
+/* Form Styling */
+.contact-form {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.form-row {
+  width: 100%; /* Set the width of form rows */
+  max-width: 400px; /* Limit maximum width for better centering */
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-row label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-row input,
+.form-row textarea {
+  width: 100%; /* Use full width inside the form row */
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  max-width: 100%; /* Ensure fields do not stretch too much */
+}
+
+.form-row input:focus,
+.form-row textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+button {
+  display: block;
+  width: 35%;
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  background-color: #193df1;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Error and Success Messages */
+.form-error, .form-success {
+  text-align: center;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.form-error {
+  color: #d9534f;
+  background-color: #f2dede;
+}
+
+.form-success {
+  color: #007bff;
+  background-color: f2dede;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 15px;
+    margin: 20px;
   }
-  
-  h1, h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .contact-details {
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #f4f4f4;
-    border-radius: 5px;
-  }
-  
-  .contact-form {
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 5px;
-  }
-  
-  .form-row {
-    margin-bottom: 15px;
-  }
-  
-  .form-row label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .form-row input,
-  .form-row textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
+
   button {
-    display: inline-block;
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    font-size: 14px;
+    padding: 10px;
   }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  .form-error {
-    color: red;
-    margin-bottom: 10px;
-  }
-  
-  .form-success {
-    color: green;
-    margin-bottom: 10px;
-  }
-  
-  .navbar {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .nav-link {
-    color: #007BFF;
-    text-decoration: none;
-  }
-  
-  .nav-link:hover {
-    text-decoration: underline;
-  }
-  
+}
