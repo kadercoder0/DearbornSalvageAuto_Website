@@ -1,24 +1,39 @@
-/* Table wrapper to control overflow */
+/* Container */
+.container {
+  padding: 20px;
+}
+
+/* Header styling */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profileIcon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #289ed8;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Table styling */
 .tableWrapper {
   overflow-y: auto;
-  max-height: 80vh; /* Increase height to 80% of the viewport */
+  max-height: 80vh;
   padding: 20px;
   margin-top: 20px;
   border: 1px solid #ccc;
 }
 
 table {
-  width: 100%; /* Ensure the table takes full width */
+  width: 100%;
   border-collapse: collapse;
+  margin-bottom: 20px;
 }
-
-.profileIcon{ 
-  position: absolute; 
-  top: 20px;  /* Adjust the position as needed */ 
-  right: 20px; color: #289ed8; /* Profile icon color */ 
-  font-size: 24px; /* Profile icon size */ 
-  cursor: pointer; /* Pointer on hover */ 
-  }
 
 thead {
   background-color: #f8f9fa;
@@ -26,7 +41,7 @@ thead {
 
 th, td {
   border: 1px solid #ddd;
-  padding: 12px; /* Increase padding for bigger cells */
+  padding: 15px; /* Increased padding for better spacing */
   text-align: center;
 }
 
@@ -35,20 +50,24 @@ th {
   font-weight: bold;
 }
 
-/* Make the images larger in the table */
-table img {
-  max-width: 200px; /* Increase image width */
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  border-radius: 8px; /* Optional: rounded corners for images */
+/* Zebra striping for rows */
+tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
 }
 
-/* Move the arrows onto the image */
+/* Images in table */
+td img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  max-height: 180px; /* Ensure the images are consistent in size */
+}
+
+/* Carousel styles */
 .carousel {
   position: relative;
   width: 100%;
-  height: 200px; /* Ensure this matches the height of your images */
+  height: 200px;
   overflow: hidden;
 }
 
@@ -59,21 +78,22 @@ table img {
 }
 
 .arrowLeft, .arrowRight {
-  position: absolute; 
-  top: 50%; 
+  position: absolute;
+  top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(255, 255, 255, 0.8); 
+  background-color: rgba(255, 255, 255, 0.8);
   color: #333;
   border: none;
   cursor: pointer;
   padding: 10px;
   border-radius: 50%;
-  width: 30px; 
+  width: 30px;
   height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
 }
 
 .arrowLeft {
@@ -88,8 +108,7 @@ table img {
   background-color: rgba(255, 255, 255, 1);
 }
 
-
-/* Adjust the action buttons */
+/* Action buttons */
 .deleteButton, .editButton {
   background-color: #e74c3c;
   color: white;
@@ -98,12 +117,18 @@ table img {
   padding: 10px;
   border-radius: 50%;
   font-size: 18px;
-  width: 40px; /* Larger button size */
-  height: 40px; /* Larger button size */
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease;
+}
+
+
+/* Add margin to create space between buttons */
+.deleteButton {
+  background-color: #e74c3c;
 }
 
 .editButton {
@@ -116,4 +141,110 @@ table img {
 
 .editButton:hover {
   background-color: #2980b9;
+}
+
+/* Modal Form */
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Increased gap for better spacing */
+}
+
+.modalForm input, 
+.modalForm button {
+  padding: 12px; /* Increased padding for input fields */
+  font-size: 16px;
+}
+
+.modalForm button {
+  cursor: pointer;
+  width: 100%; /* Full-width buttons */
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.modalForm button:hover {
+  background-color: #0056b3;
+}
+
+.submitButton {
+  background-color: #28a745; /* Submit button with green */
+}
+
+.cancelButton {
+  background-color: #dc3545; /* Cancel button with red */
+}
+
+.submitButton:hover {
+  background-color: #218838;
+}
+
+.cancelButton:hover {
+  background-color: #c82333;
+}
+
+/* Specification list */
+.specificationInput {
+  display: flex;
+  gap: 10px;
+}
+
+.specificationInput input {
+  flex: 1;
+}
+
+.specificationInput button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.specificationInput button:hover {
+  background-color: #0056b3;
+}
+
+ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+ul li {
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+ul li button {
+  margin-left: 10px;
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Add New Listing Button */
+.addListingButton {
+  background-color: #007bff; /* Blue background */
+  color: white;
+  font-size: 16px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  width: 20%; /* Make button full-width */
+  margin-bottom: 20px;
+}
+
+.addListingButton:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
 }
