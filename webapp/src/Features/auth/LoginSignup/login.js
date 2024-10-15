@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import logo1 from '../../../Assets/logo1.png';
 import { auth } from '../../../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { checkIfAdmin } from '../adminUtils'; // Import the checkIfAdmin function
+import { checkIfAdmin } from '../adminUtils';
+import './login.module.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,47 +18,35 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
-
-        // Check if the logged-in user is an admin and log the result
         const isAdmin = await checkIfAdmin(user.uid);
 
-        // Redirect based on admin status
         if (isAdmin) {
-          navigate('/admin/managelistings'); // Redirect to listings manager if the user is an admin
+          navigate('/admin/managelistings');
         } else {
-          navigate('/home'); // Redirect to home page if the user is not an admin
+          navigate('/home');
         }
       })
       .catch((error) => {
-        console.error("Login error:", error);
         if (error.code === 'auth/wrong-password') {
-            setErrorMessage('Incorrect password. Please try again.');
+          setErrorMessage('Incorrect password. Please try again.');
         } else if (error.code === 'auth/user-not-found') {
-            setErrorMessage('No user found with this email.');
+          setErrorMessage('No user found with this email.');
         } else {
-            setErrorMessage('Incorrect email or password. Please try again.');
+          setErrorMessage('Incorrect email or password. Please try again.');
         }
-    });
-    
+      });
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleReset = () => {
-    navigate('/reset');
-  };
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleReset = () => navigate('/reset');
 
   return (
-    <div style={{ textAlign: 'center', paddingTop: '50px' }}>
-      <img src={logo1} alt="Logo" style={{ width: '950px', height: '150px' }} />
+    // Add this wrapper to center both the logo and form
+    <div className="login-container">
+      <img src={logo1} alt="Logo" />
       <h2>Login</h2>
-      <form onSubmit={login} style={{ display: 'inline-block', textAlign: 'left' }}>
+      <form onSubmit={login}>
         <div>
           <input 
             type="email" 
@@ -65,7 +54,6 @@ const Login = () => {
             onChange={handleEmailChange} 
             placeholder="Email" 
             required 
-            style={{ width: '300px', padding: '10px', marginBottom: '20px' }} 
           />
         </div>
         <div>
@@ -75,18 +63,12 @@ const Login = () => {
             onChange={handlePasswordChange} 
             placeholder="Password" 
             required 
-            style={{ width: '300px', padding: '10px', marginBottom: '10px' }} 
           />
-          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-          <p onClick={handleReset} style={{ cursor: 'pointer', color: '#007bff', marginBottom: '20px' }}>Forgot Password?</p>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
-        <button type="submit" style={{ width: '300px', padding: '10px', backgroundColor: '#007bff', color: 'white', borderRadius: '5px', border: 'none', cursor: 'pointer' }}>
-          Login
-        </button>
+        <button type="submit">Login</button>
+        <p onClick={handleReset}>Forgot Password?</p>
       </form>
-      <h3 style={{ marginTop: '20px', fontSize: '14px', color: '#555' }}>
-        Don't have an account? <Link to="/signup" style={{ color: '#007bff', textDecoration: 'none' }}>Sign up here</Link>
-      </h3>
     </div>
   );
 };

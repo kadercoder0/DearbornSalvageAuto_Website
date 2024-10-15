@@ -228,8 +228,11 @@ const ManageListings = () => {
         </div>
       </div>
 
-      <button onClick={() => setModalIsOpen(true)}>Add New Listing</button>
+      <button className={styles.addListingButton} onClick={() => setModalIsOpen(true)}>
+        Add New Listing
+      </button>
 
+    
       {carListings.length === 0 ? (
         <p>No car listings available.</p>
       ) : (
@@ -297,6 +300,7 @@ const ManageListings = () => {
                       <button onClick={() => handleDelete(car.id)} className={styles.deleteButton}>
                         <i className="fas fa-trash"></i>
                       </button>
+                      <br />
                       <button onClick={() => openEditModal(car)} className={styles.editButton}>
                         <i className="fas fa-pen-to-square"></i>
                       </button>

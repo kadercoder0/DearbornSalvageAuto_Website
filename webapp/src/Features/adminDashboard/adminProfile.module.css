@@ -1,0 +1,134 @@
+/* General styling for the container */
+.profile-container {
+    margin: 0 auto;
+    max-width: 600px;
+    padding: 40px;
+    text-align: center;
+}
+
+/* Headings */
+h2, h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+h2.profile-heading {
+    color: #333;
+    font-size: 32px; /* Make the "Profile" text larger */
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* User Information */
+.user-info {
+    text-align: left;
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.user-info p {
+    margin: 10px 0;
+    text-decoration: none;
+}
+
+/* Input styling */
+.input {
+    width: 100%;
+    padding: 12px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Toggle Password Visibility */
+.password-toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.toggle-button {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 5px;
+}
+
+.toggle-button:hover {
+    color: #1f84f1;
+}
+
+/* Button styling */
+.button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin: 15px 0;
+    margin-left: 25px;
+    width: 80%;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Success alert styling */
+.alert {
+    padding: 15px;
+    background-color: #4CAF50;
+    color: white;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.alert .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.alert .closebtn:hover {
+    color: black;
+}
+
+/* Navigation link */
+.nav-link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 18px;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+/* Eye icon styling */
+.toggle-icon {
+    position: absolute;
+    right: 10px;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.toggle-icon:hover {
+    color: #0056b3;
+}
