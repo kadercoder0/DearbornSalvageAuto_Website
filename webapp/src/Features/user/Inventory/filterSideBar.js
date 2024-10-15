@@ -17,6 +17,23 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
     drivetrain: '',
   });
 
+
+  useEffect(() => {
+    const handleWheel = (e) => {
+      if (document.activeElement.type === "number") {
+        e.preventDefault();
+      }
+    };
+
+    // Add event listener
+    window.addEventListener('wheel', handleWheel, { passive: false });
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
   // Fetch car data from Firestore
   const fetchCarData = async () => {
     try {
