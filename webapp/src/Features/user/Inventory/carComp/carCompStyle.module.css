@@ -9,6 +9,20 @@ p {
   margin: 0;
 }
 
+/* Remove underline for all text elements in the car card */
+.cardDetail h2, 
+.cardDetail p, 
+.cardDetail span {
+  text-decoration: none; /* Ensure no underline for these elements */
+}
+
+.cardDetail:hover h2,
+.cardDetail:hover p,
+.cardDetail:hover span {
+  text-decoration: none; /* Prevent underline on hover */
+}
+
+
 /* Car Card Wrapper */
 .carCardWrapper {
   display: grid;
