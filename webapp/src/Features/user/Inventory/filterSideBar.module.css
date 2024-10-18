@@ -74,6 +74,7 @@
 
 /* Style for the Search Button */
 .searchButton {
+  width: 70%;
   background-color: #007bff; /* Main color for the button */
   color: white;
   border: none;
@@ -96,6 +97,7 @@
 
 /* Style for the Reset Button */
 .resetButton {
+  width: 70%;
   background-color: #dc3545; /* Red for reset */
   color: white;
   border: none;
