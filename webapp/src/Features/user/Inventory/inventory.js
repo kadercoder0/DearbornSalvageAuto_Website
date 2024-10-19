@@ -6,7 +6,7 @@ import "../Inventory/inventoryHeader";
 import InventoryHeader from '../Inventory/inventoryHeader';
 import CarComp from "../Inventory/carComp/carComp.js";
 import FilterSidebar from '../Inventory/filterSideBar.js';
-import '/Users/mohammedhaidous/Downloads/Developer/DearbornSalvageAuto_Website/webapp/src/Features/user/Inventory/carComp/carCompStyle.module.css';
+import './carComp/carCompStyle.module.css';
 
 const Inventory = () => {
   const [carListings, setCarListings] = useState([]);
