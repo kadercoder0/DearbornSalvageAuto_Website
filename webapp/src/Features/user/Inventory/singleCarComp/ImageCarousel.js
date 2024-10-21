@@ -3,17 +3,18 @@ import Carousel from 'react-bootstrap/Carousel';
 
 const ImageCarousel = ({ carImages }) => {
   const containerStyle = {
-    width: '100%',
+    width: '200%',
     maxWidth: '900px',
     margin: 'auto',
+    right: '500px',
     position: 'relative',
   };
 
   const imageStyle = {
-    width: '100%',
     height: '500px',
     minHeight: '300px',  // Ensure consistent height for images
-    objectFit: 'contain',
+    width: '900px',
+    //objectFit: 'contain',
     transition: 'opacity 0.5s ease-in-out',
   };
 
