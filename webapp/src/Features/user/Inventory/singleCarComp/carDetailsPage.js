@@ -39,15 +39,19 @@ const CarDetailsPage = () => {
       {/* Fixed Header */}
       <InventoryHeader />
       
+     
       {/* Main Content */}
+       
       <div className={styles.container}>
-        {/* Display Car Make, Model, and Year */}
-        <div className={styles.carInfo}>
+      <div className={styles.carInfo}>
           <h2 className={styles.carTitle}>{carData.make} {carData.model} ({carData.year})</h2>
         </div>
+        {/* Display Car Make, Model, and Year */}
 
         {/* Image Carousel Section */}
         <div className={styles.carouselSection}>
+          <br/>
+          <br/>
           <ImageCarousel carImages={carData.images} />
         </div>
 
