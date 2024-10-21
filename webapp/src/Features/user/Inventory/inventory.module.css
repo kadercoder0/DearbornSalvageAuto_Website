@@ -1,19 +1,15 @@
 /*inventoryModule.css*/
 /* Header Styling */
 .headerWrapper {
+  position: sticky;
+  top: 0;
   background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
   padding: 16px 0;
   z-index: 1000;
 }
 
 .header {
-  position: fixed; /* Change from absolute to fixed */
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 150px; /* This is fine if the height works for your design */
-  z-index: 1000;
   background-color: #f8f9fa;
   border-bottom: 1px solid #ddd;
 }
@@ -266,7 +262,7 @@ main {
 /* Main Container for Video and Content */
 .mainContainer {
   flex: 1;
-  padding-left: 20px; 
+  padding-left: 20px;
 }
 
 /* Search Bar and Filter Section */
@@ -312,7 +308,8 @@ main {
 }
 
 /* Arrows for Image Navigation */
-.arrowLeft, .arrowRight {
+.arrowLeft,
+.arrowRight {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -341,12 +338,11 @@ main {
   right: 5px;
   color: green;
   background-color: white;
-
 }
 
-.arrowLeft:hover, .arrowRight:hover {
+.arrowLeft:hover,
+.arrowRight:hover {
   background-color: rgba(0, 0, 0, 0.7);
-  
 }
 
 /* Car Details */
@@ -375,7 +371,7 @@ main {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1536px;
   padding: 0 20px;
 }
 
@@ -418,11 +414,7 @@ main {
 /* Inventory Page Wrapper */
 .inventoryPage {
   display: flex;
-  margin-left: 250px; /* Matches sidebar width */
-  padding-top: 170px; /* Adjust padding to match the header height */
-  padding-left: 20px;
 }
-
 
 /* Video Section */
 .videoSection {
@@ -464,10 +456,6 @@ main {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
   transition: top 0.3s;
 }
 
@@ -494,10 +482,8 @@ main {
     width: 100%; /* Ensure the car cards use the full width */
     max-width: none; /* Remove max-width constraint */
     height: auto; /* Allow the height to adjust based on content */
-    
   }
 }
-
 
 .carCard:hover {
   transform: translateY(-5px);
@@ -516,7 +502,6 @@ main {
   height: 100%;
   object-fit: cover; /* Ensure the image fits nicely */
 }
-
 
 /* Reset Button Styling */
 .resetButton {
@@ -582,7 +567,7 @@ html {
     overflow: hidden;
     z-index: 1;
   }
-  
+
   /* Video Element */
   .backgroundVideo {
     position: relative;
@@ -597,15 +582,13 @@ html {
 
 /* inventory.module.css */
 .inventoryPage {
-
-    display: flex;
-    margin-left: 250px; /* Matches sidebar width */
-    padding-top: 0; /* Set this to 0 to start under the header */
-    padding-left: 20px;
+  display: flex;
+  max-width: 1536px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 .mainContent {
   flex: 1;
   padding-left: 20px;
 }
-

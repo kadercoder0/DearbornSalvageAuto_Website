@@ -1,10 +1,6 @@
 /* Sidebar Styling for Desktop */
 .sidebar {
-  position: fixed;
-  top: 160px;
-  left: 10px;
-  width: 250px;
-  height: calc(100vh - 160px);
+  width: 300px;
   background-color: #fff;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -70,7 +66,6 @@
   border-radius: 4px;
   font-size: 16px;
 }
-
 
 /* Style for the Search Button */
 .searchButton {

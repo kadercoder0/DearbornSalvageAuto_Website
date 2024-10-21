@@ -10,8 +10,8 @@ p {
 }
 
 /* Remove underline for all text elements in the car card */
-.cardDetail h2, 
-.cardDetail p, 
+.cardDetail h2,
+.cardDetail p,
 .cardDetail span {
   text-decoration: none; /* Ensure no underline for these elements */
 }
@@ -22,14 +22,12 @@ p {
   text-decoration: none; /* Prevent underline on hover */
 }
 
-
 /* Car Card Wrapper */
 .carCardWrapper {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
   grid-column-gap: 12px;
   grid-row-gap: 12px;
-  margin-top: 740px;
   padding: 0 10px;
   justify-content: center;
   max-width: 1200px;
@@ -39,7 +37,10 @@ p {
 
 @media (max-width: 770px) {
   .carCardWrapper {
-    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* 2 cards per row on medium screens */
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
