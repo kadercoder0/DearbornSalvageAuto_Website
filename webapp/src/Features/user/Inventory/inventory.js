@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../../firebase';
-import styles from './inventory.module.css';
+import React, { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../firebase";
+import styles from "./inventory.module.css";
 import "../Inventory/inventoryHeader";
-import InventoryHeader from '../Inventory/inventoryHeader';
+import InventoryHeader from "../Inventory/inventoryHeader";
 import CarComp from "../Inventory/carComp/carComp.js";
-import FilterSidebar from '../Inventory/filterSideBar.js';
-import './carComp/carCompStyle.module.css';
+import FilterSidebar from "../Inventory/filterSideBar.js";
+import "./carComp/carCompStyle.module.css";
 
 const Inventory = () => {
   const [carListings, setCarListings] = useState([]);
@@ -20,16 +20,16 @@ const Inventory = () => {
     setLoading(true);
     setError(null);
     try {
-      const querySnapshot = await getDocs(collection(db, 'carListings'));
+      const querySnapshot = await getDocs(collection(db, "carListings"));
       const cars = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setCarListings(cars);
       setFilteredCars(cars);
-      console.log('Car Listings from Firestore:', cars);
+      console.log("Car Listings from Firestore:", cars);
     } catch (error) {
-      setError('Error fetching car listings. Please try again later.');
+      setError("Error fetching car listings. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,8 @@ const Inventory = () => {
         (!make || car.make.toLowerCase().includes(make)) &&
         (!model || car.model.toLowerCase().includes(model)) &&
         (!minYear || car.year >= parseInt(minYear)) &&
-        (!drivetrain || car.drivetrain.toLowerCase().includes(drivetrain.toLowerCase())) &&
+        (!drivetrain ||
+          car.drivetrain.toLowerCase().includes(drivetrain.toLowerCase())) &&
         (!price || (car.price >= price[0] && car.price <= price[1]))
       );
     });
@@ -62,13 +63,17 @@ const Inventory = () => {
   };
 
   return (
-    <div className={styles.inventoryPage}>
-      <FilterSidebar applyFilters={applyFilters} resetFilters={resetFilters} />
-      <div className={styles.mainContent}>
-        <InventoryHeader />
-        {/* Apply the 'filtered' class conditionally based on the filter state */}
-        <div className={`${styles.carCardWrapper} ${isFiltered ? styles.filtered : ''}`}>
-          <CarComp carListings={filteredCars} />
+    <div>
+      <InventoryHeader />
+      <div className={styles.inventoryPage}>
+        <FilterSidebar
+          applyFilters={applyFilters}
+          resetFilters={resetFilters}
+        />
+        <div className={styles.mainContent}>
+          <div className={`${styles.carCardWrapper}`}>
+            <CarComp carListings={filteredCars} />
+          </div>
         </div>
       </div>
     </div>

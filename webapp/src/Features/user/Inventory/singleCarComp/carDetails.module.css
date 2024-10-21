@@ -11,7 +11,6 @@
   max-width: 1200px;
   padding-top: 0;
   position: relative;
-  margin-top: 400px;
 }
 
 /* Styles for the carousel section */
@@ -20,7 +19,7 @@
   margin-right: 20px;
   width: 60%;
   max-width: 900px;
-  height: auto; 
+  height: auto;
 }
 
 /* Styles for the vehicle info section */
@@ -34,8 +33,8 @@
 
 /* Car Specs Section - Separate and independent */
 .carSpecsContainer {
-  max-height: 400px;  /* Set max height */
-  overflow-y: auto;  /* Enable scrolling */
+  max-height: 400px; /* Set max height */
+  overflow-y: auto; /* Enable scrolling */
 }
 
 /* Car Specs list styling */
@@ -49,8 +48,9 @@
   margin-bottom: 10px;
 }
 
-.carouselSection, .vehicleInfoSection {
-  flex-shrink: 0;  /* Prevent shrinking of these sections */
+.carouselSection,
+.vehicleInfoSection {
+  flex-shrink: 0; /* Prevent shrinking of these sections */
 }
 
 /* Web/Desktop Layout */
@@ -60,7 +60,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: middl; /* Center the image vertically */
-
   }
 
   .carouselSection {
@@ -88,12 +87,11 @@
   .vehicleInfoSection {
     width: 100%; /* Full width for vehicle info */
   }
-  
-  .carSpecsContainer{
+
+  .carSpecsContainer {
     margin-bottom: 50px;
   }
 }
-
 
 /* Car Info section - Make, Model, and Year */
 .carInfo {

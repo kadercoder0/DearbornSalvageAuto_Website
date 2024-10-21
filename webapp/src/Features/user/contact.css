@@ -1,21 +1,21 @@
 /* Container for the contact page */
-.contact-container {
-  max-width: 600px;
+.wrapper {
+  max-width: 1536px;
   margin: 0 auto;
-  padding: 20px; /* Standard padding for the container */
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 2rem;
 }
 
 /* Add spacing to the contact details */
 .contact-details {
-  margin-top: 350px; /* Add top margin to ensure it's below the header */
   margin-bottom: 20px;
   padding: 15px;
   background-color: #f9f9f9;
-  border-left: 4px solid #007bff;
-  border-radius: 5px;
 }
 
 /* Heading Spacing */
@@ -23,14 +23,14 @@ h1 {
   margin-top: 20px; /* Optional: Adjust this if needed */
   text-align: center;
   color: #333;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 h2 {
   text-align: center;
   margin-bottom: 20px;
   color: #333;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 .contact-details p {
@@ -105,7 +105,8 @@ button:hover {
 }
 
 /* Error and Success Messages */
-.form-error, .form-success {
+.form-error,
+.form-success {
   text-align: center;
   padding: 10px;
   border-radius: 4px;

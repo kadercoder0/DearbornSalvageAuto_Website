@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
-import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { db, storage } from '../../firebase';
-import styles from './managelistings.module.css';
-import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect, useState } from "react";
+import Modal from "react-modal";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { db, storage } from "../../firebase";
+import styles from "./managelistings.module.css";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
 const ManageListings = () => {
   const navigate = useNavigate();
@@ -16,17 +23,17 @@ const ManageListings = () => {
   const [loading, setLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [carData, setCarData] = useState({
-    make: '',
-    model: '',
-    year: '',
-    odometer: '',
-    price: '',
-    cylinders: '',
-    vin: '',
-    drivetrain: '',
-    engineSize: '',
-    titleStatus: '',
-    color: '',
+    make: "",
+    model: "",
+    year: "",
+    odometer: "",
+    price: "",
+    cylinders: "",
+    vin: "",
+    drivetrain: "",
+    engineSize: "",
+    titleStatus: "",
+    color: "",
     images: [],
     carSpecifications: [], // Store the car specifications dynamically
   });
@@ -35,21 +42,21 @@ const ManageListings = () => {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [currentCar, setCurrentCar] = useState(null); // Store the car being edited
   const [imageIndexes, setImageIndexes] = useState({}); // Store image indexes for each car
-  const [newSpec, setNewSpec] = useState(''); // To store the current input specification
+  const [newSpec, setNewSpec] = useState(""); // To store the current input specification
 
   const closeModal = () => {
     setCarData({
-      make: '',
-      model: '',
-      year: '',
-      odometer: '',
-      price: '',
-      cylinders: '',
-      vin: '',
-      drivetrain: '',
-      engineSize: '',
-      titleStatus: '',
-      color: '',
+      make: "",
+      model: "",
+      year: "",
+      odometer: "",
+      price: "",
+      cylinders: "",
+      vin: "",
+      drivetrain: "",
+      engineSize: "",
+      titleStatus: "",
+      color: "",
       images: [],
       carSpecifications: [],
     });
@@ -57,7 +64,7 @@ const ManageListings = () => {
   };
 
   const handleProfileClick = () => {
-    navigate('/admin/adminprofile'); // Navigate to the admin profile page
+    navigate("/admin/adminprofile"); // Navigate to the admin profile page
   };
 
   // Open edit modal and set the current car data
@@ -88,7 +95,7 @@ const ManageListings = () => {
     e.preventDefault();
 
     try {
-      const carDocRef = doc(db, 'carListings', currentCar.id); // Reference to the specific car document
+      const carDocRef = doc(db, "carListings", currentCar.id); // Reference to the specific car document
 
       // Collect updated form data
       const updatedCarData = {
@@ -102,17 +109,18 @@ const ManageListings = () => {
         engineSize: carData.engineSize || currentCar.engineSize,
         drivetrain: carData.drivetrain || currentCar.drivetrain,
         titleStatus: carData.titleStatus || currentCar.titleStatus,
-        carSpecifications: carData.carSpecifications || currentCar.carSpecifications,
+        carSpecifications:
+          carData.carSpecifications || currentCar.carSpecifications,
       };
 
       // Update the car document with the new data
       await updateDoc(carDocRef, updatedCarData);
 
-      alert('Car listing updated successfully!');
+      alert("Car listing updated successfully!");
       closeEditModal(); // Close the modal after successful edit
       fetchCarListings(); // Refresh the listings
     } catch (error) {
-      console.error('Error updating car listing: ', error);
+      console.error("Error updating car listing: ", error);
     }
   };
 
@@ -130,27 +138,27 @@ const ManageListings = () => {
       }
 
       // Add car listing with image URLs
-      await addDoc(collection(db, 'carListings'), {
+      await addDoc(collection(db, "carListings"), {
         ...carData,
         images: imageURLs,
         carSpecifications: carData.carSpecifications, // Add the car specifications here
       });
 
-      alert('Car listing added successfully!');
+      alert("Car listing added successfully!");
       closeModal(); // Close modal after submission
       fetchCarListings(); // Refresh listings
     } catch (error) {
-      console.error('Error adding car listing: ', error);
+      console.error("Error adding car listing: ", error);
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(doc(db, 'carListings', id));
-      alert('Car listing deleted successfully!');
+      await deleteDoc(doc(db, "carListings", id));
+      alert("Car listing deleted successfully!");
       fetchCarListings(); // Refresh listings
     } catch (error) {
-      console.error('Error deleting car listing: ', error);
+      console.error("Error deleting car listing: ", error);
     }
   };
 
@@ -168,32 +176,40 @@ const ManageListings = () => {
   const handleNextImage = (carId, totalImages) => {
     setImageIndexes((prevIndexes) => ({
       ...prevIndexes,
-      [carId]: (prevIndexes[carId] === undefined ? 1 : (prevIndexes[carId] + 1) % totalImages), // Cycle through images
+      [carId]:
+        prevIndexes[carId] === undefined
+          ? 1
+          : (prevIndexes[carId] + 1) % totalImages, // Cycle through images
     }));
   };
 
   const handlePreviousImage = (carId, totalImages) => {
     setImageIndexes((prevIndexes) => ({
       ...prevIndexes,
-      [carId]: (prevIndexes[carId] === undefined ? totalImages - 1 : (prevIndexes[carId] - 1 + totalImages) % totalImages), // Cycle back through images
+      [carId]:
+        prevIndexes[carId] === undefined
+          ? totalImages - 1
+          : (prevIndexes[carId] - 1 + totalImages) % totalImages, // Cycle back through images
     }));
   };
 
   const addCarSpecification = () => {
-    if (newSpec.trim() !== '') {
-      setCarData(prevData => ({
+    if (newSpec.trim() !== "") {
+      setCarData((prevData) => ({
         ...prevData,
         carSpecifications: [...prevData.carSpecifications, newSpec],
       }));
-      setNewSpec(''); // Clear the input after adding the spec
+      setNewSpec(""); // Clear the input after adding the spec
     }
   };
 
   // Function to remove a specific car specification by index
   const removeCarSpecification = (index) => {
-    setCarData(prevData => ({
+    setCarData((prevData) => ({
       ...prevData,
-      carSpecifications: prevData.carSpecifications.filter((_, i) => i !== index),
+      carSpecifications: prevData.carSpecifications.filter(
+        (_, i) => i !== index
+      ),
     }));
   };
 
@@ -201,15 +217,15 @@ const ManageListings = () => {
   const fetchCarListings = async () => {
     setLoading(true);
     try {
-      const querySnapshot = await getDocs(collection(db, 'carListings'));
-      const cars = querySnapshot.docs.map(doc => ({
+      const querySnapshot = await getDocs(collection(db, "carListings"));
+      const cars = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setCarListings(cars);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching car listings: ', error);
+      console.error("Error fetching car listings: ", error);
       setLoading(false);
     }
   };
@@ -228,11 +244,13 @@ const ManageListings = () => {
         </div>
       </div>
 
-      <button className={styles.addListingButton} onClick={() => setModalIsOpen(true)}>
+      <button
+        className={styles.addListingButton}
+        onClick={() => setModalIsOpen(true)}
+      >
         Add New Listing
       </button>
 
-    
       {carListings.length === 0 ? (
         <p>No car listings available.</p>
       ) : (
@@ -274,7 +292,9 @@ const ManageListings = () => {
                           />
                           <button
                             className={styles.arrowLeft}
-                            onClick={() => handlePreviousImage(car.id, totalImages)}
+                            onClick={() =>
+                              handlePreviousImage(car.id, totalImages)
+                            }
                           >
                             &#8249;
                           </button>
@@ -289,19 +309,27 @@ const ManageListings = () => {
                     </td>
                     <td>
                       <ul>
-                        {car.carSpecifications && Array.isArray(car.carSpecifications) && car.carSpecifications.map((spec, index) => (
-                          <li key={index}>
-                            {spec} {/* Ensure only the value is displayed */}
-                          </li>
-                        ))}
-                    </ul>
+                        {car.carSpecifications &&
+                          Array.isArray(car.carSpecifications) &&
+                          car.carSpecifications.map((spec, index) => (
+                            <li key={index}>
+                              {spec} {/* Ensure only the value is displayed */}
+                            </li>
+                          ))}
+                      </ul>
                     </td>
                     <td>
-                      <button onClick={() => handleDelete(car.id)} className={styles.deleteButton}>
+                      <button
+                        onClick={() => handleDelete(car.id)}
+                        className={styles.deleteButton}
+                      >
                         <i className="fas fa-trash"></i>
                       </button>
                       <br />
-                      <button onClick={() => openEditModal(car)} className={styles.editButton}>
+                      <button
+                        onClick={() => openEditModal(car)}
+                        className={styles.editButton}
+                      >
                         <i className="fas fa-pen-to-square"></i>
                       </button>
                     </td>
@@ -313,24 +341,119 @@ const ManageListings = () => {
         </div>
       )}
 
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Add Car Listing">
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Add Car Listing"
+      >
         <h2>Add Car Listing</h2>
-        <form onSubmit={handleSubmit} className={styles.modalForm}>
-          <input type="text" name="make" placeholder="Make" onChange={handleInputChange} required />
-          <input type="text" name="model" placeholder="Model" onChange={handleInputChange} required />
-          <input type="number" name="year" placeholder="Year" onChange={handleInputChange} required />
-          <input type="number" name="odometer" placeholder="Odometer" onChange={handleInputChange} required />
-          <input type="number" name="price" placeholder="Price" onChange={handleInputChange} required />
-          <input type="text" name="cylinders" placeholder="Cylinders" onChange={handleInputChange} required />
-          <input type="text" name="engineSize" placeholder="Engine Size" onChange={handleInputChange} required />
-          <input type="text" name="drivetrain" placeholder="Drivetrain" onChange={handleInputChange} required />
-          <input type="text" name="titleStatus" placeholder="Title Status" onChange={handleInputChange} required />
-          <input type="text" name="color" placeholder="Color" onChange={handleInputChange} required />
-          <input type="text" name="vin" placeholder="VIN" onChange={handleInputChange} required />
+        <form
+          onSubmit={handleSubmit}
+          className={styles.modalForm}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            margin: "0 auto",
+          }}
+        >
+          <input
+            style={{ width: "100%" }}
+            type="text"
+            name="make"
+            placeholder="Make"
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            style={{ width: "100%" }}
+            type="text"
+            name="model"
+            placeholder="Model"
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            style={{ width: "100%" }}
+            type="number"
+            name="year"
+            placeholder="Year"
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            style={{ width: "100%" }}
+            type="number"
+            name="odometer"
+            placeholder="Odometer"
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            style={{ width: "100%" }}
+            type="number"
+            name="price"
+            placeholder="Price"
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            style={{ width: "100%" }}
+            type="text"
+            name="cylinders"
+            placeholder="Cylinders"
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            style={{ width: "100%" }}
+            type="text"
+            name="engineSize"
+            placeholder="Engine Size"
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            style={{ width: "100%" }}
+            type="text"
+            name="drivetrain"
+            placeholder="Drivetrain"
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            style={{ width: "100%" }}
+            type="text"
+            name="titleStatus"
+            placeholder="Title Status"
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            style={{ width: "100%" }}
+            type="text"
+            name="color"
+            placeholder="Color"
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            style={{ width: "100%" }}
+            type="text"
+            name="vin"
+            placeholder="VIN"
+            onChange={handleInputChange}
+            required
+          />
 
           {/* Multiple file input for uploading images */}
           <label>Upload Images</label>
-          <input type="file" name="images" multiple onChange={handleImageChange} />
+          <input
+            type="file"
+            name="images"
+            multiple
+            onChange={handleImageChange}
+          />
 
           <h3>Car Specifications</h3>
           <div className={styles.specificationInput}>
@@ -347,17 +470,17 @@ const ManageListings = () => {
           <ul>
             {carData.carSpecifications.map((spec, index) => (
               <li key={index}>
-                {spec} 
+                {spec}
                 <button
                   type="button"
                   onClick={() => removeCarSpecification(index)}
                   style={{
-                    background: 'none',
-                    border: 'none',
-                    color: 'red',
-                    fontSize: '16px',
-                    marginLeft: '10px',
-                    cursor: 'pointer',
+                    background: "none",
+                    border: "none",
+                    color: "red",
+                    fontSize: "16px",
+                    marginLeft: "10px",
+                    cursor: "pointer",
                   }}
                 >
                   x
@@ -367,15 +490,31 @@ const ManageListings = () => {
           </ul>
 
           <button type="submit">Submit</button>
-          <button type="button" onClick={closeModal}>Cancel</button>
+          <button type="button" onClick={closeModal}>
+            Cancel
+          </button>
         </form>
       </Modal>
 
-      <Modal isOpen={editModalIsOpen} onRequestClose={closeEditModal} contentLabel="Edit Car Listing">
+      <Modal
+        isOpen={editModalIsOpen}
+        onRequestClose={closeEditModal}
+        contentLabel="Edit Car Listing"
+      >
         <h2>Edit Car Listing</h2>
         {currentCar && (
-          <form onSubmit={handleEditSubmit} className={styles.modalForm}>
+          <form
+            onSubmit={handleEditSubmit}
+            className={styles.modalForm}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+              margin: "0 auto",
+            }}
+          >
             <input
+              style={{ width: "100%" }}
               type="text"
               name="make"
               placeholder="Make"
@@ -384,6 +523,7 @@ const ManageListings = () => {
               required
             />
             <input
+              style={{ width: "100%" }}
               type="text"
               name="model"
               placeholder="Model"
@@ -392,6 +532,7 @@ const ManageListings = () => {
               required
             />
             <input
+              style={{ width: "100%" }}
               type="number"
               name="year"
               placeholder="Year"
@@ -400,6 +541,7 @@ const ManageListings = () => {
               required
             />
             <input
+              style={{ width: "100%" }}
               type="number"
               name="odometer"
               placeholder="Odometer"
@@ -408,6 +550,7 @@ const ManageListings = () => {
               required
             />
             <input
+              style={{ width: "100%" }}
               type="number"
               name="price"
               placeholder="Price"
@@ -416,6 +559,7 @@ const ManageListings = () => {
               required
             />
             <input
+              style={{ width: "100%" }}
               type="text"
               name="color"
               placeholder="Color"
@@ -424,6 +568,7 @@ const ManageListings = () => {
               required
             />
             <input
+              style={{ width: "100%" }}
               type="text"
               name="cylinders"
               placeholder="Cylinders"
@@ -432,6 +577,7 @@ const ManageListings = () => {
               required
             />
             <input
+              style={{ width: "100%" }}
               type="text"
               name="engineSize"
               placeholder="Engine Size"
@@ -440,6 +586,7 @@ const ManageListings = () => {
               required
             />
             <input
+              style={{ width: "100%" }}
               type="text"
               name="drivetrain"
               placeholder="Drivetrain"
@@ -448,6 +595,7 @@ const ManageListings = () => {
               required
             />
             <input
+              style={{ width: "100%" }}
               type="text"
               name="titleStatus"
               placeholder="Title Status"
@@ -470,29 +618,32 @@ const ManageListings = () => {
               </button>
             </div>
             <ul>
-              {carData.carSpecifications && carData.carSpecifications.map((spec, index) => (
-                <li key={index}>
-                  {spec} 
-                  <button
-                    type="button"
-                    onClick={() => removeCarSpecification(index)}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      color: 'red',
-                      fontSize: '16px',
-                      marginLeft: '10px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    x
-                  </button>
-                </li>
-              ))}
+              {carData.carSpecifications &&
+                carData.carSpecifications.map((spec, index) => (
+                  <li key={index}>
+                    {spec}
+                    <button
+                      type="button"
+                      onClick={() => removeCarSpecification(index)}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "red",
+                        fontSize: "16px",
+                        marginLeft: "10px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      x
+                    </button>
+                  </li>
+                ))}
             </ul>
 
             <button type="submit">Submit</button>
-            <button type="button" onClick={closeEditModal}>Cancel</button>
+            <button type="button" onClick={closeEditModal}>
+              Cancel
+            </button>
           </form>
         )}
       </Modal>

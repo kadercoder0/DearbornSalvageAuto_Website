@@ -1,21 +1,10 @@
-/* Ensure body takes the full height and uses Flexbox to center content */
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, sans-serif;
-  background-color: #f1f3f5;
-  text-align: center;
-}
-
 /* Center the entire login section (logo + form) */
-.login-container {
+.loginContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 /* Logo Styling */
