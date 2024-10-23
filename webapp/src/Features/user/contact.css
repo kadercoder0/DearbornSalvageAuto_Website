@@ -125,11 +125,19 @@ button:hover {
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .contact-container {
-    padding: 15px;
+    padding: 1px;
     margin: 20px;
+    position: absolute;
+  }
+
+  .form-row {
+    width: 80%; /* Full width for mobile screens */
+    max-width: none; /* Remove max-width on smaller devices */
+    padding: 0 50px; /* Add padding to fit smaller screens */
   }
 
   button {
+    width: 40%; /* Make the button take up full width on mobile */
     font-size: 14px;
     padding: 10px;
   }
