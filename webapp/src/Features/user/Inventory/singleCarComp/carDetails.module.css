@@ -15,13 +15,10 @@
 
 /* Styles for the carousel section */
 .carouselSection {
-  flex: 2;
-  margin-right: 20px;
-  width: 60%;
-  max-width: 900px;
-  height: auto;
+  width: 50%;  /* Half the width on mobile */
+  margin: 0 auto;  /* Center the carousel */
+  margin-top: 20px;
 }
-
 /* Styles for the vehicle info section */
 .vehicleInfoSection {
   flex: 1;
@@ -35,6 +32,7 @@
 .carSpecsContainer {
   max-height: 400px; /* Set max height */
   overflow-y: auto; /* Enable scrolling */
+  width: 100%;
 }
 
 /* Car Specs list styling */
@@ -75,13 +73,15 @@
 @media only screen and (max-width: 768px) {
   .container {
     flex-direction: column; /* Stack content vertically */
-    margin-top: 1150px;
+    /*margin-top: 20px;*/
   }
 
   .carouselSection {
-    width: 100%; /* Full width on mobile */
+    width: 95%; /* Full width on mobile */
     margin: 0 auto; /* Center carousel on mobile */
     margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .vehicleInfoSection {

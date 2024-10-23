@@ -17,5 +17,6 @@
   
   .carSpecsList li {
     padding: 5px 0;
+    justify-content: center;
   }
   

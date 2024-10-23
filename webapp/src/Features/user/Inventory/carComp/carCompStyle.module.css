@@ -52,10 +52,10 @@ p {
     grid-template-columns: 1fr; /* 1 card per row on small screens */
     justify-content: center;
     align-items: center;
-    margin-top: 2200px;
+    /*margin-top: 20px;*/
     padding: 0; /* Remove extra padding on mobile */
     margin-left: auto;
-    margin-right: 10rem;
+    margin-right: auto;
     margin-bottom: 200px;
     width: 100%; /* Ensure full width */
     max-width: 400px; /* Limit width for better centering */
