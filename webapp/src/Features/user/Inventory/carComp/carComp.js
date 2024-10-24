@@ -47,12 +47,11 @@ const CarComp = ({ carListings }) => {
 
               <div className={styles.priceWrapper}>
                 <p className={styles.stock}>
-                  Stock #:<span> {car.stock || 'N/A'}</span>
+                 <span> </span>
                 </p>
                 <p className={styles.carCardPrice}>${car.price}</p>
               </div>
 
-              <p className={styles.autoSales}>Greenfield Auto Center</p>
 
               <div className={styles.carSpecsWrapper}>
                 <div className={styles.carSpecsTextWrapper}>
