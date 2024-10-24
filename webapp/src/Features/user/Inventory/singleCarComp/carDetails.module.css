@@ -92,15 +92,16 @@
     margin-bottom: 50px;
   }
 }
-
 /* Car Info section - Make, Model, and Year */
 .carInfo {
   text-align: center;
   margin-bottom: 20px;
   padding: 10px 0;
   border-bottom: 2px solid #ddd; /* Add a subtle divider */
+  width: 100%; /* Make sure the title takes full width */
+  box-sizing: border-box; /* Ensure padding is included in the width */
+  display: block;
 }
-
 .carInfo h2 {
   font-size: 32px; /* Increase font size for emphasis */
   font-weight: 700; /* Bold for more prominence */
