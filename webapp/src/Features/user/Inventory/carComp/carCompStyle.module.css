@@ -37,10 +37,7 @@ p {
 
 @media (max-width: 770px) {
   .carCardWrapper {
-    grid-template-columns: repeat(
-      2,
-      1fr
-    ); /* 2 cards per row on medium screens */
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -52,7 +49,6 @@ p {
     grid-template-columns: 1fr; /* 1 card per row on small screens */
     justify-content: center;
     align-items: center;
-    /*margin-top: 20px;*/
     padding: 0; /* Remove extra padding on mobile */
     margin-left: auto;
     margin-right: auto;
@@ -72,6 +68,21 @@ p {
   gap: 6px;
   cursor: pointer;
   transition: transform 0.3s ease;
+  position: relative; /* Required for absolute positioning of the price */
+}
+
+.cardContent {
+  flex-grow: 1; /* Allow content to grow and take available space */
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  text-align: start;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0; /* Remove margin to prevent gaps */
+  flex: 1; /* Allow the title to take full height */
 }
 
 .cardCarousel {
@@ -97,22 +108,15 @@ p {
   object-fit: cover;
 }
 
-.cardHeader {
-  text-align: start;
-  font-size: 18px;
-  font-weight: 600;
-  margin: 12px 0 0 0;
-}
-
 .priceWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin-top: auto; /* Push price to the bottom */
 }
 
 .carCardPrice {
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 700;
   color: black;
 }

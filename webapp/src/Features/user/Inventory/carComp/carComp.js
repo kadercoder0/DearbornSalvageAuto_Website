@@ -40,19 +40,19 @@ const CarComp = ({ carListings }) => {
                 ))}
               </Carousel>
 
-              <h2 className={styles.cardHeader}>
-                {car.year} {car.make} {car.model}
-                <br /> <span>{car.trim}</span>
-              </h2>
+              <div className={styles.cardContent}>
+                <h2 className={styles.cardHeader}>
+                  {car.year} {car.make} {car.model}
+                  <br /> <span>{car.trim}</span>
+                </h2>
 
-              <div className={styles.priceWrapper}>
-                <p className={styles.stock}>
-                 <span> </span>
-                </p>
-                <p className={styles.carCardPrice}>${car.price}</p>
+                <div className={styles.priceWrapper}>
+                  <p className={styles.stock}>
+                    <span> </span>
+                  </p>
+                  <p className={styles.carCardPrice}>${car.price}</p>
+                </div>
               </div>
-
-
             </div>
           ))
         ) : (
