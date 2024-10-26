@@ -96,8 +96,6 @@ const Contact = () => {
     <div className="contact-container">
       <InventoryHeader />
 
-      <h1>Contact Us</h1>
-
       <div className="wrapper">
         <div className="contact-details">
           <p>
@@ -105,20 +103,12 @@ const Contact = () => {
           </p>
           <br />
           <p>
-            <strong>Shop email:</strong>{" "}
+            <strong>Email:</strong>{" "}
             <a href="mailto:ahmadali.usedcars@gmail.com">
               ahmadali.usedcars@gmail.com
             </a>
           </p>
-          <br />
-          <p>
-            <strong>Shop address:</strong> 14041 Greenfield Rd, Detroit, MI,
-            United States
-          </p>
-          <br />
-          <p>
-            <strong>Shop name:</strong> Greenfield Auto Center
-          </p>
+
         </div>
 
         <h2>Contact Form</h2>
