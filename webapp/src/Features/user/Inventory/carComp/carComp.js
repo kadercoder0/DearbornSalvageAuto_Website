@@ -50,7 +50,9 @@ const CarComp = ({ carListings }) => {
                   <p className={styles.stock}>
                     <span> </span>
                   </p>
-                  <p className={styles.carCardPrice}>${car.price}</p>
+                  <p className={styles.carCardPrice}>
+                  ${Number(car.price).toLocaleString()}                  
+                  </p>
                 </div>
               </div>
             </div>
