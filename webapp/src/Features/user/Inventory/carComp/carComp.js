@@ -53,32 +53,6 @@ const CarComp = ({ carListings }) => {
               </div>
 
 
-              <div className={styles.carSpecsWrapper}>
-                <div className={styles.carSpecsTextWrapper}>
-                  <p>Mileage:</p>
-                  <p>{car.odometer}</p>
-                </div>
-                <div className={styles.carSpecsTextWrapper}>
-                  <p>Fuel:</p>
-                  <p>{car.fuelType || 'Gasoline'}</p>
-                </div>
-                <div className={styles.carSpecsTextWrapper}>
-                  <p>Exterior:</p>
-                  <p>{car.color || 'N/A'}</p>
-                </div>
-                <div className={styles.carSpecsTextWrapper}>
-                  <p>Interior:</p>
-                  <p>{car.interior || 'N/A'}</p>
-                </div>
-                <div className={styles.carSpecsTextWrapper}>
-                  <p>DriveTrain:</p>
-                  <p>{car.drivetrain || 'N/A'}</p>
-                </div>
-                <div className={styles.carSpecsTextWrapper}>
-                  <p>Transmission:</p>
-                  <p>{car.transmission || 'AUTO'}</p>
-                </div>
-              </div>
             </div>
           ))
         ) : (
