@@ -133,3 +133,21 @@
   -webkit-appearance: none; /* Chrome, Safari, Edge */
   margin: 0;
 }
+
+/* Label Styling */
+.textField label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333; /* Dark grey for better contrast */
+  display: block;
+  margin-bottom: 5px; /* Space between label and input */
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .textField label {
+    font-size: 16px; /* Slightly larger font on mobile */
+    color: #222; /* Slightly darker text for readability on smaller screens */
+    text-align: left;
+  }
+}

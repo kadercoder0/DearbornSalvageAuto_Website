@@ -91,7 +91,6 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
 
       {/* Sidebar content */}
       <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
-        <p>Filter Cars</p>
         <div className={styles.filterWrapper}>
           {/* Min Year */}
           <div className={styles.textField}>
