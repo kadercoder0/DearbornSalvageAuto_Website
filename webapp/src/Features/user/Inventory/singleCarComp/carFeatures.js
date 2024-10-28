@@ -52,6 +52,22 @@ const CarFeatures = ({ carId }) => {
     <div className={styles.featuresContainer}>
       <h3 className={styles.title}>Vehicle Info</h3>
       <ul className={styles.featuresList}>
+
+        <li>
+          {/* <i class="fas fa-tachometer-alt"></i>*/}
+          <span className={styles.icon}><i className="fas fa-tachometer"></i></span>
+          <span className={styles.label}>Mileage:</span> {carFeatures.odometer || 'N/A'}
+
+        </li>
+
+        <li>
+        {/* <i class="fa-solid fa-dollar-sign"></i>*/}
+
+        <span className={styles.icon}><i className="fas fa-solid fa-dollar-sign"></i></span>
+        <span className={styles.label}>Price:</span> {carFeatures.price || 'N/A'}
+
+        </li>
+
         <li>
           <span className={styles.icon}><i className="fas fa-car"></i></span>
           <span className={styles.label}>Condition:</span> {carFeatures.titleStatus || 'N/A'}
