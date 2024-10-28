@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import {
-  collection,
-  getDocs,
-  addDoc,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc} from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../../firebase";
 import styles from "./managelistings.module.css";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 Modal.setAppElement("#root");
 
@@ -43,6 +37,7 @@ const ManageListings = () => {
   const [currentCar, setCurrentCar] = useState(null); // Store the car being edited
   const [imageIndexes, setImageIndexes] = useState({}); // Store image indexes for each car
   const [newSpec, setNewSpec] = useState(""); // To store the current input specification
+  const [selectedListing, setSelectedListing] = useState(null);
 
   const closeModal = () => {
     setCarData({
@@ -68,25 +63,49 @@ const ManageListings = () => {
   };
 
   // Open edit modal and set the current car data
-  const openEditModal = (car) => {
-    setCurrentCar(car);
-    setCarData({
-      make: car.make,
-      model: car.model,
-      year: car.year,
-      odometer: car.odometer,
-      price: car.price,
-      cylinders: car.cylinders,
-      vin: car.vin,
-      drivetrain: car.drivetrain,
-      engineSize: car.engineSize,
-      titleStatus: car.titleStatus,
-      color: car.color,
-      images: car.images,
-      carSpecifications: car.carSpecifications || [], // Load the correct car specifications
-    });
-    setEditModalIsOpen(true);
-  };
+  // Function to open the "Add Car Listing" modal
+const openAddModal = () => {
+  setImageFiles([]);  // Clear any previous images
+  setCarData({
+    make: "",
+    model: "",
+    year: "",
+    odometer: "",
+    price: "",
+    cylinders: "",
+    vin: "",
+    drivetrain: "",
+    engineSize: "",
+    titleStatus: "",
+    color: "",
+    images: [],
+    carSpecifications: [],
+  });
+  setModalIsOpen(true);  // Open the "Add Car Listing" modal
+};
+
+// Function to open the "Edit Car Listing" modal
+const openEditModal = (car) => {
+  setCurrentCar(car);
+  setCarData({
+    make: car.make,
+    model: car.model,
+    year: car.year,
+    odometer: car.odometer,
+    price: car.price,
+    cylinders: car.cylinders,
+    vin: car.vin,
+    drivetrain: car.drivetrain,
+    engineSize: car.engineSize,
+    titleStatus: car.titleStatus,
+    color: car.color,
+    images: car.images,
+    carSpecifications: car.carSpecifications || [],
+  });
+  setImageFiles(car.images.map((url, index) => ({ url, id: `${url}-${index}` })));
+  setEditModalIsOpen(true);  // Open the "Edit Car Listing" modal
+};
+
 
   // Close edit modal
   const closeEditModal = () => setEditModalIsOpen(false);
@@ -127,14 +146,13 @@ const ManageListings = () => {
   // Handle the form submit for adding a new listing
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const imageURLs = [];
       for (let file of imageFiles) {
         const imageRef = ref(storage, `cars/${file.name}`);
         const uploadTask = await uploadBytesResumable(imageRef, file);
         const downloadURL = await getDownloadURL(uploadTask.ref);
-        imageURLs.push(downloadURL); // Push each uploaded image's URL to the array
+        imageURLs.push(downloadURL);
       }
 
       // Add car listing with image URLs
@@ -145,8 +163,7 @@ const ManageListings = () => {
       });
 
       alert("Car listing added successfully!");
-      closeModal(); // Close modal after submission
-      fetchCarListings(); // Refresh listings
+      setModalIsOpen(false);
     } catch (error) {
       console.error("Error adding car listing: ", error);
     }
@@ -169,7 +186,17 @@ const ManageListings = () => {
 
   // Handle image file selection
   const handleImageChange = (e) => {
-    setImageFiles([...e.target.files]); // Set the selected image files
+    const files = Array.from(e.target.files);
+    setImageFiles((prev) => [...prev, ...files]);
+  };
+
+
+  const handleImageOrderChange = (result) => {
+    if (!result.destination) return;
+    const reorderedFiles = Array.from(imageFiles);
+    const [movedFile] = reorderedFiles.splice(result.source.index, 1);
+    reorderedFiles.splice(result.destination.index, 0, movedFile);
+    setImageFiles(reorderedFiles);
   };
 
   // Slideshow logic for each car's image set
@@ -230,9 +257,48 @@ const ManageListings = () => {
     }
   };
 
+  // Fetch listings from Firestore
   useEffect(() => {
-    fetchCarListings();
+    const fetchListings = async () => {
+      const listingsSnapshot = await getDocs(collection(db, "carListings"));
+      const listingsData = listingsSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setCarListings(listingsData);
+    };
+    fetchListings();
   }, []);
+
+  // Open edit modal and load images in saved order
+  const handleEdit = (listing) => {
+    setSelectedListing(listing);
+    setImageFiles(listing.images.map((url) => ({ url, id: url }))); // Assuming URL is unique
+    setEditModalIsOpen(true);
+  };
+
+  
+  const handleSaveChanges = async () => {
+    try {
+      // Map image URLs based on the reordered `imageFiles`
+      const updatedImages = imageFiles.map((file) => file.url);
+      console.log("Updated Images Order:", updatedImages); // Check the order here
+  
+      // Update Firestore with the new image order for this listing
+      await updateDoc(doc(db, "carListings", currentCar.id), {
+        images: updatedImages,
+      });
+  
+      alert("Listing updated successfully!");
+      setEditModalIsOpen(false); // Close the modal after saving changes
+      fetchCarListings(); // Refresh car listings to reflect updated order
+    } catch (error) {
+      console.error("Error updating listing: ", error);
+    }
+  };
+  
+  
+
 
   return (
     <div className={styles.container}>
@@ -244,12 +310,8 @@ const ManageListings = () => {
         </div>
       </div>
 
-      <button
-        className={styles.addListingButton}
-        onClick={() => setModalIsOpen(true)}
-      >
-        Add New Listing
-      </button>
+      <button onClick={openAddModal}>Add New Listing</button>
+
 
       {carListings.length === 0 ? (
         <p>No car listings available.</p>
@@ -330,10 +392,11 @@ const ManageListings = () => {
                         onClick={() => openEditModal(car)}
                         className={styles.editButton}
                       >
-                        <i className="fas fa-pen-to-square"></i>
+                      <i className="fas fa-pen-to-square"></i>
                       </button>
                     </td>
                   </tr>
+                
                 );
               })}
             </tbody>
@@ -341,119 +404,56 @@ const ManageListings = () => {
         </div>
       )}
 
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Add Car Listing"
-      >
+      <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
         <h2>Add Car Listing</h2>
-        <form
-          onSubmit={handleSubmit}
-          className={styles.modalForm}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-            margin: "0 auto",
-          }}
-        >
-          <input
-            style={{ width: "100%" }}
-            type="text"
-            name="make"
-            placeholder="Make"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            style={{ width: "100%" }}
-            type="text"
-            name="model"
-            placeholder="Model"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            style={{ width: "100%" }}
-            type="number"
-            name="year"
-            placeholder="Year"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            style={{ width: "100%" }}
-            type="number"
-            name="odometer"
-            placeholder="Odometer"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            style={{ width: "100%" }}
-            type="number"
-            name="price"
-            placeholder="Price"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            style={{ width: "100%" }}
-            type="text"
-            name="cylinders"
-            placeholder="Cylinders"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            style={{ width: "100%" }}
-            type="text"
-            name="engineSize"
-            placeholder="Engine Size"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            style={{ width: "100%" }}
-            type="text"
-            name="drivetrain"
-            placeholder="Drivetrain"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            style={{ width: "100%" }}
-            type="text"
-            name="titleStatus"
-            placeholder="Title Status"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            style={{ width: "100%" }}
-            type="text"
-            name="color"
-            placeholder="Color"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            style={{ width: "100%" }}
-            type="text"
-            name="vin"
-            placeholder="VIN"
-            onChange={handleInputChange}
-            required
-          />
+        <form onSubmit={handleSubmit}>
+
+          <input style={{ width: "100%" }}type="text" name="make" placeholder="Make" onChange={handleInputChange} required/>
+          <input style={{ width: "100%" }} type="text" name="model" placeholder="Model" onChange={handleInputChange} required/>
+          <input style={{ width: "100%" }} type="number" name="year" placeholder="Year" onChange={handleInputChange} required/>
+          <input style={{ width: "100%" }} type="number" name="odometer" placeholder="Odometer" onChange={handleInputChange} required />
+          <input style={{ width: "100%" }} type="number" name="price"  placeholder="Price" onChange={handleInputChange} required  />
+          <input style={{ width: "100%" }} type="text" name="cylinders" placeholder="Cylinders" onChange={handleInputChange} required/>
+          <input style={{ width: "100%" }} type="text" name="engineSize" placeholder="Engine Size" onChange={handleInputChange} required/>
+          <input style={{ width: "100%" }} type="text"  name="drivetrain" placeholder="Drivetrain" onChange={handleInputChange} required />
+          <input style={{ width: "100%" }} type="text" name="titleStatus" placeholder="Title Status" onChange={handleInputChange} required />
+          <input style={{ width: "100%" }} type="text" name="color" placeholder="Color" onChange={handleInputChange} required/>
+          <input style={{ width: "100%" }} type="text" name="vin" placeholder="VIN" onChange={handleInputChange} required/>
 
           {/* Multiple file input for uploading images */}
-          <label>Upload Images</label>
-          <input
-            type="file"
-            name="images"
-            multiple
-            onChange={handleImageChange}
-          />
+          <input type="file" multiple onChange={handleImageChange} />
+          <h3>Reorder Images</h3>
+          {imageFiles.length > 0 ? (
+            <DragDropContext onDragEnd={handleImageOrderChange}>
+              <Droppable droppableId="editImages" direction="horizontal">
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className={styles.imagePreview}
+                  >
+                    {imageFiles.map((file, index) => (
+                      <Draggable key={file.id} draggableId={file.id} index={index}>
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className={styles.imageItem}
+                          >
+                            <img src={file.url} alt="Preview" />
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          ) : (
+            <p>No images available for this listing.</p>
+          )}
 
           <h3>Car Specifications</h3>
           <div className={styles.specificationInput}>
@@ -471,9 +471,7 @@ const ManageListings = () => {
             {carData.carSpecifications.map((spec, index) => (
               <li key={index}>
                 {spec}
-                <button
-                  type="button"
-                  onClick={() => removeCarSpecification(index)}
+                <button type="button" onClick={() => removeCarSpecification(index)}
                   style={{
                     background: "none",
                     border: "none",
@@ -489,18 +487,15 @@ const ManageListings = () => {
             ))}
           </ul>
 
-          <button type="submit">Submit</button>
+          <button type="submit">Publish</button>
           <button type="button" onClick={closeModal}>
             Cancel
           </button>
         </form>
       </Modal>
 
-      <Modal
-        isOpen={editModalIsOpen}
-        onRequestClose={closeEditModal}
-        contentLabel="Edit Car Listing"
-      >
+      <Modal isOpen={editModalIsOpen} onRequestClose={() => setEditModalIsOpen(false)}>
+
         <h2>Edit Car Listing</h2>
         {currentCar && (
           <form
@@ -513,96 +508,53 @@ const ManageListings = () => {
               margin: "0 auto",
             }}
           >
-            <input
-              style={{ width: "100%" }}
-              type="text"
-              name="make"
-              placeholder="Make"
-              defaultValue={currentCar.make}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              style={{ width: "100%" }}
-              type="text"
-              name="model"
-              placeholder="Model"
-              defaultValue={currentCar.model}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              style={{ width: "100%" }}
-              type="number"
-              name="year"
-              placeholder="Year"
-              defaultValue={currentCar.year}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              style={{ width: "100%" }}
-              type="number"
-              name="odometer"
-              placeholder="Odometer"
-              defaultValue={currentCar.odometer}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              style={{ width: "100%" }}
-              type="number"
-              name="price"
-              placeholder="Price"
-              defaultValue={currentCar.price}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              style={{ width: "100%" }}
-              type="text"
-              name="color"
-              placeholder="Color"
-              defaultValue={currentCar.color}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              style={{ width: "100%" }}
-              type="text"
-              name="cylinders"
-              placeholder="Cylinders"
-              defaultValue={currentCar.cylinders}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              style={{ width: "100%" }}
-              type="text"
-              name="engineSize"
-              placeholder="Engine Size"
-              defaultValue={currentCar.engineSize}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              style={{ width: "100%" }}
-              type="text"
-              name="drivetrain"
-              placeholder="Drivetrain"
-              defaultValue={currentCar.drivetrain}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              style={{ width: "100%" }}
-              type="text"
-              name="titleStatus"
-              placeholder="Title Status"
-              defaultValue={currentCar.titleStatus}
-              onChange={handleInputChange}
-              required
-            />
+          <input type="text" name="make" placeholder="Make" defaultValue={currentCar.make} onChange={handleInputChange} required />
+          <input type="text" name="model" placeholder="Model" defaultValue={currentCar.model} onChange={handleInputChange} required />
+          <input type="number" name="year" placeholder="Year" defaultValue={currentCar.year} onChange={handleInputChange} required />
+          <input type="number" name="odometer" placeholder="Odometer" defaultValue={currentCar.odometer} onChange={handleInputChange} required />
+          <input type="number" name="price" placeholder="Price" defaultValue={currentCar.price} onChange={handleInputChange} required />
+          <input type="text" name="color" placeholder="Color" defaultValue={currentCar.color} onChange={handleInputChange} required />
+          <input type="text" name="cylinders" placeholder="Cylinders" defaultValue={currentCar.cylinders} onChange={handleInputChange} required />
+          <input type="text" name="engineSize" placeholder="Engine Size" defaultValue={currentCar.engineSize} onChange={handleInputChange} required />
+          <input type="text" name="drivetrain" placeholder="Drivetrain" defaultValue={currentCar.drivetrain} onChange={handleInputChange} required />
+          <input type="text" name="titleStatus" placeholder="Title Status" defaultValue={currentCar.titleStatus} onChange={handleInputChange} required />
+          <input type="text" placeholder="Enter a specification" value={newSpec} onChange={(e) => setNewSpec(e.target.value)} />
+          
+          {/* Re arraging or editing images*/}
+          <h3>Reorder Images</h3>
+          <DragDropContext onDragEnd={handleImageOrderChange}>
+          <Droppable droppableId="editImages" direction="horizontal">
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className={styles.imagePreview}
+              >
+                {imageFiles.length > 0 ? (
+                  imageFiles.map((file, index) => (
+                    <Draggable key={file.id} draggableId={file.id} index={index}>
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className={styles.imageItem}
+                        >
+                          <img src={file.url} alt="Preview" className={styles.carouselImage} />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))
+                ) : (
+                  <p>No images available for reordering</p>
+                )}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+        
+
 
             {/* Car Specifications - Add/Edit/Delete */}
             <h3>Car Specifications</h3>
@@ -640,10 +592,8 @@ const ManageListings = () => {
                 ))}
             </ul>
 
-            <button type="submit">Submit</button>
-            <button type="button" onClick={closeEditModal}>
-              Cancel
-            </button>
+            <button onClick={handleSaveChanges}>Publish Changes</button>
+            <button type="button" onClick={closeEditModal}>Cancel</button>
           </form>
         )}
       </Modal>
