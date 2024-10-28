@@ -46,14 +46,19 @@ const CarComp = ({ carListings }) => {
                   <br /> <span>{car.trim}</span>
                 </h2>
 
-                <div className={styles.priceWrapper}>
-                  <p className={styles.stock}>
-                    <span> </span>
-                  </p>
-                  <p className={styles.carCardPrice}>
-                  ${Number(car.price).toLocaleString()}                  
-                  </p>
+                <div className={styles.infoWrapper}>
+                  <div className={styles.milesWrapper}>
+                    <p className={styles.carCardMiles}>
+                      {car.odometer.toLocaleString()} miles
+                    </p>
+                  </div>
+                  <div className={styles.priceWrapper}>
+                    <p className={styles.carCardPrice}>
+                      ${Number(car.price).toLocaleString()}
+                    </p>
+                  </div>
                 </div>
+
               </div>
             </div>
           ))
