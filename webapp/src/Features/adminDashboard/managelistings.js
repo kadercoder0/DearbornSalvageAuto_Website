@@ -14,6 +14,7 @@ Modal.setAppElement("#root");
 const ManageListings = () => {
   const navigate = useNavigate();
   const [carListings, setCarListings] = useState([]);
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [carData, setCarData] = useState({
@@ -37,6 +38,7 @@ const ManageListings = () => {
   const [currentCar, setCurrentCar] = useState(null); // Store the car being edited
   const [imageIndexes, setImageIndexes] = useState({}); // Store image indexes for each car
   const [newSpec, setNewSpec] = useState(""); // To store the current input specification
+  // eslint-disable-next-line
   const [selectedListing, setSelectedListing] = useState(null);
 
   const closeModal = () => {
@@ -271,6 +273,7 @@ const openEditModal = (car) => {
   }, []);
 
   // Open edit modal and load images in saved order
+  // eslint-disable-next-line
   const handleEdit = (listing) => {
     setSelectedListing(listing);
     setImageFiles(listing.images.map((url) => ({ url, id: url }))); // Assuming URL is unique
