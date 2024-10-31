@@ -9,7 +9,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './Features/auth/LoginSignup/login';
 import Signup from './Features/auth/LoginSignup/signup';
 import Home from './Features/user/home';
-import About from './Features/user/about';
 import Inventory from './Features/user/Inventory/inventory';
 import Contact from './Features/user/contact';
 import FAQ from './Features/user/faq';
@@ -35,7 +34,6 @@ function App() {
           <Routes>
             {/* Public Routes */}
             <Route path="/home" element={<Home />} />
-            <Route path="/about" element={<About />} />
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/inventory/car/:carId" element={<CarDetailsPage />} />
             <Route path="/contact" element={<Contact />} />
