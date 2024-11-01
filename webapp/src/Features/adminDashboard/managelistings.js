@@ -183,7 +183,7 @@ const openEditModal = (car) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCarData({ ...carData, [name]: value });
-  };
+  }
 
   // Handle image file selection
   const handleImageChange = async (e) => {
