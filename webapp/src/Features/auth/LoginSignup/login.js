@@ -44,32 +44,32 @@ const Login = () => {
   return (
     // Add this wrapper to center both the logo and form
     <div className={styles.loginContainer}>
-      <img src={logo1} alt="Logo" />
+      <img src={logo1} alt="Logo" className={styles.logo} />
       <h2>Login</h2>
       <form onSubmit={login}>
-        <div style={{ width: "100%" }}>
+        <div className={styles.inputWrapper}>
           <input
             type="email"
             value={email}
             onChange={handleEmailChange}
             placeholder="Email"
             required
-            style={{ width: "100%" }}
+            className={styles.inputField}
           />
         </div>
-        <div style={{ width: "100%" }}>
+        <div className={styles.inputWrapper}>
           <input
             type="password"
+            className={styles.inputField}
             value={password}
             onChange={handlePasswordChange}
             placeholder="Password"
             required
-            style={{ width: "100%" }}
           />
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
         </div>
-        <button type="submit">Login</button>
-        <p onClick={handleReset}>Forgot Password?</p>
+        <button type="submit" className={styles.submitButton}>Login</button>
+        <p onClick={handleReset} className={styles.forgotPassword}>Forgot Password?</p>
       </form>
     </div>
   );
