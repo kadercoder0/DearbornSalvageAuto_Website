@@ -44,6 +44,8 @@ const About = () => {
 
   return (
     <div>
+
+      <InventoryHeader />
       <h1>About Us</h1>
       <p>Information about the company.</p>
 

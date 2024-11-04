@@ -11,6 +11,7 @@ import Signup from './Features/auth/LoginSignup/signup';
 import Home from './Features/user/home';
 import About from './Features/user/about';
 import Inventory from './Features/user/Inventory/inventory';
+import About from './Features/user/about';
 import Contact from './Features/user/contact';
 import FAQ from './Features/user/faq';
 import ForgotPassword from './Features/auth/LoginSignup/forgotPassword';
