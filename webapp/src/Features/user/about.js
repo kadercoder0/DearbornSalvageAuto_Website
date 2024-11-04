@@ -47,9 +47,7 @@ const About = () => {
     <div>
 
       <InventoryHeader />
-      <h1>About Us</h1>
-      <p>Information about the company.</p>
-
+      <p className='paragraph' style={{ textDecoration: 'none' }}>Don't take our words, take it from our customers!</p>
       {loading ? (
         <p>Loading reviews...</p> // Display loading message while data is being fetched
       ) : (
@@ -58,11 +56,11 @@ const About = () => {
             <p>No reviews available.</p>
           ) : (
             reviews.map((review) => (
-              <div className="review-card" key={review.id}>
-                <p className="review-name">{review.name}</p>
-                <p className="review-date">{review.date}</p>
-                <div className="review-rating">{renderStars(review.rating)}</div>
-                <p className="review-text">{review.text}</p>
+              <div className="review-card" key={review.id} style={{ textDecoration: 'none' }}>
+                <p className="review-name" style={{ textDecoration: 'none' }}>{review.name}</p>
+                <p className="review-date" style={{ textDecoration: 'none' }}>{review.date}</p>
+                <div className="review-rating" style={{ textDecoration: 'none' }}>{renderStars(review.rating)}</div>
+                <p className="review-text" style={{ textDecoration: 'none' }}>{review.text}</p>
               </div>
             ))
           )}
