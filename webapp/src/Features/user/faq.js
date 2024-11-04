@@ -27,6 +27,8 @@ const FAQ = () => {
         <div className={`faq-question ${activeIndex === 0 ? 'active' : ''}`} onClick={() => toggleFAQ(0)}>
           <h3>What cars do you offer for sale?</h3>
           <span className="arrow">{activeIndex === 0 ? '▲' : '▼'}</span>
+          <br />
+          <br />
           <div className="faq-answer" style={{ maxHeight: activeIndex === 0 ? '200px' : '0', overflow: 'hidden' }}>
             We offer a variety of rebuilt cars, including sedans, SUVs, and trucks, all sourced from auctions and expertly repaired.
           </div>
@@ -35,6 +37,8 @@ const FAQ = () => {
         <div className={`faq-question ${activeIndex === 1 ? 'active' : ''}`} onClick={() => toggleFAQ(1)}>
           <h3>How are the cars repaired?</h3>
           <span className="arrow">{activeIndex === 1 ? '▲' : '▼'}</span>
+          <br />
+          <br />
           <div className="faq-answer" style={{ maxHeight: activeIndex === 1 ? '200px' : '0', overflow: 'hidden' }}>
             Each car is thoroughly inspected and repaired by certified technicians to ensure it meets safety and performance standards.
           </div>
