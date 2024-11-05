@@ -297,3 +297,38 @@ ul li button {
   justify-content: center;
   overflow: hidden;
 }
+
+.imageItem {
+  position: relative; /* Ensures the delete button positions relative to this container */
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.deleteImageButton {
+  position: absolute;
+  top: -6px; /* Position near the top */
+  right: 1px; /* Position near the right */
+  background-color: red !important;
+  color: white;
+  border: none;
+  border-radius: 20% !important; /* Makes it circular */
+  width: 5px !important; /* Adjust size as needed */
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1; /* Ensures the "X" is centered */
+  font-weight: bold;
+  z-index: 10;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.deleteImageButton:hover {
+  background-color: darkred; /* Darker red on hover */
+  transform: scale(1.1); /* Slightly larger on hover */
+}

@@ -309,7 +309,24 @@ const openEditModal = (car) => {
   };
   
   
+// Function to delete an image by index
+const handleDeleteImage = async (index) => {
+  const updatedImageFiles = [...imageFiles];
+  const [removedImage] = updatedImageFiles.splice(index, 1); // Remove image from local state
 
+  setImageFiles(updatedImageFiles);
+
+  // Update Firestore by removing the image URL from the "images" array
+  const updatedImages = updatedImageFiles.map((file) => file.url);
+  try {
+    await updateDoc(doc(db, "carListings", currentCar.id), {
+      images: updatedImages,
+    });
+    console.log(`Image ${removedImage.url} deleted successfully`);
+  } catch (error) {
+    console.error("Error deleting image from Firestore:", error);
+  }
+};
 
   return (
     <div className={styles.container}>
@@ -584,8 +601,8 @@ const openEditModal = (car) => {
           
           {/* Re arraging or editing images*/}
           <h3>Reorder Images</h3>
-          <DragDropContext onDragEnd={handleImageOrderChange}>
-          <Droppable droppableId="editImages" direction="horizontal">
+              <DragDropContext onDragEnd={handleImageOrderChange}>
+              <Droppable droppableId="editImages" direction="horizontal">
                 {(provided) => (
                   <div
                     ref={provided.innerRef}
@@ -603,19 +620,25 @@ const openEditModal = (car) => {
                               className={styles.imageItem}
                             >
                               <img src={file.url} alt="Preview" className={styles.carouselImage} />
+                              <button
+                                type="button"
+                                className={styles.deleteImageButton}
+                                onClick={() => handleDeleteImage(index)}
+                              >
+                                &times;
+                              </button>
                             </div>
                           )}
                         </Draggable>
                       ))
                     ) : (
-                      <p>No images available for reordering</p>
+                      <p>No images available for this listing.</p>
                     )}
                     {provided.placeholder}
                   </div>
                 )}
               </Droppable>
             </DragDropContext>
-
             <button onClick={handleSaveChanges}>Publish Changes</button>
             <button type="button" onClick={closeEditModal}>Cancel</button>
           </form>
