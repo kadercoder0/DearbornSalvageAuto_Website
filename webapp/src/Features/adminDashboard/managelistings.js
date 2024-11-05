@@ -481,20 +481,31 @@ const handleDeleteImage = async (index) => {
                     {...provided.droppableProps}
                     className={styles.imagePreview}
                   >
-                    {imageFiles.map((file, index) => (
-                      <Draggable key={file.id} draggableId={file.id} index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className={styles.imageItem}
-                          >
-                            <img src={file.url} alt="Preview" />
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
+                    {imageFiles.length > 0 ? (
+                      imageFiles.map((file, index) => (
+                        <Draggable key={file.id} draggableId={file.id} index={index}>
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              className={styles.imageItem}
+                            >
+                              <img src={file.url} alt="Preview" className={styles.carouselImage} />
+                              <button
+                                type="button"
+                                className={styles.deleteImageButton}
+                                onClick={() => handleDeleteImage(index)}
+                              >
+                                &times;
+                              </button>
+                            </div>
+                          )}
+                        </Draggable>
+                      ))
+                    ) : (
+                      <p>No images available for this listing.</p>
+                    )}
                     {provided.placeholder}
                   </div>
                 )}
