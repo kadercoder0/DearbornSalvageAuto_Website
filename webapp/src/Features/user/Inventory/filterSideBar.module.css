@@ -50,7 +50,8 @@
 @media (max-width: 768px) {
   .toggleButton {
     display: block; /* Show toggle button on mobile */
-    top: 170px; /* Set position below the fixed header */
+    top: 150px; /* Set position below the fixed header */
+    width: fit-content;
   }
 }
 
