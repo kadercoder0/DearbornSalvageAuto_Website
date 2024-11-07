@@ -67,7 +67,7 @@ const CarDetailsPage = () => {
       </div>
 
       {/* Car Specs Section */}
-    </div>
+      </div>
   );
 };
 
