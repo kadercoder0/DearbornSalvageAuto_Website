@@ -2,6 +2,7 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import React from "react";
 import { auth } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
+import styles from "./forgotPassword.module.css";
 
 
 function ForgotPassword() {
@@ -33,20 +34,20 @@ function ForgotPassword() {
     };
 
     return (
-        <div className="App">
-            <h1>Forgot Password</h1>
-            <form onSubmit={handleSubmit}>
-               <input 
+        <div className={styles.forgotPasswordContainer}>
+        <h1>Forgot Password</h1>
+        <br />
+        <form onSubmit={handleSubmit}>
+            <input 
                 name="email" 
                 placeholder="Enter your email" 
                 required 
-                style={{ width: "300px" }}  
-                />
-                <button type="submit">Reset</button>
-            </form>
-            <button onClick={handleBackToLogin}>Back to Login</button>  
-
-        </div>
+                className={styles.input} 
+            />
+            <button type="submit" className={styles.button}>Reset</button>
+            <button onClick={handleBackToLogin} className={styles.button}>Back to Login</button>  
+        </form>
+    </div>
     );
 }
 

@@ -7,6 +7,7 @@
   overflow-y: auto;
   z-index: 1000;
   transition: transform 0.3s ease; /* Add transition for smooth opening/closing */
+  
 }
 
 .sidebar.open {
@@ -18,7 +19,7 @@
   .sidebar {
     position: fixed;
     top: 0;
-    left: 0;
+    left: 0; /* Align sidebar to the left edge of the page */
     width: 100%;
     height: 100vh;
     transform: translateX(-100%); /* Sidebar hidden off-screen */
@@ -49,7 +50,8 @@
 @media (max-width: 768px) {
   .toggleButton {
     display: block; /* Show toggle button on mobile */
-    top: 170px; /* Set position below the fixed header */
+    top: 150px; /* Set position below the fixed header */
+    width: fit-content;
   }
 }
 
@@ -57,6 +59,7 @@
   background-color: #007bff; /* Darken on hover */
 }
 
+/* Input Field Styling */
 .textField input {
   width: 100%;
   max-width: 250px; /* Set a reasonable max-width */

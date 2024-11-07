@@ -17,7 +17,7 @@ const FAQ = () => {
     <div className="faq-container">
       <InventoryHeader />
       <h1 className="faq-title">Frequently Asked Questions</h1>
-      <p className="intro-text">
+      <p className="intro-text" style={{ textDecoration: 'none' }}>
         At Greenfield Auto Center, we believe that finding the right vehicle should be hassle-free and enjoyable.
         That’s why we offer expertly rebuilt cars from auctions, ensuring they meet all safety and performance
         standards. Whether you're looking for a family SUV, a durable truck, or a stylish sedan, we have it all.
@@ -27,6 +27,8 @@ const FAQ = () => {
         <div className={`faq-question ${activeIndex === 0 ? 'active' : ''}`} onClick={() => toggleFAQ(0)}>
           <h3>What cars do you offer for sale?</h3>
           <span className="arrow">{activeIndex === 0 ? '▲' : '▼'}</span>
+          <br />
+          <br />
           <div className="faq-answer" style={{ maxHeight: activeIndex === 0 ? '200px' : '0', overflow: 'hidden' }}>
             We offer a variety of rebuilt cars, including sedans, SUVs, and trucks, all sourced from auctions and expertly repaired.
           </div>
@@ -35,6 +37,8 @@ const FAQ = () => {
         <div className={`faq-question ${activeIndex === 1 ? 'active' : ''}`} onClick={() => toggleFAQ(1)}>
           <h3>How are the cars repaired?</h3>
           <span className="arrow">{activeIndex === 1 ? '▲' : '▼'}</span>
+          <br />
+          <br />
           <div className="faq-answer" style={{ maxHeight: activeIndex === 1 ? '200px' : '0', overflow: 'hidden' }}>
             Each car is thoroughly inspected and repaired by certified technicians to ensure it meets safety and performance standards.
           </div>

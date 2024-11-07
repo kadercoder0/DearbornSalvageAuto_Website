@@ -148,14 +148,13 @@ const openEditModal = (car) => {
   // Handle the form submit for adding a new listing
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const imageURLs = imageFiles.map(file => file.url); // Extract URLs only
     try {
-      const imageURLs = [];
-      for (let file of imageFiles) {
-        const imageRef = ref(storage, `cars/${file.name}`);
-        const uploadTask = await uploadBytesResumable(imageRef, file);
-        const downloadURL = await getDownloadURL(uploadTask.ref);
-        imageURLs.push(downloadURL);
-      }
+      await addDoc(collection(db, "carListings"), {
+        ...carData,
+        images: imageURLs,
+        carSpecifications: carData.carSpecifications,
+      });
 
       // Add car listing with image URLs
       await addDoc(collection(db, "carListings"), {
@@ -184,13 +183,22 @@ const openEditModal = (car) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCarData({ ...carData, [name]: value });
-  };
+  }
 
   // Handle image file selection
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const files = Array.from(e.target.files);
-    setImageFiles((prev) => [...prev, ...files]);
+    const formattedFiles = await Promise.all(
+      files.map(async (file) => {
+        const imageRef = ref(storage, `cars/${file.name}`);
+        const uploadTask = await uploadBytesResumable(imageRef, file);
+        const downloadURL = await getDownloadURL(uploadTask.ref);
+        return { url: downloadURL, id: downloadURL }; // Ensure unique ID and URL for DnD
+      })
+    );
+    setImageFiles((prev) => [...prev, ...formattedFiles]); // Add new images
   };
+  
 
 
   const handleImageOrderChange = (result) => {
@@ -301,7 +309,24 @@ const openEditModal = (car) => {
   };
   
   
+// Function to delete an image by index
+const handleDeleteImage = async (index) => {
+  const updatedImageFiles = [...imageFiles];
+  const [removedImage] = updatedImageFiles.splice(index, 1); // Remove image from local state
 
+  setImageFiles(updatedImageFiles);
+
+  // Update Firestore by removing the image URL from the "images" array
+  const updatedImages = updatedImageFiles.map((file) => file.url);
+  try {
+    await updateDoc(doc(db, "carListings", currentCar.id), {
+      images: updatedImages,
+    });
+    console.log(`Image ${removedImage.url} deleted successfully`);
+  } catch (error) {
+    console.error("Error deleting image from Firestore:", error);
+  }
+};
 
   return (
     <div className={styles.container}>
@@ -314,7 +339,6 @@ const openEditModal = (car) => {
       </div>
 
       <button onClick={openAddModal}>Add New Listing</button>
-
 
       {carListings.length === 0 ? (
         <p>No car listings available.</p>
@@ -407,7 +431,29 @@ const openEditModal = (car) => {
         </div>
       )}
 
-      <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
+      <Modal 
+        isOpen={modalIsOpen} 
+        onRequestClose={() => setModalIsOpen(false)}
+        style={{
+          content: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start', // Start from top with padding
+            alignItems: 'center',
+            paddingTop: '20px', // Add padding to push down content
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '95%',
+            maxWidth: '900px',
+            height: '90%',
+            maxHeight: '100%',
+            overflowY: 'auto',
+            padding: '20px'
+          }
+        }}
+      >
+
         <h2>Add Car Listing</h2>
         <form onSubmit={handleSubmit}>
 
@@ -435,20 +481,31 @@ const openEditModal = (car) => {
                     {...provided.droppableProps}
                     className={styles.imagePreview}
                   >
-                    {imageFiles.map((file, index) => (
-                      <Draggable key={file.id} draggableId={file.id} index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className={styles.imageItem}
-                          >
-                            <img src={file.url} alt="Preview" />
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
+                    {imageFiles.length > 0 ? (
+                      imageFiles.map((file, index) => (
+                        <Draggable key={file.id} draggableId={file.id} index={index}>
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              className={styles.imageItem}
+                            >
+                              <img src={file.url} alt="Preview" className={styles.carouselImage} />
+                              <button
+                                type="button"
+                                className={styles.deleteImageButton}
+                                onClick={() => handleDeleteImage(index)}
+                              >
+                                &times;
+                              </button>
+                            </div>
+                          )}
+                        </Draggable>
+                      ))
+                    ) : (
+                      <p>No images available for this listing.</p>
+                    )}
                     {provided.placeholder}
                   </div>
                 )}
@@ -521,57 +578,15 @@ const openEditModal = (car) => {
           <input type="text" name="engineSize" placeholder="Engine Size" defaultValue={currentCar.engineSize} onChange={handleInputChange} required />
           <input type="text" name="drivetrain" placeholder="Drivetrain" defaultValue={currentCar.drivetrain} onChange={handleInputChange} required />
           <input type="text" name="titleStatus" placeholder="Title Status" defaultValue={currentCar.titleStatus} onChange={handleInputChange} required />
-          <input type="text" placeholder="Enter a specification" value={newSpec} onChange={(e) => setNewSpec(e.target.value)} />
-          
-          {/* Re arraging or editing images*/}
-          <h3>Reorder Images</h3>
-          <DragDropContext onDragEnd={handleImageOrderChange}>
-          <Droppable droppableId="editImages" direction="horizontal">
-            {(provided) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className={styles.imagePreview}
-              >
-                {imageFiles.length > 0 ? (
-                  imageFiles.map((file, index) => (
-                    <Draggable key={file.id} draggableId={file.id} index={index}>
-                      {(provided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          className={styles.imageItem}
-                        >
-                          <img src={file.url} alt="Preview" className={styles.carouselImage} />
-                        </div>
-                      )}
-                    </Draggable>
-                  ))
-                ) : (
-                  <p>No images available for reordering</p>
-                )}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-        
 
 
-            {/* Car Specifications - Add/Edit/Delete */}
-            <h3>Car Specifications</h3>
-            <div className={styles.specificationInput}>
-              <input
-                type="text"
-                placeholder="Enter a specification"
-                value={newSpec}
-                onChange={(e) => setNewSpec(e.target.value)} // Update the new spec input field
-              />
-              <button type="button" onClick={() => addCarSpecification()}>
-                + {/* Plus button to add the specification */}
-              </button>
-            </div>
+          {/* Car Specifications - Add/Edit/Delete */}
+          <h3>Car Specifications</h3>
+            <input type="text" placeholder="Enter a specification" value={newSpec} onChange={(e) => setNewSpec(e.target.value)} />
+            <button type="button" onClick={addCarSpecification}>
+                +
+            </button>
+
             <ul>
               {carData.carSpecifications &&
                 carData.carSpecifications.map((spec, index) => (
@@ -594,7 +609,47 @@ const openEditModal = (car) => {
                   </li>
                 ))}
             </ul>
-
+          
+          {/* Re arraging or editing images*/}
+          <h3>Reorder Images</h3>
+              <DragDropContext onDragEnd={handleImageOrderChange}>
+              <Droppable droppableId="editImages" direction="horizontal">
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className={styles.imagePreview}
+                  >
+                    {imageFiles.length > 0 ? (
+                      imageFiles.map((file, index) => (
+                        <Draggable key={file.id} draggableId={file.id} index={index}>
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              className={styles.imageItem}
+                            >
+                              <img src={file.url} alt="Preview" className={styles.carouselImage} />
+                              <button
+                                type="button"
+                                className={styles.deleteImageButton}
+                                onClick={() => handleDeleteImage(index)}
+                              >
+                                &times;
+                              </button>
+                            </div>
+                          )}
+                        </Draggable>
+                      ))
+                    ) : (
+                      <p>No images available for this listing.</p>
+                    )}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
             <button onClick={handleSaveChanges}>Publish Changes</button>
             <button type="button" onClick={closeEditModal}>Cancel</button>
           </form>
