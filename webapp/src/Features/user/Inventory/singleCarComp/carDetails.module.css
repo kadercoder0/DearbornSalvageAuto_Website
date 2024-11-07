@@ -77,7 +77,7 @@
   }
 
   .carouselSection {
-    width: 95%; /* Full width on mobile */
+    width: fit-content; /* Full width on mobile */
     margin: 0 auto; /* Center carousel on mobile */
     margin-top: 20px;
     margin-left: auto;
