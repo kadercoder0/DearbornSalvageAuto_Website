@@ -66,6 +66,7 @@ const Login = () => {
             placeholder="Password"
             required
           />
+          <br />
           {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
         </div>
         <button type="submit" className={styles.submitButton}>Login</button>
