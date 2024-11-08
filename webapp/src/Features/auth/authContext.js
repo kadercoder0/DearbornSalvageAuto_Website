@@ -1,12 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth, db } from '../../firebase';
-import { getDoc, doc } from 'firebase/firestore';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { auth, db } from "../../firebase"; // Adjust the path if necessary
+import { doc, getDoc } from "firebase/firestore";
 
 const AuthContext = createContext();
 
-export const useAuth = () => useContext(AuthContext);
-
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -14,21 +12,25 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setCurrentUser(user);
+      setLoading(false);
+
       if (user) {
-        const docRef = doc(db, 'admin', 'privileges');
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const privileges = docSnap.data();
-          if (privileges.uid === user.uid) {
-            setIsAdmin(true);
+        // Fetch admin privileges from Firestore
+        try {
+          const privilegesDoc = await getDoc(doc(db, "admin", "privileges"));
+          if (privilegesDoc.exists()) {
+            const adminUids = privilegesDoc.data().uid;
+            setIsAdmin(Array.isArray(adminUids) && adminUids.includes(user.uid));
           } else {
             setIsAdmin(false);
           }
+        } catch (error) {
+          console.error("Error fetching admin privileges:", error);
+          setIsAdmin(false);
         }
       } else {
         setIsAdmin(false);
       }
-      setLoading(false);
     });
 
     return unsubscribe;
@@ -44,4 +46,8 @@ export const AuthProvider = ({ children }) => {
       {!loading && children}
     </AuthContext.Provider>
   );
-};
+}
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
