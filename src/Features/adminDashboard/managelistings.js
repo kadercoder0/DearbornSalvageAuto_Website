@@ -148,27 +148,22 @@ const openEditModal = (car) => {
   // Handle the form submit for adding a new listing
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const imageURLs = imageFiles.map(file => file.url); // Extract URLs only
+    console.log("Submitting form..."); // Add this line
+    const imageURLs = imageFiles.map(file => file.url);
     try {
       await addDoc(collection(db, "carListings"), {
         ...carData,
         images: imageURLs,
         carSpecifications: carData.carSpecifications,
       });
-
-      // Add car listing with image URLs
-      await addDoc(collection(db, "carListings"), {
-        ...carData,
-        images: imageURLs,
-        carSpecifications: carData.carSpecifications, // Add the car specifications here
-      });
-
+  
       alert("Car listing added successfully!");
       setModalIsOpen(false);
     } catch (error) {
       console.error("Error adding car listing: ", error);
     }
   };
+  
 
   const handleDelete = async (id) => {
     try {
