@@ -16,9 +16,6 @@ const InventoryHeader = () => {
               </div>
               */}
             </div>
-            <p>14041 Greenfield Rd, Detroit, MI,48227</p>
-            <br />
-            <p> +1 (313) 203 - 6018</p>
           </div>
         </div>
         <nav className={styles.nav}>

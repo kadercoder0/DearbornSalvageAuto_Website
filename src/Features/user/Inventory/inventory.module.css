@@ -17,8 +17,8 @@
 /* Header Content */
 .headerContent {
   display: flex;
-  justify-content: space-between;
-  align-items: start;
+  justify-content: flex-start; /* Align items to the left */
+  align-items: center;
   width: 100%;
 
   @media (max-width: 756px) {
@@ -363,22 +363,6 @@ main {
   margin: 0;
   font-size: 0.9rem;
   color: #333;
-}
-
-/* Header Content */
-.headerContent {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1536px;
-  padding: 0 20px;
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #007bff;
 }
 
 .contactInfo {
