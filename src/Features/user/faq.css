@@ -8,8 +8,7 @@ body {
 
 /* FAQ Container */
 .faq-container {
-  max-width: 800px; /* Set a max-width for better readability on large screens */
-  width: 80%;
+  width: 100%;
   margin: 40px auto;
   background-color: white;
   border-radius: 10px;
@@ -101,4 +100,24 @@ body {
     width: 90%;
     padding: 20px;
   }
+}
+
+
+/* Remove margin and padding from the body */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure header spans the full width */
+header {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* Container or wrapper adjustments if necessary */
+.wrapper, .faq-container {
+  margin: 0;
+  padding: 0;
 }
