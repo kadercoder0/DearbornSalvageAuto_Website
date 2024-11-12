@@ -4,7 +4,7 @@
   position: sticky;
   top: 0;
   background-color: #f8f9fa;
-  padding: 16px 0;
+  padding:  0;
   z-index: 1000;
 }
 
@@ -166,6 +166,7 @@ p {
 
 .cardWrapper {
   flex: 1;
+  margin-top: 200rem;
 }
 /* card wrapper styles end  */
 
@@ -173,7 +174,7 @@ p {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 10rem;
 
   @media (max-width: 1300px) {
     display: grid !important;
@@ -397,10 +398,6 @@ main {
   border-radius: 4px;
 }
 
-/* Inventory Page Wrapper */
-.inventoryPage {
-  display: flex;
-}
 
 /* Video Section */
 .videoSection {
@@ -566,12 +563,13 @@ html {
   }
 }
 
-/* inventory.module.css */
 .inventoryPage {
   display: flex;
   max-width: 1536px;
   margin: 0 auto;
   padding: 0 16px;
+  gap: 1.5rem;
+  padding-top: 2rem; /* Adds space below the header */
 }
 
 .mainContent {

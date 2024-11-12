@@ -1,6 +1,9 @@
 .App {
   text-align: center;
+  background: linear-gradient(to bottom right, #005aa7, #fffde4);
+  min-height: 100vh; /* full screen height */
 }
+
 
 .App-header {
   /*background-color: #282c34;*/
