@@ -5,6 +5,13 @@ body {
   padding: 0;
 }
 
+/* Header Styles */
+header {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
 /* Container for the contact page */
 .wrapper {
   max-width: 1536px;
@@ -17,30 +24,45 @@ body {
   padding-bottom: 2rem;
 }
 
-/* Add spacing to the contact details */
+/* Individual Section Containers */
+.contact-section,
+.faq-section {
+  background-color: white;
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  margin: 0 auto; /* Center the section horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+}
+
+/* Add margin above the FAQ section */
+.faq-section {
+  margin-top: 20px; /* Adds space under the header */
+  border-top: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+/* Contact Section */
 .contact-details {
   margin-bottom: 20px;
   padding: 15px;
   background-color: #f9f9f9;
-}
-
-/* Heading Spacing */
-h1 {
-  margin-top: 20px; /* Optional: Adjust this if needed */
-  text-align: center;
-  color: #333;
-  font-family: "Arial", sans-serif;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-  font-family: "Arial", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .contact-details p {
   margin: 5px 0;
+}
+
+.contact-details p strong {
+  margin-right: 5px; /* Adds space between "Phone number:" and "Email:" */
 }
 
 .contact-details a {
@@ -52,39 +74,46 @@ h2 {
   text-decoration: underline;
 }
 
+/* Heading Spacing */
+h1,
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-family: "Arial", sans-serif;
+}
+
 /* Form Styling */
 .contact-form {
-  background-color: white; /* Set form container to white */
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add shadow for contrast */
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers all form elements */
 }
 
 .form-row {
-  width: 100%; /* Set the width of form rows */
-  max-width: 400px; /* Limit maximum width for better centering */
+  width: 100%;
+  max-width: 400px;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; /* Center each form row */
 }
 
 .form-row label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #333;
+  align-self: flex-start; /* Align labels to the left of the input field */
 }
 
 .form-row input,
 .form-row textarea {
-  width: 100% !important; 
+  width: 100%;
+  min-width: 400px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
   box-sizing: border-box;
   transition: border-color 0.3s ease;
-  max-width: 100%; /* Ensure fields do not stretch too much */
 }
 
 .form-row input:focus,
@@ -95,7 +124,8 @@ h2 {
 
 button {
   display: block;
-  width: 35%;
+  width: 100%;
+  max-width: 200px;
   background-color: #007bff;
   color: white;
   padding: 12px;
@@ -104,6 +134,7 @@ button {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 20px; /* Add some space above the button */
 }
 
 button:hover {
@@ -129,23 +160,79 @@ button:hover {
   background-color: #f2dede;
 }
 
-/* Mobile Responsiveness */
+/* FAQ Section */
+.faq-question {
+  position: relative;
+  padding: 20px 0;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.faq-question h3 {
+  font-size: 18px;
+  color: #333;
+  margin: 0;
+  display: inline-block;
+}
+
+.arrow {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #007bff;
+  transition: transform 0.3s ease;
+}
+
+.faq-answer {
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-question.active .faq-answer {
+  padding: 15px;
+  max-height: 200px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.faq-question.active .arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.faq-question:hover {
+  background-color: #f9f9f9;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
   .contact-container {
     padding: 1px;
     margin: 20px;
-    position: absolute;
+    position: relative;
   }
 
   .form-row {
-    width: 80%; /* Full width for mobile screens */
-    max-width: none; /* Remove max-width on smaller devices */
-    padding: 0 50px; /* Add padding to fit smaller screens */
+    width: 90%; /* Make inputs more responsive */
   }
 
   button {
-    width: 40%; /* Make the button take up full width on mobile */
+    width: 50%; /* Adjust button width for smaller screens */
     font-size: 14px;
     padding: 10px;
+  }
+
+  .contact-section,
+  .faq-section {
+    width: 90%;
   }
 }
