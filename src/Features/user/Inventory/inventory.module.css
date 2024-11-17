@@ -3,15 +3,26 @@
 .headerWrapper {
   position: sticky;
   top: 0;
-  background-color: #f8f9fa;
+  background-color: #005aa7;
   padding:  0;
   z-index: 1000;
 }
 
+
+/* Fixed Header */
 .header {
+  background-color: white;
+  padding: 10px 20px; /* Add padding for consistent spacing */
+  border-bottom: none;
+  display: flex;
+  flex-direction: row; /* Align items in a row */
+  align-items: center;
+  justify-content: center; /* Center content within the header */
   width: 100%;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
+  transition: top 0.3s;
+  color: #005aa7;
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
+  position: relative; /* Allow absolute positioning inside */
 }
 
 /* Header Content */
@@ -20,6 +31,7 @@
   justify-content: flex-start; /* Align items to the left */
   align-items: center;
   width: 100%;
+  gap: 1rem;
 
   @media (max-width: 756px) {
     flex-direction: column;
@@ -30,7 +42,7 @@
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #007bff;
+  color: #005aa7;
 }
 
 .contactInfo {
@@ -73,7 +85,7 @@
 /* Navigation Styling */
 .nav {
   margin-top: 10px;
-  background-color: #007bff;
+  background-color: #4682B4;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -93,13 +105,13 @@
 }
 
 .nav a {
-  color: white;
+  color: #005aa7;
   text-decoration: none;
   padding: 10px 15px;
 }
 
 .nav a:hover {
-  background-color: #0056b3;
+  background-color: #003366;
   border-radius: 4px;
 }
 /* Header Styling  end*/
@@ -372,13 +384,31 @@ main {
 
 /* Navigation Styling */
 .nav {
-  margin-top: 10px;
-  background-color: #007bff;
+  margin-top: 0;
+  background-color: white;
   width: 100%;
   display: flex;
   justify-content: flex-start;
   padding: 1rem 0;
   height: 20px;
+  transform: translateX(-20%);
+}
+
+/* Responsive Design for Small Screens */
+@media (max-width: 768px) {
+  .header {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align items to the left */
+  }
+
+  .nav {
+    transform: translateX(0); /* Reset the transform for proper alignment */
+    justify-content: center; /* Align navigation items to the left */
+    width: 100%; /* Ensure the nav takes up full width */
+    margin-top: 0.5rem; /* Add spacing under the logo */
+    order: 1; /* Ensure the nav comes after the logo */
+  }
 }
 
 .nav ul {
@@ -388,14 +418,17 @@ main {
 }
 
 .nav a {
-  color: white;
+  color: #005aa7;
   text-decoration: none;
   padding: 10px 15px;
+  font-weight: bold;
 }
 
 .nav a:hover {
-  background-color: #0056b3;
+  background-color: #005aa7;
   border-radius: 4px;
+  color: white;
+  font-weight: bold;
 }
 
 
@@ -430,17 +463,6 @@ main {
   padding-top: 80px;
 }
 
-/* Fixed Header */
-.header {
-  background-color: #ffffff;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  transition: top 0.3s;
-}
 
 /* Car Listings Section */
 .carListingsContainer {
