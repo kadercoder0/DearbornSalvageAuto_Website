@@ -23,7 +23,7 @@ const Login = () => {
         if (isAdmin) {
           navigate("/admin/managelistings");
         } else {
-          navigate("/home");
+          navigate("/inventory");
         }
       })
       .catch((error) => {
