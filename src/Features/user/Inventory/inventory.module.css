@@ -44,6 +44,10 @@
   font-weight: bold;
   color: #005aa7;
   padding-left: 1rem;
+
+  @media (max-width: 756px) {
+    padding-left: 0;
+  }
  
 }
 
