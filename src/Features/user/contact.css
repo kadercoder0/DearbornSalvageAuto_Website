@@ -216,8 +216,7 @@ button:hover {
 /* Responsive Styles */
 @media (max-width: 768px) {
   .contact-container {
-    padding: 1px;
-    margin: 20px;
+    margin: 0;
     position: relative;
   }
 
@@ -234,5 +233,8 @@ button:hover {
   .contact-section,
   .faq-section {
     width: 90%;
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
 }
+

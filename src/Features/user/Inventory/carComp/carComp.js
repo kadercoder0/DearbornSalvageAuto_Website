@@ -49,7 +49,7 @@ const CarComp = ({ carListings }) => {
                 <div className={styles.infoWrapper}>
                   <div className={styles.milesWrapper}>
                     <p className={styles.carCardMiles}>
-                      {car.odometer.toLocaleString()} miles
+                      {Number(car.odometer).toLocaleString()} miles
                     </p>
                   </div>
                   <div className={styles.priceWrapper}>

@@ -69,11 +69,6 @@ const CarFeatures = ({ carId }) => {
         </li>
 
         <li>
-          <span className={styles.icon}><i className="fas fa-car"></i></span>
-          <span className={styles.label}>Condition:</span> {carFeatures.titleStatus || 'N/A'}
-        </li>
-
-        <li>
         <span className={styles.icon}><i className="fas fa-cogs"></i></span>
         <span className={styles.label}>Cylinders:</span> {carFeatures.cylinders || 'N/A'}
         </li>
@@ -97,6 +92,11 @@ const CarFeatures = ({ carId }) => {
         <li>
           <span className={styles.icon}><i className="fas fa-paintbrush"></i></span>
           <span className={styles.label}>Exterior Color:</span> {carFeatures.color || 'N/A'}
+        </li>
+        
+        <li>
+          <span className={styles.icon}><i className="fas fa-car"></i></span>
+          <span className={styles.label}>Title:</span> {carFeatures.titleStatus || 'N/A'}
         </li>
         <li>
           <span className={styles.icon}><i className="fas fa-barcode"></i></span>
