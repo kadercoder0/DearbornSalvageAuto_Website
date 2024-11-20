@@ -221,7 +221,14 @@ button:hover {
   }
 
   .form-row {
-    width: 90%; /* Make inputs more responsive */
+    width: 90%; /* Adjust width to ensure it fits smaller screens */
+  }
+
+  .form-row input,
+  .form-row textarea {
+    width: 100%; /* Ensure input and textarea fields do not exceed form width */
+    min-width: unset; /* Remove any fixed minimum width that could cause overflow */
+    box-sizing: border-box; /* Maintain padding and borders within width */
   }
 
   button {
@@ -233,8 +240,18 @@ button:hover {
   .contact-section,
   .faq-section {
     width: 90%;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Fix the blue triangles (.arrow) */
+  .arrow {
+    font-size: 14px; /* Reduce size for smaller screens */
+    right: 10px; /* Adjust distance from the right edge */
+    transform: translateY(-50%); /* Keep it vertically centered */
+  }
+
+  .faq-question {
+    padding-right: 30px; /* Add space to prevent overlap with text */
   }
 }
-
