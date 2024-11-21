@@ -1,22 +1,57 @@
-/*carSpecs.module.css*/
-
 .carSpecsContainer {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    width: 100%;  
-    margin-top: 20px; /* Space above */
-    margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .carSpecsContainer {
+      padding: 15px; /* Reduce padding for smaller screens */
+      margin-top: 15px; /* Adjust margin for better spacing */
+      margin-bottom: 15px;
+      max-width: 90%; /* Limit width to 90% for better appearance on small screens */
+      margin: auto;
   }
-  
+
   .carSpecsList {
-    columns: 2;
-    list-style-position: inside;
-    column-gap: 40px;
+      columns: 1; /* Reduce to a single column for better readability */
+      column-gap: 20px; /* Adjust gap */
   }
-  
-  .carSpecsList li {
-    padding: 5px 0;
-    justify-content: center;
-  }
-  
+}
+
+.carSpecsList {
+  columns: 2;
+  list-style-position: inside;
+  column-gap: 40px;
+}
+
+.carSpecsList li {
+  position: relative; /* Allows positioning of the custom bullet */
+  padding: 5px 0 5px 25px; /* Add space for the bullet */
+  list-style: none; /* Remove default bullet points */
+  display: flex; /* Ensure alignment for content inside */
+  align-items: center; /* Vertically center content */
+}
+
+.carSpecsList li::before {
+  content: ""; /* Empty content for the bullet */
+  position: absolute; /* Position it relative to the list item */
+  left: 0; /* Align it to the left edge */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for exact vertical centering */
+  width: 10px; /* Size of the bullet */
+  height: 10px; /* Size of the bullet */
+  background-color: #3498db; /* Cool blue color */
+  border-radius: 50%; /* Make it a circle */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
+
+
+h2 {
+  font-weight: bold;
+}
