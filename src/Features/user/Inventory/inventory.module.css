@@ -51,26 +51,6 @@
  
 }
 
-.contactInfo {
-  text-align: right;
-}
-
-.searchWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  input:focus {
-    outline: none !important;
-  }
-
-  input {
-    width: 100%;
-    margin-bottom: 1rem;
-    border-radius: 0px !important;
-    border-top-left-radius: 6px !important;
-    border-bottom-left-radius: 6px !important;
-  }
-}
 
 .iconWrapper {
   display: flex;
@@ -89,14 +69,6 @@
 }
 
 /* Navigation Styling */
-.nav {
-  margin-top: 10px;
-  background-color: #4682B4;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0;
-}
 
 .nav ul {
   list-style: none;
@@ -110,16 +82,6 @@
   }
 }
 
-.nav a {
-  color: #005aa7;
-  text-decoration: none;
-  padding: 10px 15px;
-}
-
-.nav a:hover {
-  background-color: #003366;
-  border-radius: 4px;
-}
 /* Header Styling  end*/
 
 /* inventoryWrapper styles start */
@@ -284,48 +246,6 @@ main {
   padding-left: 20px;
 }
 
-/* Search Bar and Filter Section */
-.searchFilterContainer {
-  display: flex;
-  justify-content: center; /* Center the filters */
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-/* Filter Input Styling */
-.searchFilters {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-/* Input Field Styling */
-.searchInput {
-  padding: 8px;
-  font-size: 14px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  width: 120px;
-  box-sizing: border-box;
-}
-
-/* Search Button Styling */
-.searchButton {
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
-
-.searchButton:hover {
-  background-color: #0056b3;
-}
-
 /* Arrows for Image Navigation */
 .arrowLeft,
 .arrowRight {
@@ -417,12 +337,6 @@ main {
   }
 }
 
-.nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
-
 .nav a {
   color: #005aa7;
   text-decoration: none;
@@ -480,7 +394,6 @@ main {
   max-width: 1200px;
   margin: 0 auto;
 }
-
 
 .carCard:hover {
   transform: translateY(-5px);
