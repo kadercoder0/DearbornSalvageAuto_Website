@@ -481,20 +481,6 @@ main {
   margin: 0 auto;
 }
 
-/* Car Card Styling */
-@media (max-width: 768px) {
-  .carListingsContainer {
-    grid-template-columns: 1fr; /* Stacks items vertically */
-    padding: 10px;
-    gap: 15px; /* Add some spacing */
-  }
-
-  .carCard {
-    width: 100%; /* Ensure the car cards use the full width */
-    max-width: none; /* Remove max-width constraint */
-    height: auto; /* Allow the height to adjust based on content */
-  }
-}
 
 .carCard:hover {
   transform: translateY(-5px);
