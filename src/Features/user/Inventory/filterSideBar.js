@@ -86,11 +86,16 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
     <div>
       {/* Toggle button only visible on mobile */}
       <button className={styles.toggleButton} onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? 'Hide Filters' : 'Show Filters'}
+        ☰
       </button>
-
+  
       {/* Sidebar content */}
       <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
+        {/* Close button */}
+        <button className={styles.closeButton} onClick={() => setIsOpen(false)}>
+          ×
+        </button>
+  
         <div className={styles.filterWrapper}>
           {/* Min Year */}
           <div className={styles.textField}>
@@ -103,7 +108,7 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
               placeholder="Enter minimum year"
             />
           </div>
-
+  
           {/* Make */}
           <div className={styles.textField}>
             <label htmlFor="make">Make</label>
@@ -115,7 +120,7 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
               placeholder="Enter car make"
             />
           </div>
-
+  
           {/* Model */}
           <div className={styles.textField}>
             <label htmlFor="model">Model</label>
@@ -127,7 +132,7 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
               placeholder="Enter car model"
             />
           </div>
-
+  
           {/* Min and Max Price */}
           <div className={styles.textField}>
             <label htmlFor="minPrice">Min Price</label>
@@ -149,7 +154,7 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
               placeholder="Enter maximum price"
             />
           </div>
-
+  
           {/* Drivetrain */}
           <div className={styles.textField}>
             <label htmlFor="drivetrain">Drivetrain</label>
@@ -161,7 +166,7 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
               placeholder="Enter drivetrain"
             />
           </div>
-
+  
           {/* Buttons */}
           <div className={styles.buttonsWrapper}>
             <button className={styles.searchButton} onClick={handleSearch}>

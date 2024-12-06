@@ -30,6 +30,7 @@ const CarComp = ({ carListings }) => {
               >
                 {car.images.map((image, imgIndex) => (
                   <Carousel.Item key={imgIndex}>
+                    {/* eslint-disable-next-line */}
                     <img
                       src={image}
                       alt={`${car.make} ${car.model} image ${imgIndex + 1}`}

@@ -50,9 +50,7 @@ const CarDetailsPage = () => {
         {/* Display Car Make, Model, and Year */}
 
         {/* Image Carousel Section */}
-        <div className={styles.carouselSection}>
-          <br />
-          <br />
+        <div className={styles.carouselSection}>          
           <ImageCarousel carImages={carData.images} />
         </div>
 

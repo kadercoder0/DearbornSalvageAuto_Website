@@ -15,6 +15,12 @@
   padding-top: 20px; /* Provide space between filters and the toggle button */
 }
 
+/* Ensure toggle button is hidden on desktop */
+.toggleButton {
+  display: none; /* Default state: hidden */
+}
+
+
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;
@@ -28,30 +34,53 @@
 
   .sidebar.open {
     transform: translateX(0); /* Slide in */
-    padding-top: 220px; /* Ensure padding so filters don't clash with button */
+    padding-top: 40px; /* Ensure padding so filters don't clash with button */
   }
 }
 
-/* Toggle Button */
-.toggleButton {
-  display: none;
-  position: fixed; /* Fixed button for scrolling */
-  top: 160px; /* Set below the header */
-  left: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  z-index: 1100;
+.closeButton:hover {
+  color: #007bff; /* Highlight color on hover */
 }
 
+.closeButton {
+  display: none; /* Hide by default */
+}
 @media (max-width: 768px) {
   .toggleButton {
-    display: block; /* Show toggle button on mobile */
-    top: 150px; /* Set position below the fixed header */
-    width: fit-content;
+    left: calc(100% - 60px); /* Push it close to the right edge */
+    top: 15px; /* Keep it near the top */
+    z-index: 1100; /* Stay above other elements */
+    width: 40px; /* Compact size for smaller screens */
+    height: 40px; /* Square shape */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  .closeButton {
+    display: flex; /* Show on mobile screens */
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px; /* Size of the circle */
+    height: 40px;
+    background-color: black; /* Black circle background */
+    color: white; /* White "X" */
+    border: none;
+    border-radius: 50%; /* Makes it a circle */
+    font-size: 18px; /* Size of the "X" */
+    font-weight: bold; /* Makes the "X" bolder */
+    cursor: pointer;
+    z-index: 1200; /* Above sidebar content */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .closeButton:hover {
+    color: #007bff; /* Highlight color on hover */
   }
 }
 
