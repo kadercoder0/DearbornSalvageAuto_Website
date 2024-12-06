@@ -40,17 +40,14 @@ const CarDetailsPage = () => {
       <InventoryHeader />
 
       {/* Main Content */}
-
       <div className={styles.container}>
-        <div className={styles.carInfo}>
-          <h2 className={styles.carTitle}>
-            {carData.make} {carData.model} ({carData.year})
-          </h2>
-        </div>
-        {/* Display Car Make, Model, and Year */}
-
-        {/* Image Carousel Section */}
-        <div className={styles.carouselSection}>          
+        {/* Image Carousel Section with Title */}
+        <div className={styles.carouselSection}>
+          <div className={styles.titleOverlay}>
+            <h2 className={styles.carTitle}>
+              {carData.year} {carData.make} {carData.model}
+            </h2>
+          </div>
           <ImageCarousel carImages={carData.images} />
         </div>
 
@@ -59,13 +56,12 @@ const CarDetailsPage = () => {
           <CarFeatures carId={carId} />
         </div>
 
+        {/* Car Specs Section */}
         <div className={styles.carSpecsContainer}>
           <CarSpecs carId={carId} />
         </div>
       </div>
-
-      {/* Car Specs Section */}
-      </div>
+    </div>
   );
 };
 

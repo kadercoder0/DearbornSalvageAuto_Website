@@ -83,6 +83,12 @@
     object-fit: contain; /* Prevent stretching */
     display: block; /* Ensure proper alignment */
   }
+
+  .carTitle {
+    font-size: 22px; /* Adjust font size for mobile */
+    font-weight: bold; /* Make it stand out */
+    text-align: center; /* Center-align text */
+  }
   
   /* Adjust the overall carousel section */
   .carouselSection {
