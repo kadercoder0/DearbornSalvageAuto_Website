@@ -15,25 +15,34 @@
 
 /* Styles for the carousel section */
 .carouselSection {
-  width: 50%;  /* Half the width on mobile */
-  margin: 0 auto;  /* Center the carousel */
-  margin-top: 20px;
-}
-/* Styles for the vehicle info section */
-.vehicleInfoSection {
-  flex: 1;
-  padding: 20px;
-  width: 35%;
-  margin-top: -70px;
+  width: 70%; /* Keep the same width */
+  margin: 0 0 0 -3px; /* Adjust the left margin to move it slightly left */
+  padding: 0; /* Ensure no extra padding interferes */
   display: flex;
   flex-direction: column;
+  align-items: flex-start; /* Align content to the left */
+}
+
+/* Styles for the vehicle info section */
+.vehicleInfoSection {
+  width: 35%; /* Maintain the existing width */
+  height: 100;
+  margin-top: -20px; /* Move the section upwards */
+  margin-left: -10px; /* Move the section slightly to the left */
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start; /* Keep it aligned to the top */
+  position: relative; /* Ensure it remains in the flow of the container */
 }
 
 /* Car Specs Section - Separate and independent */
 .carSpecsContainer {
-  max-height: 400px; /* Set max height */
-  overflow-y: auto; /* Enable scrolling */
-  width: 100%;
+  max-height: 400px; /* Keep the height as specified */
+  overflow-y: auto; /* Allow scrolling if needed */
+  width: 100%; /* Ensure it aligns with the parent container */
+  margin: 0; /* Remove unnecessary margin */
+  padding-left: 0; /* Remove extra padding on the left */
+  box-sizing: border-box; /* Ensure proper alignment with the car image */
 }
 
 /* Car Specs list styling */
@@ -50,6 +59,13 @@
 .carouselSection,
 .vehicleInfoSection {
   flex-shrink: 0; /* Prevent shrinking of these sections */
+}
+
+.carTitle {
+  font-size: 24px; /* Adjust font size for mobile */
+  font-weight: bold; /* Make it stand out */
+  text-align: left; /* Center-align text */
+  color: white;
 }
 
 /* Web/Desktop Layout */
@@ -70,11 +86,22 @@
   }
 }
 
-/* Mobile Layout */
+/* Mobile Layout - Restored and Adjusted for Alignment */
+/* Mobile Layout - Restored and Adjusted for Alignment and Spacing */
 @media only screen and (max-width: 768px) {
   .container {
     flex-direction: column; /* Stack content vertically */
-    /*margin-top: 20px;*/
+  }
+
+  .carouselSection {
+    width: 90%; /* Relative width for responsiveness */
+    max-width: 600px; /* Set a max width for the carousel */
+    margin: 0 auto 2rem auto; /* Equal spacing beneath the carousel */
+    padding: 0; /* Match the carousel padding */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Slightly stronger shadow for a clean pop */
+    background-color: transparent; /* Transparent background */
+    border-radius: 12px; /* Curved corners */
+    overflow: hidden; /* Prevent content overflow */
   }
 
   .carouselSection img {
@@ -84,57 +111,47 @@
     display: block; /* Ensure proper alignment */
   }
 
+  .vehicleInfoSection {
+    width: 90%; /* Same width as the carousel */
+    max-width: 600px; /* Match the carousel max-width */
+    margin: -5rem auto 2rem auto; /* Move up slightly with negative margin */
+    padding: 0; /* Remove extra padding */
+  }
+
+  .carSpecsContainer {
+    width: 90%; /* Same width as the carousel */
+    max-width: 600px; /* Match the carousel max-width */
+    margin: 0 auto 2rem auto; /* Equal spacing beneath car specs */
+    padding: 0; /* Match the carousel padding */
+    min-width: 390px;
+  }
+
+  .carSpecsContainer ul {
+    padding: 10px; /* Add padding for readability */
+  }
+
   .carTitle {
     font-size: 22px; /* Adjust font size for mobile */
     font-weight: bold; /* Make it stand out */
     text-align: center; /* Center-align text */
-  }
-  
-  /* Adjust the overall carousel section */
-  .carouselSection {
-    max-width: 600px; /* Set a max width for the carousel */
-    width: 90%; /* Relative width for responsiveness */
-    margin: 10px auto; /* Add some vertical spacing */
-    padding: 0; /* Remove extra padding */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Slightly stronger shadow for a clean pop */
-    background-color: transparent; /* Subtle light gray background for elegance */
-    border-radius: 12px; /* Curved corners */
-    overflow: hidden; /* Ensure the image doesn't spill outside the rounded corners */
+    color: white;
   }
 
-  .vehicleInfoSection {
-    width: 100%; /* Full width for vehicle info */
+  .carInfo {
+    text-align: center; /* Center align the car info on mobile */
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 2px solid #ddd; /* Add a subtle divider */
+    width: 100%; /* Ensure full width */
+    box-sizing: border-box; /* Ensure proper padding alignment */
   }
 
-  .carSpecsContainer {
-    margin-bottom: 50px;
+  .carInfo h2 {
+    font-size: 22px; /* Adjust for mobile screens */
   }
-}
-/* Car Info section - Make, Model, and Year */
-.carInfo {
-  text-align: center;
-  margin-bottom: 20px;
-  padding: 10px 0;
-  border-bottom: 2px solid #ddd; /* Add a subtle divider */
-  width: 100%; /* Make sure the title takes full width */
-  box-sizing: border-box; /* Ensure padding is included in the width */
-  display: block;
-}
-.carInfo h2 {
-  font-size: 32px; /* Increase font size for emphasis */
-  font-weight: 700; /* Bold for more prominence */
-  color: #2c3e50; /* Darker color for a professional look */
-  margin: 0;
-  padding: 0;
-}
 
-.carInfo p {
-  font-size: 18px; /* Subtle font size for supporting text */
-  color: #7f8c8d; /* Lighter color for contrast */
-  margin-top: 5px; /* Small spacing for better readability */
-}
-
-/* Carousel section styles */
-.carouselSection {
-  margin-top: 20px; /* Space between car info and carousel */
+  .carInfo p {
+    font-size: 16px; /* Subtle font size for supporting text */
+    margin-top: 5px; /* Small spacing for better readability */
+  }
 }
