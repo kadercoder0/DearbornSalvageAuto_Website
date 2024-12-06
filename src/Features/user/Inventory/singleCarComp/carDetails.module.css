@@ -34,16 +34,17 @@
   align-self: flex-start; /* Keep it aligned to the top */
   position: relative; /* Ensure it remains in the flow of the container */
 }
-
-/* Car Specs Section - Separate and independent */
 .carSpecsContainer {
-  max-height: 400px; /* Keep the height as specified */
-  overflow-y: auto; /* Allow scrolling if needed */
-  width: 100%; /* Ensure it aligns with the parent container */
-  margin: 0; /* Remove unnecessary margin */
-  padding-left: 0; /* Remove extra padding on the left */
-  box-sizing: border-box; /* Ensure proper alignment with the car image */
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  overflow: visible; /* Ensure content can expand naturally */
+  display: block; /* Ensure it's not limited by flex or grid parents */
 }
+
 
 /* Car Specs list styling */
 .carSpecsList {
