@@ -34,7 +34,7 @@
 
   .sidebar.open {
     transform: translateX(0); /* Slide in */
-    padding-top: 40px; /* Ensure padding so filters don't clash with button */
+    padding-top: 10px; /* Ensure padding so filters don't clash with button */
   }
 }
 
@@ -47,16 +47,20 @@
 }
 @media (max-width: 768px) {
   .toggleButton {
-    left: calc(100% - 60px); /* Push it close to the right edge */
-    top: 15px; /* Keep it near the top */
-    z-index: 1100; /* Stay above other elements */
-    width: 40px; /* Compact size for smaller screens */
-    height: 40px; /* Square shape */
+    position: fixed; /* Keep the button fixed */
+    top: calc(50px - 10px); /* Move it 10px upwards from its current position */
+    right: calc(100% - 60px); /* Keep it near the right edge */
+    z-index: 1100; /* Ensure it stays above other elements */
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 32px;
     font-weight: bold;
+    background-color: #007bff; /* Optional: Button background */
+    color: white; /* Optional: Text color */
+    cursor: pointer;
   }
 
   .closeButton {

@@ -85,9 +85,11 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
   return (
     <div>
       {/* Toggle button only visible on mobile */}
-      <button className={styles.toggleButton} onClick={() => setIsOpen(!isOpen)}>
-        ☰
-      </button>
+      {!isOpen && (
+        <button className={styles.toggleButton} onClick={() => setIsOpen(!isOpen)}>
+          ☰
+        </button>
+      )}
   
       {/* Sidebar content */}
       <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
@@ -169,9 +171,15 @@ const FilterSidebar = ({ applyFilters, resetFilters }) => {
   
           {/* Buttons */}
           <div className={styles.buttonsWrapper}>
-            <button className={styles.searchButton} onClick={handleSearch}>
+          <button
+            className={styles.searchButton}
+            onClick={() => {
+              handleSearch(); // Call the search function
+              setIsOpen(!isOpen); // Toggle the `isOpen` state
+            }}
+            >
               Search
-            </button>
+          </button>
             <button className={styles.resetButton} onClick={handleReset}>
               Reset
             </button>
