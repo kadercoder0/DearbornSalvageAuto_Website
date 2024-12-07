@@ -89,6 +89,7 @@
 
 /* Mobile Layout - Restored and Adjusted for Alignment */
 /* Mobile Layout - Restored and Adjusted for Alignment and Spacing */
+/* Mobile Layout - Adjusted for Car Specs Container */
 @media only screen and (max-width: 768px) {
   .container {
     flex-direction: column; /* Stack content vertically */
@@ -122,9 +123,13 @@
   .carSpecsContainer {
     width: 90%; /* Same width as the carousel */
     max-width: 600px; /* Match the carousel max-width */
-    margin: 0 auto 2rem auto; /* Equal spacing beneath car specs */
-    padding: 0; /* Match the carousel padding */
-    min-width: 390px;
+    margin: 0 auto 2rem auto; /* Add margins to the left and right */
+    padding: 20px; /* Add padding inside the container */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    overflow: visible; /* Ensure content can expand naturally */
+    display: block; /* Ensure it's not limited by flex or grid parents */
+    min-width: 320px; /* Set a minimum width for better responsiveness */
   }
 
   .carSpecsContainer ul {
