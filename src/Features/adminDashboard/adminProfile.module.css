@@ -49,6 +49,7 @@ h2.profile-heading {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+    margin-left: 25px;
 }
 
 .toggle-button {
