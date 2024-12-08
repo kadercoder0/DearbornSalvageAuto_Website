@@ -62,22 +62,24 @@ const Inventory = () => {
     setIsFiltered(false); // Reset filter state
   };
 
-  return (
-    <div>
-      <InventoryHeader />
-      <div className={styles.inventoryPage}>
-        <FilterSidebar
-          applyFilters={applyFilters}
-          resetFilters={resetFilters}
-        />
-        <div className={styles.mainContent}>
-          <div className={`${styles.carCardWrapper}`}>
-            <CarComp carListings={filteredCars} />
-          </div>
+return (
+  <div>
+    <InventoryHeader />
+    <div className={styles.inventoryPage}>
+      <FilterSidebar
+        applyFilters={applyFilters}
+        resetFilters={resetFilters}
+      />
+      <div className={styles.mainContent}>
+        {/* Apply the correct class here */}
+        <div className={styles.carListingsContainer}>
+          <CarComp carListings={filteredCars} />
         </div>
       </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Inventory;
