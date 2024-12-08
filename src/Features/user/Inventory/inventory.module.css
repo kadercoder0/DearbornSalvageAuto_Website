@@ -384,17 +384,6 @@ main {
 }
 
 
-/* Car Listings Section */
-.carListingsContainer {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 cards per row on larger screens */
-  gap: 20px;
-  padding: 20px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
 .carCard:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
@@ -493,14 +482,51 @@ html {
 .inventoryPage {
   display: flex;
   max-width: 1536px;
-  margin: 0 auto;
+  margin: 0 auto; /* Center the entire layout */
   padding: 0 16px;
-  padding-left: 2rem;
-  margin-left: 0;
   padding-top: 2rem; /* Adds space below the header */
+  justify-content: space-between; /* Align content inside properly */
 }
 
 .mainContent {
-  flex: 1;
-  padding-left: 20px;
+  flex: 1; /* Take up remaining space */
+  padding-left: 0; /* Reset unnecessary padding */
+  display: flex; /* Flexbox for better alignment */
+  justify-content: center; /* Center align the car listings */
+}
+
+.carListingsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Flexible card width */
+  gap: 20px; /* Space between cards */
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px; /* Prevent the grid from exceeding this width */
+  margin: 0 auto; /* Center the grid container */
+  justify-content: center; /* Center-align the cards */
+}
+
+@media (max-width: 768px) {
+  .inventoryPage {
+    padding: 0; /* Remove excessive padding for mobile */
+    margin: 0 10px; /* Add small margins on mobile */
+    justify-content: start; /* Align to the left on mobile */
+  }
+
+  .mainContent {
+    padding-left: 0; /* No padding for mobile */
+    justify-content: start; /* Align to the left */
+  }
+
+  .carListingsContainer {
+    grid-template-columns: 1fr; /* Stack cards vertically on mobile */
+    gap: 15px; /* Adjust gap for mobile */
+    padding: 10px;
+    margin: 0 5px; /* Align slightly left and avoid touching edges */
+  }
+
+  .carCard {
+    margin: 0 auto; /* Center the cards */
+    width: 95%; /* Slightly smaller cards for better spacing */
+  }
 }
