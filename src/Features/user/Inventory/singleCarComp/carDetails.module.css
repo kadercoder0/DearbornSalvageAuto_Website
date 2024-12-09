@@ -9,8 +9,9 @@
   margin: 0 auto;
   width: 100%;
   max-width: 1200px;
-  padding-top: 0;
+  padding-top: 2rem;
   position: relative;
+  padding-bottom: 20rem;
 }
 
 /* Styles for the carousel section */
