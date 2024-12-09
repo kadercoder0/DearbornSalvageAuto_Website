@@ -187,3 +187,13 @@
     text-align: left;
   }
 }
+
+
+
+@media (max-width: 768px) {
+
+  .searchButton,
+  .resetButton {
+    margin-bottom: 15rem; /* Add padding under the buttons */
+  }
+}
