@@ -92,70 +92,84 @@ const AdminProfile = () => {
 
   return (
     <div className={styles["profile-container"]}>
-      <h2 className={styles["profile-heading"]}>Profile</h2>
+        <h2 className={styles["profile-heading"]}>Profile</h2>
 
-      <div className={styles["user-info"]}>
-        <h3>User Information</h3>
-        <br />
-        <p>Email: {email}</p>
-        <br />
-        <p>Phone Number: {phoneNumber}</p>
-        <br />
-        <p>Name: {name}</p>
-      </div>
-
-      <div>
-        <h3>Change Password</h3>
-
-        {/* Current Password Field with Eye Icon */}
-        <div className={styles["password-toggle"]}>
-          <input
-            type={showCurrentPassword ? "text" : "password"}
-            placeholder="Current Password"
-            value={currentPassword}
-            onChange={handleCurrentPasswordChange}
-            className={styles.input}
-          />
-          <FontAwesomeIcon
-            icon={showCurrentPassword ? faEyeSlash : faEye}
-            className={styles["toggle-icon"]}
-            onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-          />
+        <div className={styles["user-info"]}>
+            <h3>User Information</h3>
+            <br />
+            <p>Email: {email}</p>
+            <br />
+            <p>Phone Number: {phoneNumber}</p>
+            <br />
+            <p>Name: {name}</p>
         </div>
 
-        {/* New Password Field with Eye Icon */}
-        <div className={styles["password-toggle"]}>
-          <input
-            type={showNewPassword ? "text" : "password"}
-            placeholder="New Password"
-            value={newPassword}
-            onChange={handleNewPasswordChange}
-            className={styles.input}
-          />
-          <FontAwesomeIcon
-            icon={showNewPassword ? faEyeSlash : faEye}
-            className={styles["toggle-icon"]}
-            onClick={() => setShowNewPassword(!showNewPassword)}
-          />
+        <div>
+            <h3>Change Password</h3>
+
+            {/* Current Password Field with Eye Icon */}
+            <div className={styles["password-toggle"]}>
+                <input
+                    type={showCurrentPassword ? "text" : "password"}
+                    placeholder="Current Password"
+                    value={currentPassword}
+                    onChange={handleCurrentPasswordChange}
+                    className={styles.input}
+                />
+                <FontAwesomeIcon
+                    icon={showCurrentPassword ? faEyeSlash : faEye}
+                    className={styles["toggle-icon"]}
+                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                />
+            </div>
+
+            {/* New Password Field with Eye Icon */}
+            <div className={styles["password-toggle"]}>
+                <input
+                    type={showNewPassword ? "text" : "password"}
+                    placeholder="New Password"
+                    value={newPassword}
+                    onChange={handleNewPasswordChange}
+                    className={styles.input}
+                />
+                <FontAwesomeIcon
+                    icon={showNewPassword ? faEyeSlash : faEye}
+                    className={styles["toggle-icon"]}
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                />
+            </div>
+
+            {/* Buttons centered in the button-container */}
+            <div className={styles["button-container"]}>
+                <button className={styles.button} onClick={handlePasswordUpdate}>
+                    Update Password
+                </button>
+                <button className={styles.button} onClick={handleLogout}>
+                    Logout
+                </button>
+            </div>
         </div>
 
-        <button className={styles.button} onClick={handlePasswordUpdate}>Update Password</button>
-      </div>
+        {showSuccessAlert && (
+            <div className={styles.alert}>
+                <span
+                    className={styles.closebtn}
+                    onClick={() => setShowSuccessAlert(false)}
+                >
+                    &times;
+                </span>
+                Password updated successfully!
+            </div>
+        )}
 
-      {showSuccessAlert && (
-        <div className={styles.alert}>
-          <span className={styles.closebtn} onClick={() => setShowSuccessAlert(false)}>&times;</span>
-          Password updated successfully!
-        </div>
-      )}
-
-      <button className={styles.button} onClick={handleLogout}>Logout</button>
-
-      <h2>
-        <Link to="/admin/managelistings" className={styles["nav-link"]}>View Inventory</Link>
-      </h2>
+        <h2>
+            <Link to="/admin/managelistings" className={styles["nav-link"]}>
+                View Inventory
+            </Link>
+        </h2>
     </div>
-  );
+);
+
 };
 
 export default AdminProfile;
