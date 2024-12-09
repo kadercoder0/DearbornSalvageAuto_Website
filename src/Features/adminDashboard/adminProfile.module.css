@@ -22,7 +22,7 @@ h2.profile-heading {
 
 /* User Information */
 .user-info {
-    text-align: left;
+    text-align: center;
     font-size: 18px;
     color: #555;
     margin-bottom: 30px;
@@ -35,21 +35,18 @@ h2.profile-heading {
 
 /* Input styling */
 .input {
-    width: 100%;
-    padding: 12px;
-    margin: 15px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+    width: 80%; /* Adjust width for better centering */
+    max-width: 300px; /* Optional: Limit the maximum width */
 }
 
 /* Toggle Password Visibility */
 .password-toggle {
     position: relative;
     display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    margin-left: 25px;
+    flex-direction: column; /* Stack the elements vertically */
+    align-items: center;    /* Center-align the items */
+    margin-bottom: 20px;    /* Add spacing */
+    margin-left: 0;         /* Reset left margin */
 }
 
 .toggle-button {
@@ -77,9 +74,10 @@ h2.profile-heading {
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
-    margin: 15px 0;
-    margin-left: 25px;
-    width: 80%;
+    margin: 10px 0; /* Add spacing between buttons */
+    width: 80%;      /* Match the width of input fields */
+    max-width: 300px; /* Limit the maximum width for consistency */
+    text-align: center; /* Center the text inside the button */
 }
 
 .button:hover {
@@ -132,4 +130,11 @@ h2.profile-heading {
 
 .toggle-icon:hover {
     color: #0056b3;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column; /* Stack the buttons vertically */
+    align-items: center;    /* Center the buttons horizontally */
+    margin-top: 20px;       /* Add spacing from input fields */
 }
