@@ -62,7 +62,11 @@ const CarComp = ({ carListings }) => {
 
                 {/* Call Button */}
                 <div className={styles.callButtonWrapper}>
-                  <a href="tel:3132036018" className={styles.callButton}>
+                  <a
+                    href="tel:3134152982"
+                    className={styles.callButton}
+                    onClick={(e) => e.stopPropagation()} // Prevent event propagation
+                  >
                     Call Now
                   </a>
                 </div>
