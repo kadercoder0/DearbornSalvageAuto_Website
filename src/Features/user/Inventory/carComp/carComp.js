@@ -60,6 +60,12 @@ const CarComp = ({ carListings }) => {
                   </div>
                 </div>
 
+                {/* Call Button */}
+                <div className={styles.callButtonWrapper}>
+                  <a href="tel:3132036018" className={styles.callButton}>
+                    Call Now
+                  </a>
+                </div>
               </div>
             </div>
           ))

@@ -160,3 +160,31 @@ p {
   color: rgb(77, 107, 227);
 }
 
+/* Wrapper for the call button */
+.callButtonWrapper {
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Call Button Styles */
+.callButton {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #28a745; /* Green background */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.callButton:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.callButton:active {
+  background-color: #1e7e34; /* Even darker green when pressed */
+  transform: scale(0.95); /* Slightly shrink when clicked */
+}
