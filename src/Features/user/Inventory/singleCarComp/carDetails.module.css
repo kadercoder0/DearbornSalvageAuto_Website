@@ -108,11 +108,14 @@
   }
 
   .carouselSection img {
-    width: 100%; /* Scale images to fit the carousel width */
-    height: auto; /* Maintain aspect ratio */
-    object-fit: contain; /* Prevent stretching */
-    display: block; /* Ensure proper alignment */
+    width: 100%; /* Ensure the image scales correctly within its container */
+    height: auto; /* Maintain the aspect ratio */
+    object-fit: contain; /* Prevent the image from being cropped or stretched */
+    display: block; /* Remove any inline spacing issues */
+    margin: -100px 0 0 0; /* Move the image upwards with a negative top margin */
   }
+  
+  
 
   .vehicleInfoSection {
     width: 90%; /* Same width as the carousel */
@@ -138,10 +141,13 @@
   }
 
   .carTitle {
-    font-size: 22px; /* Adjust font size for mobile */
-    font-weight: bold; /* Make it stand out */
-    text-align: center; /* Center-align text */
-    color: white;
+    font-size: 20px; /* Keep the existing font size */
+    font-weight: bold; /* Keep the bold style */
+    color: white; /* Keep the existing color */
+    margin: 10px 0 0 43px; /* Push the title down (10px) and to the right (20px) */
+    position: relative; /* Ensure positioning remains relative for adjustments */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   .carInfo {
