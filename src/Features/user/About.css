@@ -57,10 +57,31 @@
   color: #333;
   line-height: 1.4;
   display: block;
+  text-decoration: none; /* Remove underline */
+
+}
+.review-text:hover {
+  text-decoration: none; /* Prevent underline on hover */
 }
 
-.paragraph{
+.paragraph {
   font-size: 24px;
   font-weight: bold;
   font-style: italic;
+  text-decoration: none; /* Remove underline */
+  cursor: default; /* Prevent pointer change on hover */
+}
+
+.subparagraph {
+  font-size: 15px;
+  font-style: italic;
+  text-decoration: none; /* Remove underline */
+  cursor: default; /* Prevent pointer change on hover */
+}
+
+/* Ensure no hover effects */
+.paragraph:hover,
+.subparagraph:hover {
+  text-decoration: none; /* Prevent underline on hover */
+  color: inherit; /* Keep text color consistent */
 }

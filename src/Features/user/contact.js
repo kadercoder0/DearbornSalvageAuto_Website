@@ -107,49 +107,77 @@ const Contact = () => {
       <div className="wrapper">
         <div className="faq-section">
           <h2>Frequently Asked Questions</h2>
-          <div className={`faq-question ${activeIndex === 0 ? "active" : ""}`} onClick={() => toggleFAQ(0)}>
+          <div
+            className={`faq-question ${activeIndex === 0 ? "active" : ""}`}
+            onClick={() => toggleFAQ(0)}
+          >
             <h3>What cars do you offer for sale?</h3>
             <span className="arrow">{activeIndex === 0 ? "▲" : "▼"}</span>
-            <div className="faq-answer" style={{ maxHeight: activeIndex === 0 ? "200px" : "0" }}>
-              We offer a variety of rebuilt cars, including sedans, SUVs, and trucks, all sourced from auctions and expertly repaired.
+            <div
+              className="faq-answer"
+              style={{ maxHeight: activeIndex === 0 ? "200px" : "0" }}
+            >
+              We offer a variety of rebuilt cars, including sedans, SUVs, and
+              trucks, all sourced from auctions and expertly repaired.
             </div>
           </div>
-          <div className={`faq-question ${activeIndex === 1 ? "active" : ""}`} onClick={() => toggleFAQ(1)}>
+          <div
+            className={`faq-question ${activeIndex === 1 ? "active" : ""}`}
+            onClick={() => toggleFAQ(1)}
+          >
             <h3>How are the cars repaired?</h3>
             <span className="arrow">{activeIndex === 1 ? "▲" : "▼"}</span>
-            <div className="faq-answer" style={{ maxHeight: activeIndex === 1 ? "200px" : "0" }}>
-              Each car is thoroughly inspected and repaired by certified technicians to ensure it meets safety and performance standards.
+            <div
+              className="faq-answer"
+              style={{ maxHeight: activeIndex === 1 ? "200px" : "0" }}
+            >
+              Each car is thoroughly inspected and repaired by certified
+              technicians to ensure it meets safety and performance standards.
             </div>
           </div>
-          <div className={`faq-question ${activeIndex === 2 ? "active" : ""}`} onClick={() => toggleFAQ(2)}>
+          <div
+            className={`faq-question ${activeIndex === 2 ? "active" : ""}`}
+            onClick={() => toggleFAQ(2)}
+          >
             <h3>Can I test drive the car before buying?</h3>
             <span className="arrow">{activeIndex === 2 ? "▲" : "▼"}</span>
-            <div className="faq-answer" style={{ maxHeight: activeIndex === 2 ? "200px" : "0" }}>
-              Yes, we offer test drives for all vehicles at our location. Contact us to schedule an appointment.
+            <div
+              className="faq-answer"
+              style={{ maxHeight: activeIndex === 2 ? "200px" : "0" }}
+            >
+              Yes, we offer test drives for all vehicles at our location.
+              Contact us to schedule an appointment.
             </div>
           </div>
-          <div className={`faq-question ${activeIndex === 3 ? "active" : ""}`} onClick={() => toggleFAQ(3)}>
+          <div
+            className={`faq-question ${activeIndex === 3 ? "active" : ""}`}
+            onClick={() => toggleFAQ(3)}
+          >
             <h3>What is your return policy?</h3>
             <span className="arrow">{activeIndex === 3 ? "▲" : "▼"}</span>
-            <div className="faq-answer" style={{ maxHeight: activeIndex === 3 ? "200px" : "0" }}>
-              We provide a 7-day return policy on all vehicles if they do not meet your satisfaction.
+            <div
+              className="faq-answer"
+              style={{ maxHeight: activeIndex === 3 ? "200px" : "0" }}
+            >
+              We provide a 7-day return policy on all vehicles if they do not
+              meet your satisfaction.
             </div>
           </div>
         </div>
 
         <div className="contact-section">
           <h2>Contact Us</h2>
-          <div className="contact-details">
-            <p>
-              <strong>Phone number:</strong> +1(313) 203 - 6018
-            </p>
-            <p>
-              <strong>Email:</strong>{" "}
-              <a href="mailto:ahmadali.usedcars@gmail.com">
-                ahmadali.usedcars@gmail.com
-              </a>
-            </p>
-          </div>
+          <p className="call-instruction">
+            Click the call button to call or submit the form below to email us.
+          </p>
+          <a
+            href="tel:3134152982"
+            className="call-button"
+            onClick={(e) => e.stopPropagation()}
+          >
+            Call Now
+          </a>
+
           <form onSubmit={handleSubmit} className="contact-form">
             {error && <div className="form-error">{error}</div>}
             {success && <div className="form-success">{success}</div>}

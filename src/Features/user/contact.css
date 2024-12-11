@@ -255,3 +255,38 @@ button:hover {
     padding-right: 30px; /* Add space to prevent overlap with text */
   }
 }
+
+
+/* Styling for the Call Now button in Contact form */
+.call-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff; /* Matches the CarComp button color */
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin: 20px auto;
+  cursor: pointer;
+}
+
+.call-button:hover {
+  background-color: #0056b3; /* Slightly darker shade on hover */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+.call-instruction {
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #333;
+  text-decoration: none; /* Remove underline */
+}
+
+.call-instruction:hover {
+  text-decoration: none; /* Remove underline */
+}
