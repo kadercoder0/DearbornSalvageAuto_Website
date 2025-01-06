@@ -7,7 +7,7 @@ const InventoryHeader = () => {
     <div className={styles.headerWrapper}>
       <header className={styles.header}>
         <div className={styles.headerContent}>
-          <h1 className={styles.logo}>Dearborn Salvage Auto</h1>
+          <h1 className={styles.logo}>K&D Auto Sales </h1>
           <div className={styles.contactInfo}>
             <div className={styles.searchWrapper}>
             {/*<input placeholder="Search" /> 

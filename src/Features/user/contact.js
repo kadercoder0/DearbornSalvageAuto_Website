@@ -149,20 +149,6 @@ const Contact = () => {
               Contact us to schedule an appointment.
             </div>
           </div>
-          <div
-            className={`faq-question ${activeIndex === 3 ? "active" : ""}`}
-            onClick={() => toggleFAQ(3)}
-          >
-            <h3>What is your return policy?</h3>
-            <span className="arrow">{activeIndex === 3 ? "▲" : "▼"}</span>
-            <div
-              className="faq-answer"
-              style={{ maxHeight: activeIndex === 3 ? "200px" : "0" }}
-            >
-              We provide a 7-day return policy on all vehicles if they do not
-              meet your satisfaction.
-            </div>
-          </div>
         </div>
 
         <div className="contact-section">
