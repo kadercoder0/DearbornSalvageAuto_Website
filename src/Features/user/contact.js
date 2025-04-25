@@ -157,7 +157,7 @@ const Contact = () => {
             Click the call button to call or submit the form below to email us.
           </p>
           <a
-            href="tel:3134152982"
+            href="tel:3137442663"
             className="call-button"
             onClick={(e) => e.stopPropagation()}
           >
